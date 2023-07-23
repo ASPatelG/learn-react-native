@@ -14,19 +14,4 @@ export const styles = StyleSheet.create({
 		textAlign:'center',
 		alignSelf:'center',
 	},
-	pressableButtonStyle:{
-		backgroundColor:'#175491',
-		width:80,
-		paddingVertical:5,
-		paddingHorizontal:5,
-		borderRadius:5,
-		marginTop:10,
-		alignSelf:'center',
-	},
-	buttonTitle:{
-		textAlign:'center',
-		fontSize:14,
-		fontWeight:'bold',
-		color:'#ffffff',
-	}
 });

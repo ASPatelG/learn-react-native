@@ -18,11 +18,7 @@ function AppMainStack (){
 			<ApploadingStack.Navigator
 				initialRouteName='ChooseWork'
 			>
-				{/*<ApploadingStack.Screen name="AppLoadingUI" component={AppLoadingUI} />*/}
-				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork}/>
-				{/*<ApploadingStack.Screen name="Notifications" component={Notifications} />*/}
-				{/*<ApploadingStack.Screen name="Profile" component={Profile} />*/}
-				{/*<ApploadingStack.Screen name="Settings" component={Settings} />*/}
+				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
 			</ApploadingStack.Navigator>
 		</NavigationContainer>
 	)
@@ -43,7 +39,7 @@ export default class App extends Component {
 	}
 
 	componentDidMount(){	// Life cycle methods
-		changeAppLoadingTimer = setTimeout(() => this.setState({isAppLoading:false}), 10000);
+		changeAppLoadingTimer = setTimeout(() => this.setState({isAppLoading:false}), 5000);
 	}
 	
 	render(){	// Life cycle methods
