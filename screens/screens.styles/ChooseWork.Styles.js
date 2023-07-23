@@ -7,13 +7,6 @@ export const styles = StyleSheet.create({
 		alignitems:'center',
 		justifyContent:'center',
 	},
-	aploadingTextStyle:{
-		width:wp('90%'),
-		fontWeight:'bold',
-		fontSize:16,
-		textAlign:'center',
-		alignSelf:'center',
-	},
 	pressableButtonStyle:{
 		backgroundColor:'#175491',
 		width:80,
