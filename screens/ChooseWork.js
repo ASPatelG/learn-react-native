@@ -10,11 +10,12 @@ export const ChooseWork = (props)=>{
 	const {navigation} = props;
 
 	function showLoginScreen(){
-		console.log('props: ', props);
-		console.log(`called the showLoginScreen functiona`);
 		navigation.navigate('LoginScreen');
 	}
 
+	function navigateToProgramingPractise(){
+		navigation.navigate('ProgramingPracitseStack')
+	}
 
 	return(
 		<View style={styles.mainContainer}>
@@ -26,6 +27,7 @@ export const ChooseWork = (props)=>{
 			</Pressable>
 			<Pressable
 				style={styles.pressableButtonStyle}
+				onPressIn={({nativeEvent})=> navigateToProgramingPractise()}
 			>
 				<Text style={styles.buttonTitle}>{programingPractis}</Text>
 			</Pressable>

@@ -11,7 +11,7 @@ import {AppLoadingUI} from './components/AppLoadingUI';
 import {LoginScreen} from './screens/loginScreen';
 import {ChooseWork} from './screens/ChooseWork';
 
-
+import {ProgramingPractiseRoot} from './programingPractise/programingPractiseRoot';
 
 const ApploadingStack = createStackNavigator();		// App Starting navigation(app root navigation)
 function AppMainStack (){
@@ -21,9 +21,21 @@ function AppMainStack (){
 				initialRouteName='ChooseWork'
 			>
 				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
+				<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack}/>
 				<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
 			</ApploadingStack.Navigator>
 		</NavigationContainer>
+	)
+}
+
+const PractiseProgramingStack = createStackNavigator();		// Programin practise stack navigation
+function ProgramingPracitseStack (){
+	return (
+		<PractiseProgramingStack.Navigator
+			initialRouteName='ProgramingPractiseRoot'
+		>
+			<PractiseProgramingStack.Screen name="ProgramingPractiseRoot" component={ProgramingPractiseRoot} options={{headerShown:false}}/>
+		</PractiseProgramingStack.Navigator>
 	)
 }
 
