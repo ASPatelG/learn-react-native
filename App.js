@@ -7,6 +7,8 @@ import { StyleSheet, Text, View, StatusBar, useState, Pressable } from 'react-na
 
 import {CodingPractise} from './HomeScreen';
 import {AppLoadingUI} from './components/AppLoadingUI';
+
+import {LoginScreen} from './screens/loginScreen';
 import {ChooseWork} from './screens/ChooseWork';
 
 
@@ -19,6 +21,7 @@ function AppMainStack (){
 				initialRouteName='ChooseWork'
 			>
 				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
+				<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
 			</ApploadingStack.Navigator>
 		</NavigationContainer>
 	)

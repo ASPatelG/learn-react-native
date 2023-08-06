@@ -3,5 +3,6 @@ export const translationValues = {
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
 		connectorApp:'ओपेन कैलकुलेटर',
 		programingPractis:'Programing Practise',
+		enterMobilNumber:'Enter Mobile Number',
 	}
 }
