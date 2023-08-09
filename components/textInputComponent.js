@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Text, View, StyleSheet, TextInput} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -7,10 +8,7 @@ const {hi:{ enterMobilNumber}} = translationValues;
 
 export const TextInputComponent = (props)=> {
 	/* Used to show ui till the app is loading */
-	const {maxLength, showFieldLabel, fieldLabelText, ...restProps} = props;
-
-
-	// onchangeInputValue()
+	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeInputValue, ...restProps} = props;
 
 	return(
 		<View style={styles.inputBoxStyle}>
@@ -21,10 +19,11 @@ export const TextInputComponent = (props)=> {
 			}
 			<TextInput
 				style={styles.textInputStyle}
-				value = 'value'
+				value={value}
 				placehodar='placeHolder'
 				maxLength={maxLength}
 				{...restProps}	// To remaingin props
+				onChangeText={(enteredText)=> onChangeInputValue(enteredText)}
 			/>
 		</View>
 	);
