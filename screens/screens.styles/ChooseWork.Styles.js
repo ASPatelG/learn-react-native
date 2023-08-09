@@ -3,7 +3,6 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export const styles = StyleSheet.create({
 	mainContainer:{
 		flex:1,
-		backgroundColor:'#ffffff',
 		alignitems:'center',
 		justifyContent:'center',
 	},
