@@ -2,7 +2,7 @@ import {Text, View, Pressable} from 'react-native';
 import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ connectorApp, programingPractis}} = translationValues;
 import {styles} from './screens.styles/ChooseWork.Styles';
-
+import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 
 export const ChooseWork = (props)=>{
 	/* Used to show ui till the app is loading */
@@ -19,6 +19,7 @@ export const ChooseWork = (props)=>{
 
 	return(
 		<View style={styles.mainContainer}>
+			<CommonHeaderComponent/>
 			<Pressable
 				style={styles.pressableButtonStyle}
 				onPressIn={({nativeEvent})=> showLoginScreen()}
