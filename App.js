@@ -21,8 +21,8 @@ function AppMainStack (){
 				initialRouteName='ChooseWork'
 			>
 				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
-				<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack}/>
-				<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
+				<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:true}}/>
+				<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:true}}/>
 			</ApploadingStack.Navigator>
 		</NavigationContainer>
 	)
