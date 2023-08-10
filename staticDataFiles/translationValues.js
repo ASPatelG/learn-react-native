@@ -4,5 +4,6 @@ export const translationValues = {
 		connectorApp:'ओपेन कैलकुलेटर',
 		programingPractis:'Programing Practise',
 		enterMobilNumber:'Enter Mobile Number',
+		submit:'Submit',
 	}
 }

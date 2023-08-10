@@ -3,9 +3,11 @@ import {useState} from 'react';
 
 import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ connectorApp, programingPractis, enterMobilNumber}} = translationValues;
+import {contantValues} from '../staticDataFiles/constantValues';
 
 import {TextInputComponent} from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
+import {ButtonComponent} from '../components/buttonComponent';
 
 import {styles} from './screens.styles/loginScreenStyle';
 
@@ -31,8 +33,12 @@ export const LoginScreen = ()=>{
 				showFieldLabel={true}
 				fieldLabelText={enterMobilNumber}
 				value={mobileNumber}
-				onChangeInputValue={enteredText => onchangeMobileNumber(enteredText)}
+				onChangeText={enteredText => onchangeMobileNumber(enteredText)}
 				keyboardType='number-pad'
+			/>
+			<ButtonComponent
+				// pressableProps={}
+				// texProps={}
 			/>
 		</View>
 	);
