@@ -1,16 +1,18 @@
 import {Text, View, Pressable, StyleSheet} from 'react-native';
 import {translationValues} from '../staticDataFiles/translationValues';
 const { hi:{ submit } } = translationValues;
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const ButtonComponent = (props)=>{
 	/* Used to show ui till the app is loading */
 
-	const {navigation, onPressIn, pressableProps, textProps, title} = props;
+	const {navigation, onPressIn, pressableProps, textProps, title, disabled} = props;
 
 	return(
 		<View style={styles.mainContainer}>
 			<Pressable
-				style={styles.pressableButtonStyle}
+				disabled={disabled}
+				style={disabled ? styles.disabledButtonStyle :styles.pressableButtonStyle}
 				onPressIn={({nativeEvent})=> onPressIn(nativeEvent)}
 				// ...pressableProps
 			>
@@ -18,7 +20,7 @@ export const ButtonComponent = (props)=>{
 					? <Text
 						style={styles.buttonTitleStyle}
 						// ...textProps
-					>{ submit }</Text>
+					>{ title }</Text>
 					: null
 				}
 			</Pressable>
@@ -29,7 +31,9 @@ export const ButtonComponent = (props)=>{
 const styles = StyleSheet.create({
 	pressableButtonStyle:{
 		backgroundColor:'#175491',
-		width:80,
+		width:wp('60%'),
+		paddingVertical:12,
+		alignitems:'center',
 		paddingVertical:5,
 		paddingHorizontal:5,
 		borderRadius:5,
@@ -41,5 +45,17 @@ const styles = StyleSheet.create({
 		fontSize:14,
 		fontWeight:'bold',
 		color:'#ffffff',
+		paddingVertical:10,
+	},
+	disabledButtonStyle:{
+		backgroundColor:'#D1D1D1',
+		width:wp('60%'),
+		paddingVertical:12,
+		alignitems:'center',
+		paddingVertical:5,
+		paddingHorizontal:5,
+		borderRadius:5,
+		marginTop:10,
+		alignSelf:'center',
 	}
 });

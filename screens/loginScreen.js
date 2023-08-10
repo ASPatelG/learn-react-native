@@ -1,9 +1,11 @@
 import {Text, View} from 'react-native';
 import {useState} from 'react';
 
+import { FontAwesome } from '@expo/vector-icons'; 
+
 import {translationValues} from '../staticDataFiles/translationValues';
-const {hi:{ connectorApp, programingPractis, enterMobilNumber}} = translationValues;
-import {contantValues} from '../staticDataFiles/constantValues';
+const {hi:{ connectorApp, programingPractis, enterMobilNumber, submit}} = translationValues;
+import {constantValues} from '../staticDataFiles/constantValues';
 
 import {TextInputComponent} from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
@@ -26,6 +28,12 @@ export const LoginScreen = ()=>{
 		}
 	}
 
+	function onPressSubmit(nativeEvent){
+		if(constantValues.registeredMobileNumber === mobileNumber){
+			// Pending the process
+		}
+	}
+
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
@@ -35,10 +43,13 @@ export const LoginScreen = ()=>{
 				value={mobileNumber}
 				onChangeText={enteredText => onchangeMobileNumber(enteredText)}
 				keyboardType='number-pad'
+				inputIcon={()=>(<FontAwesome name="mobile-phone" size={24} color="black" />)}
+				maxLength={10}
 			/>
 			<ButtonComponent
-				// pressableProps={}
-				// texProps={}
+				title={submit}
+				onPressIn={onPressSubmit}
+				disabled={mobileNumber.length < 10}
 			/>
 		</View>
 	);
