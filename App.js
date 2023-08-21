@@ -10,6 +10,7 @@ import {AppLoadingUI} from './components/AppLoadingUI';
 
 import {LoginScreen} from './screens/loginScreen';
 import {ChooseWork} from './screens/ChooseWork';
+import {HomeScreen} from './screens/homeScreen';
 
 import {ProgramingPractiseRoot} from './programingPractise/programingPractiseRoot';
 
@@ -23,6 +24,7 @@ function AppMainStack (){
 				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
 				<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
 				<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
+				<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
 			</ApploadingStack.Navigator>
 		</NavigationContainer>
 	)
@@ -39,6 +41,16 @@ function ProgramingPracitseStack (){
 	)
 }
 
+const CostEstimationStack = createStackNavigator();		// This is cost estimation stack
+function CostEstimationCalculator (){
+	return (
+		<CostEstimationStack.Navigator
+			initialRouteName='HomeScreen'
+		>
+			<CostEstimationStack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown:true, title: 'Back'}}/>
+		</CostEstimationStack.Navigator>
+	)
+}
 
 export default class App extends Component {
 	constructor(props){

@@ -11,10 +11,10 @@ import {TextInputComponent} from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import {ButtonComponent} from '../components/buttonComponent';
 
-import {styles} from './screens.styles/loginScreenStyle';
+import {styles} from './screens.styles/homeScreenStyles';
 
 
-export const LoginScreen = (props)=>{
+export const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */
 	const [mobileNumber, setMobileNumber] = useState('');
 
@@ -29,30 +29,14 @@ export const LoginScreen = (props)=>{
 	}
 
 	function onPressSubmit(nativeEvent){
-		const {navigation} = props;
-		console.log('onPressSubmit button constantValues.registeredMobileNumber: ', constantValues.registeredMobileNumber, ' mobileNumber: ', mobileNumber)
 		if(constantValues.registeredMobileNumber === mobileNumber){
-			navigation.navigate('CostEstimationCalculator');
+			// Pending the process
 		}
 	}
 
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
-			<TextInputComponent
-				showFieldLabel={true}
-				fieldLabelText={enterMobilNumber}
-				value={mobileNumber}
-				onChangeText={enteredText => onchangeMobileNumber(enteredText)}
-				keyboardType='number-pad'
-				inputIcon={()=>(<FontAwesome name="mobile-phone" size={24} color="black" />)}
-				maxLength={10}
-			/>
-			<ButtonComponent
-				title={submit}
-				onPressIn={onPressSubmit}
-				disabled={mobileNumber.length < 10}
-			/>
 		</View>
 	);
 }
