@@ -10,6 +10,7 @@ import {constantValues} from '../staticDataFiles/constantValues';
 import {TextInputComponent} from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import {ButtonComponent} from '../components/buttonComponent';
+import {crossPlatformToast} from '../components/crossPlatformToast';
 
 import {styles} from './screens.styles/loginScreenStyle';
 
@@ -33,6 +34,9 @@ export const LoginScreen = (props)=>{
 		console.log('onPressSubmit button constantValues.registeredMobileNumber: ', constantValues.registeredMobileNumber, ' mobileNumber: ', mobileNumber)
 		if(constantValues.registeredMobileNumber === mobileNumber){
 			navigation.navigate('CostEstimationCalculator');
+		}
+		else{
+			crossPlatformToast('mobile number is incorrect or not registered');
 		}
 	}
 
