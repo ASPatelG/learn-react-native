@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Text, View, Pressable, StyleSheet} from 'react-native';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -11,7 +11,11 @@ import { createTable } from '../offlineFunctionality/createTable';
 import { getData } from '../offlineFunctionality/getData';
 import { insertData } from '../offlineFunctionality/insertData';
 
-import {ContextDataConsume} from '../create_context/contextDataConsume';
+import {contractorContext} from '../createContext/createdContext';
+// import {CreateContractor} from '../createContext/createContractor';
+
+import {ContextDataConsume} from '../createContext/contextDataConsume';
+import {ContextDataConsumeFourth} from '../createContext/contextDataConsumeFourth';
 
 export const ProgramingPractiseRoot = (props)=>{
 	/* Used to show ui till the app is loading */
@@ -29,11 +33,33 @@ export const ProgramingPractiseRoot = (props)=>{
 		// crossPlatformToast(offlineSuccess);
 	}, []);
 
+	const contractorInitialDetails = {
+		contractorName:'',
+		address:'',
+		qualification:'',
+		setMobileNumber:'',
+	}
+	const [contractorDetails, setContractorDetails] = useState(contractorInitialDetails);
+
+	function setContractorAllDetails(contractorAllDetails) {	// To set all contractor details
+		setContractorDetails({contractorAllDetails});
+	}
+
+	function setContractorAddress(address) {
+		setContractorDetails({...contractorDetails, address});		// To set contractor address
+	}
+
+	function setContractorName(contractorName) {
+		let setContractorNameData = {...contractorDetails, contractorName};
+		setContractorDetails(setContractorNameData);
+	}
+
 	function onPressButton(){
 		// Functionality imaplementaion till now pending
-		console.log(`Functionality imaplementaion till now pending`);
 		crossPlatformToast(`Functionality imaplementaion till now pending`);
 	}
+
+	const contractorInformationChange = {setContractorAllDetails, setContractorAddress,setContractorName };
 
 
 	return(
@@ -51,7 +77,9 @@ export const ProgramingPractiseRoot = (props)=>{
 			>
 				<Text style={styles.buttonTitle}>{checkContext}</Text>
 			</Pressable>
-			<ContextDataConsume/>
+			<contractorContext.Provider value={{contractorDetails, contractorInformationChange}}>
+				<ContextDataConsume/>
+			</contractorContext.Provider>
 		</View>
 	);
 }

@@ -7,16 +7,16 @@ import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ connectorApp}} = translationValues;
 import {crossPlatformToast} from '../components/crossPlatformToast';
 
-export const ContextDataConsume = (props)=>{
+export const ContextDataConsumeThree = (props)=>{
 	/* Used to show ui till the app is loading */
 
-	const {navigation} = props
-	useEffect(()=>{
+	const {navigation} = props;
+
+	useEffect(()=>{	
 	}, []);
 
 	function onPressButton(){
 		// Functionality imaplementaion till now pending
-		console.log(`Functionality imaplementaion till now pending`);
 		crossPlatformToast(`Functionality imaplementaion till now pending`);
 	}
 
@@ -26,7 +26,7 @@ export const ContextDataConsume = (props)=>{
 				style={styles.pressableButtonStyle}
 				onPressIn={({nativeEvent})=> onPressButton()}
 			>
-				<Text style={styles.buttonTitle}>Context Data Consume</Text>
+				<Text style={styles.buttonTitle}>Context Data Consume Third</Text>
 			</Pressable>
 	);
 }

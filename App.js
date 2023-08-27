@@ -71,6 +71,7 @@ export default class App extends Component {
 	
 	render(){	// Life cycle methods
 		if(this.state.isAppLoading){
+			//  <> </> ---> fragment/react.frament
 			return(
 				<>
 					<AppLoadingUI/>

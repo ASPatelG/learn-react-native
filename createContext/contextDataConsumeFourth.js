@@ -1,34 +1,39 @@
-import {useEffect} from 'react';
+import {useEffect, useContext} from 'react';
 import {Text, View, Pressable, StyleSheet} from 'react-native';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import {translationValues} from '../staticDataFiles/translationValues';
-const {hi:{ connectorApp}} = translationValues;
+const {hi:{ connectorApp }} = translationValues;
 import {crossPlatformToast} from '../components/crossPlatformToast';
+import {contractorContext} from '../createContext/createdContext';
 
-export const ContextDataConsumeThree = (props)=>{
+
+export const ContextDataConsumeFourth = (props)=>{
 	/* Used to show ui till the app is loading */
 
 	const {navigation} = props;
 
-	useEffect(()=>{	
+	const contractorContextDetails = useContext(contractorContext);
+
+	useEffect(()=>{
 	}, []);
 
 	function onPressButton(){
 		// Functionality imaplementaion till now pending
-		console.log(`Functionality imaplementaion till now pending`);
+		contractorContextDetails.contractorInformationChange.setContractorAddress('Indore');
+		contractorContextDetails.contractorInformationChange.setContractorName('Anil singh');
 		crossPlatformToast(`Functionality imaplementaion till now pending`);
 	}
 
 
 	return(
-			<Pressable
-				style={styles.pressableButtonStyle}
-				onPressIn={({nativeEvent})=> onPressButton()}
-			>
-				<Text style={styles.buttonTitle}>Context Data Consume Third</Text>
-			</Pressable>
+		<Pressable
+			style={styles.pressableButtonStyle}
+			onPressIn={({nativeEvent})=> onPressButton()}
+		>
+			<Text style={styles.buttonTitle}>Context Data Consume Fourth</Text>
+		</Pressable>
 	);
 }
 

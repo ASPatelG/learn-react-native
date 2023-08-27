@@ -7,27 +7,29 @@ import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ connectorApp }} = translationValues;
 import {crossPlatformToast} from '../components/crossPlatformToast';
 
-export const contextDataConsumerFourth = (props)=>{
+import {}
+
+export const ContextDataConsumeTwo = (props)=>{
 	/* Used to show ui till the app is loading */
 
 	const {navigation} = props;
 
-	useEffect(()=>{
+	useEffect(()=>{	
 	}, []);
 
 	function onPressButton(){
-		// Functionality imaplementaion till now pending
-		console.log(`Functionality imaplementaion till now pending`);
+		crossPlatformToast(`Functionality imaplementaion till now pending`);
 	}
 
-
 	return(
-		<Pressable
-			style={styles.pressableButtonStyle}
-			onPressIn={({nativeEvent})=> onPressButton()}
-		>
-			<Text style={styles.buttonTitle}>Context Data Consume Fourth</Text>
-		</Pressable>
+		<View style={{flex:1}}>
+			<Pressable
+				style={styles.pressableButtonStyle}
+				onPressIn={({nativeEvent})=> onPressButton()}
+			>
+				<Text style={styles.buttonTitle}>Context Data Consume First</Text>
+			</Pressable>
+		</View>
 	);
 }
 
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
 		paddingVertical:15,
 		paddingHorizontal:5,
 		borderRadius:5,
-		marginTop:10,
+		marginVertical:10,
 		alignSelf:'center',
 	},
 	buttonTitle:{

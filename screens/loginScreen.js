@@ -31,7 +31,6 @@ export const LoginScreen = (props)=>{
 
 	function onPressSubmit(nativeEvent){
 		const {navigation} = props;
-		console.log('onPressSubmit button constantValues.registeredMobileNumber: ', constantValues.registeredMobileNumber, ' mobileNumber: ', mobileNumber)
 		if(constantValues.registeredMobileNumber === mobileNumber){
 			navigation.navigate('CostEstimationCalculator');
 		}
