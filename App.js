@@ -23,7 +23,7 @@ function AppMainStack (){
 			>
 				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
 				<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
-				<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
+				{/*<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>*/}
 				<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
 			</ApploadingStack.Navigator>
 		</NavigationContainer>
@@ -71,6 +71,7 @@ export default class App extends Component {
 	
 	render(){	// Life cycle methods
 		if(this.state.isAppLoading){
+			//  <> </> ---> fragment/react.frament
 			return(
 				<>
 					<AppLoadingUI/>

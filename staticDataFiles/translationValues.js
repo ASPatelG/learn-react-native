@@ -5,5 +5,8 @@ export const translationValues = {
 		programingPractis:'Programing Practise',
 		enterMobilNumber:'Enter Mobile Number',
 		submit:'Submit',
+		offlineCheck:'Check offline database functionality',
+		checkContext:'Check context api functionality',
+		offlineSuccess:'Offline data created successfully',
 	}
 }
