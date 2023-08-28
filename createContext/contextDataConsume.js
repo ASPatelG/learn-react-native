@@ -14,8 +14,6 @@ export const ContextDataConsume = (props)=>{
 
 
 	const {contractorDetails, contractorInformationChange} = useContext(contractorContext);
-	console.log('contractorDetails: ', contractorDetails);
-	console.log('contractorInformationChange: ', contractorInformationChange);
 
 	const {navigation} = props
 	useEffect(()=>{
@@ -24,7 +22,6 @@ export const ContextDataConsume = (props)=>{
 	function onPressButton(){
 		// Functionality imaplementaion till now pending
 		contractorInformationChange.setContractorName('Anil singh parihar ji');
-		console.log("contractorDetails after change the data: ", contractorDetails);
 		crossPlatformToast(`Functionality imaplementaion till now pending but customer name is: ${contractorDetails.contractorName}`);
 	}
 
