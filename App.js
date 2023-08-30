@@ -23,7 +23,7 @@ function AppMainStack (){
 			>
 				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
 				<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
-				{/*<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>*/}
+				<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
 				<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
 			</ApploadingStack.Navigator>
 		</NavigationContainer>

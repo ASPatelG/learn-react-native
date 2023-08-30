@@ -37,6 +37,11 @@ export const HomeScreen = (props)=>{ 	// props used to get user props and defaul
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
+			<Text style={{textAlign:'center'}}>Initial value is: </Text>
+			<ButtonComponent
+				title={submit}
+				// onPressIn={onPressSubmit}
+			/>
 		</View>
 	);
 }
