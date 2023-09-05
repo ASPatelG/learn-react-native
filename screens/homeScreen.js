@@ -1,12 +1,12 @@
 import {View} from 'react-native';
 import {Provider} from 'react-redux';
-import {myStore} from '../learnReadux/stores';
+import {myStore} from '../learnRedux/stores';
 
 import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ connectorApp, programingPractis, enterMobilNumber, submit}} = translationValues;
 import {constantValues} from '../staticDataFiles/constantValues';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
-import {ShowDataFromRedux} from '../learnReadux/showDataFromRedux';
+import {ShowDataFromRedux} from '../learnRedux/showDataFromRedux';
 import {styles} from './screens.styles/homeScreenStyles';
 
 
