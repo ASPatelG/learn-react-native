@@ -26,9 +26,9 @@ export const ShowDataFromRedux = ((props)=>{ 	// props used to get user props an
 
 	return(
 		<View style={styles.mainContainer}>
-			<Text style={{textAlign:'center'}}>Initial value is: {givenDigitValue}</Text>
+			<Text style={{textAlign:'center'}}>Value is: {givenDigitValue}</Text>
 			<ButtonComponent
-				title={submit}
+				title={'Press To Incremeant'}
 				onPressIn={onPressIncrement}
 			/>
 		</View>
