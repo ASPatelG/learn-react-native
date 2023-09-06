@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';		//According to reactnative stack navigat
 import {Component} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {Provider} from 'react-redux';
 
 import { StyleSheet, Text, View, StatusBar, useState, Pressable } from 'react-native';
 
@@ -12,20 +13,25 @@ import {LoginScreen} from './screens/loginScreen';
 import {ChooseWork} from './screens/ChooseWork';
 import {HomeScreen} from './screens/homeScreen';
 
+import {myStore} from './learnRedux/stores';
+
 import {ProgramingPractiseRoot} from './programingPractise/programingPractiseRoot';
 
 const ApploadingStack = createStackNavigator();		// App Starting navigation(app root navigation)
 function AppMainStack (){
+	// myStore --> To use centralized state
 	return (
 		<NavigationContainer>
-			<ApploadingStack.Navigator
-				initialRouteName='ChooseWork'
-			>
-				<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
-				<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
-				<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
-				<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
-			</ApploadingStack.Navigator>
+			<Provider store={myStore}>
+				<ApploadingStack.Navigator
+					initialRouteName='ChooseWork'
+				>
+					<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
+					<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
+					<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
+					<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
+				</ApploadingStack.Navigator>
+			</Provider>
 		</NavigationContainer>
 	)
 }

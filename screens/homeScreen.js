@@ -1,5 +1,4 @@
 import {View} from 'react-native';
-import {Provider} from 'react-redux';
 import {myStore} from '../learnRedux/stores';
 
 import {translationValues} from '../staticDataFiles/translationValues';
@@ -16,9 +15,7 @@ export const HomeScreen = (props)=>{ 	// props used to get user props and defaul
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
-			<Provider store={myStore}>
-				<ShowDataFromRedux/>
-			</Provider>
+			<ShowDataFromRedux/>
 		</View>
 	);
 }
