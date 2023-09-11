@@ -1,6 +1,6 @@
 import {memo} from 'react';
 import {Text, View} from 'react-native';
-import {useSelector, shallowEqual, useDispatch} from 'react-redux';		// shallowEqual to check skip unwanted rerendering
+import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
 

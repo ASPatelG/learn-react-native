@@ -1,5 +1,6 @@
 import {Text, View} from 'react-native';
 import {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
 
@@ -14,10 +15,14 @@ import {crossPlatformToast} from '../components/crossPlatformToast';
 
 import {styles} from './screens.styles/loginScreenStyle';
 
+import {changeLoginUserData} from '../learnRedux/actions';
+
 
 export const LoginScreen = (props)=>{
 	/* Used to show ui till the app is loading */
 	const [mobileNumber, setMobileNumber] = useState('');
+	const transRef  = useSelector((state)=>state.transRef);
+	const dispatchrefrence = useDispatch()		// To send the data in store
 
 	function onchangeMobileNumber(enteredText){
 		const regularExpression = /^[0-9]+$/;
@@ -32,10 +37,11 @@ export const LoginScreen = (props)=>{
 	function onPressSubmit(nativeEvent){
 		const {navigation} = props;
 		if(constantValues.registeredMobileNumber === mobileNumber){
+			dispatchrefrence(changeLoginUserData({loginUserData:{mobileNumber, userName:constantValues.registeredUserName}}));
 			navigation.navigate('CostEstimationCalculator');
 		}
 		else{
-			crossPlatformToast('mobile number is incorrect or not registered');
+			crossPlatformToast(transRef.t('notRegistered'));
 		}
 	}
 
