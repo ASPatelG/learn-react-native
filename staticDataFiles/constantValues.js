@@ -10,4 +10,22 @@ export const constantValues = {
 	crossPlatformToastAnimation: false,
 	crossPlatformToastHideOnPress: false,
 	crossPlatformToastDuration:1500,
+	workTypes:[
+		{
+			label:'छत',
+			value:'roof',
+		},
+		{
+			label:'बीम',
+			value:'beem',
+		},
+		{
+			label:'वॉल',
+			value:'wall',
+		},
+		{
+			label:'फर्श',
+			value:'floor',
+		}
+	]
 }

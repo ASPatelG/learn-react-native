@@ -4,13 +4,13 @@ import {Picker} from '@react-native-picker/picker';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const DropdownPickerComponent = (props) => {
-	const {value, stateKey, itemList, dropdownStyle, ...rest } = props
+	const {selectedItemValue, itemKey, itemList, dropdownStyle, ...rest } = props
 	return (
 		<Picker
-			selectedValue={value}
+			selectedValue={selectedItemValue}
 			mode={'dropdown'}
-			style={dropdownStyle ?dropdownStyle :styles.employeeDropdownContainerStyle}
-			onValueChange={itemValue =>props.onValueChange(stateKey,itemValue)}
+			style={dropdownStyle}
+			onValueChange={item =>props.onValueChange(itemKey, item.Value)}
 			{...rest}
 		>
 			{itemList.map((item , index)=> {
@@ -21,11 +21,17 @@ const DropdownPickerComponent = (props) => {
 		</Picker>
 	);
 }
+
+export default DropdownPickerComponent;
+
 const styles = StyleSheet.create({
-	employeeDropdownContainerStyle:{
+	dropdownStyle:{
 		alignItems:'center',
 		width:wp('85%'),
 		paddingTop:10
 	},
-})
-export default PickerComponent;
+});
+
+DropdownPickerComponent.defaultProps = {
+	dropdownStyle:styles.dropdownStyle,
+}
