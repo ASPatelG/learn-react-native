@@ -5,4 +5,12 @@ export const styles = StyleSheet.create({
 		flex:1,
 		backgroundColor:'#ffffff',
 	},
+	dropDownContainer:{
+		padding:5,
+		borderRadius:5,
+		borderColor:'#D1D1D1',
+		borderWidth:1,
+		marginTop:10,
+		marginHorizontal:5,
+	}
 });

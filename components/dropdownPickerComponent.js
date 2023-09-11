@@ -10,7 +10,9 @@ const DropdownPickerComponent = (props) => {
 			selectedValue={selectedItemValue}
 			mode={'dropdown'}
 			style={dropdownStyle}
-			onValueChange={item =>props.onValueChange(itemKey, item.Value)}
+			itemStyle={{color:'#175491'}}
+			// selectionColor={'#D3D3D3'}
+			onValueChange={item =>props.onValueChange(item.label, item.value)}
 			{...rest}
 		>
 			{itemList.map((item , index)=> {
@@ -27,8 +29,8 @@ export default DropdownPickerComponent;
 const styles = StyleSheet.create({
 	dropdownStyle:{
 		alignItems:'center',
-		width:wp('85%'),
-		paddingTop:10
+		width:wp('95%'),
+		paddingTop:10,
 	},
 });
 
