@@ -16,3 +16,8 @@ export const changeLoginUserData = (data)=>({
 	type:saveLoginUserData,
 	payload:data
 });
+
+export const changeWorkType = (data)=>({
+	type:changeWorkType,
+	payload:data
+});

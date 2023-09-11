@@ -1,14 +1,18 @@
 import {View, Text, StyleSheet} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons';
 
 export const UserShortDetails = (props)=>{
+
+	const loginUserData  = useSelector((state)=>state.loginUserData);
+
 	return(
 		<View style={styles.userDetailsContainer}>
 			<FontAwesome name="user-circle" size={50} color="#B3B3B3" />
 			<View style={styles.userDetails}>
-				<Text style={styles.userNameStyle}>User Name</Text>
-				<Text>User mobile number</Text>
+				<Text style={styles.userNameStyle}>{loginUserData.userName}</Text>
+				<Text>{loginUserData.mobileNumber}</Text>
 			</View>
 		</View>
 	);
