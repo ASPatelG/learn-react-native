@@ -2,3 +2,4 @@
 
 export const addGivenValue = "addGivenValue";
 export const changeLanguage = 'changeLanguage';
+export const saveLoginUserData = 'saveLoginUserData';

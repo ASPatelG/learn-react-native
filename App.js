@@ -6,23 +6,23 @@ import {Provider} from 'react-redux';
 
 import { StyleSheet, Text, View, StatusBar, useState, Pressable } from 'react-native';
 
-import {CodingPractise} from './HomeScreen';
+import {CodingPractise} from './codingPractise';
 import {AppLoadingUI} from './components/AppLoadingUI';
 
 import {LoginScreen} from './screens/loginScreen';
 import {ChooseWork} from './screens/ChooseWork';
 import {HomeScreen} from './screens/homeScreen';
 
-import {myStore} from './learnRedux/stores';
+import {dataStore} from './learnRedux/dataStore';
 
 import {ProgramingPractiseRoot} from './programingPractise/programingPractiseRoot';
 
 const ApploadingStack = createStackNavigator();		// App Starting navigation(app root navigation)
 function AppMainStack (){
-	// myStore --> To use centralized state
+	// dataStore --> To use centralized state,  Provider --> To map all screen with store
 	return (
 		<NavigationContainer>
-			<Provider store={myStore}>
+			<Provider store={dataStore}>
 				<ApploadingStack.Navigator
 					initialRouteName='ChooseWork'
 				>
@@ -53,7 +53,7 @@ function CostEstimationCalculator (){
 		<CostEstimationStack.Navigator
 			initialRouteName='HomeScreen'
 		>
-			<CostEstimationStack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown:true, title: 'Back'}}/>
+			<CostEstimationStack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown:false, title: 'Back'}}/>
 		</CostEstimationStack.Navigator>
 	)
 }

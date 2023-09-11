@@ -1,11 +1,12 @@
 import {View} from 'react-native';
-import {myStore} from '../learnRedux/stores';
+import {dataStore} from '../learnRedux/dataStore';
 
 import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ connectorApp, programingPractis, enterMobilNumber, submit}} = translationValues;
 import {constantValues} from '../staticDataFiles/constantValues';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
-import {ShowDataFromRedux} from '../learnRedux/showDataFromRedux';
+import {UserShortDetails} from '../components/userShortDetails';
+// import {ShowDataFromRedux} from '../learnRedux/showDataFromRedux';
 import {styles} from './screens.styles/homeScreenStyles';
 
 
@@ -15,7 +16,8 @@ export const HomeScreen = (props)=>{ 	// props used to get user props and defaul
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
-			<ShowDataFromRedux/>
+			<UserShortDetails/>
+			{/*<ShowDataFromRedux/>*/}
 		</View>
 	);
 }

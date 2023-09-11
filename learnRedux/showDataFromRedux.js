@@ -13,6 +13,8 @@ import {addValueWithInitial, changeSelectedLanguage} from './actions';
 
 import {styles} from '../screens/screens.styles/homeScreenStyles';
 
+import { NativeModules } from 'react-native'
+
 
 export const ShowDataFromRedux = ((props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */

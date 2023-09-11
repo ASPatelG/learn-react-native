@@ -10,6 +10,7 @@ transRef.enableFallback = true;	// When a value is missing from a language it'll
 const initialValue = {
 	givenDigitValue:0,
 	transRef:transRef,
+	loginUserData:'',
 }
 
 export const reducers = (state = initialValue, action)=>{
@@ -20,6 +21,10 @@ export const reducers = (state = initialValue, action)=>{
 		case "changeLanguage":{
 			const {languageCod} = action.payload;
 			return { ...state, transRef:{...state.transRef, local:languageCod}}
+		}
+		case "saveLoginUserData":{
+			const {loginUserData} = action.payload;
+			return { ...state, loginUserData:loginUserData}
 		}
 		default:{
 			return state;

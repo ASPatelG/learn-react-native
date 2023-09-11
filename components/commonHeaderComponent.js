@@ -3,10 +3,11 @@ import { View, StyleSheet, StatusBar} from 'react-native';
 import {getStatusBarHeight} from '../javaScriptFunction/getStatusBarHeight';
 
 
-export const CommonHeaderComponent = ()=> {
+export const CommonHeaderComponent = (props)=> {
 	/* Used to show ui till the app is loading */
+	const {statusBarContainer} = props;
 	return(
-		<View style={styles.statusBarContainer}>
+		<View>
 			<StatusBar
 				animated={true}
 				backgroundColor="#61dafb"
@@ -18,5 +19,9 @@ export const CommonHeaderComponent = ()=> {
 const styles = StyleSheet.create({
 	statusBarContainer:{
 		height:getStatusBarHeight(),
-	}
+	},
 });
+
+CommonHeaderComponent.defaultProps = {
+	statusBarContainer:styles.statusBarContainer
+}
