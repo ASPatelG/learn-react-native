@@ -6,10 +6,18 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export const ButtonComponent = (props)=>{
 	/* Used to show ui till the app is loading */
 
-	const {navigation, onPressIn, pressableProps, textProps, title, disabled} = props;
+	const {navigation,
+		onPressIn,
+		pressableProps,
+		textProps,
+		title,
+		disabled,
+		// Styles
+		mainContainer,
+	} = props;
 
 	return(
-		<View style={styles.mainContainer}>
+		<View style={mainContainer}>
 			<Pressable
 				disabled={disabled}
 				style={disabled ? styles.disabledButtonStyle :styles.pressableButtonStyle}
@@ -29,6 +37,9 @@ export const ButtonComponent = (props)=>{
 }
 
 const styles = StyleSheet.create({
+	mainContainer:{
+		marginTop:10,
+	},
 	pressableButtonStyle:{
 		backgroundColor:'#175491',
 		width:wp('60%'),
@@ -59,3 +70,7 @@ const styles = StyleSheet.create({
 		alignSelf:'center',
 	}
 });
+
+ButtonComponent.defaultProps = {
+	mainContainer: styles.mainContainer
+}

@@ -39,10 +39,13 @@ const styles = StyleSheet.create({
 	textInputStyle:{
 		paddingLeft:15,
 		paddingRight:5,
-		paddingTop:5,
-		paddingBottom:10,
+		paddingTop:15,
+		paddingBottom:16,
 		marginTop:-10,
 		width:wp('87%'),
+		fontWeight:'bold',
+		fontSize:18,
+		color:'#808080',
 	},
 	inputBoxStyle:{
 		borderRadius:5,

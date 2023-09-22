@@ -4,19 +4,14 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
 
-import {translationValues} from '../staticDataFiles/translationValues';
-const {hi:{ connectorApp, programingPractis, enterMobilNumber, submit}} = translationValues;
 import {constantValues} from '../staticDataFiles/constantValues';
-
 import {TextInputComponent} from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import {ButtonComponent} from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
-
-import {styles} from './screens.styles/loginScreenStyle';
-
 import {changeLoginUserData} from '../learnRedux/actions';
 
+import {styles} from './screens.styles/loginScreenStyle';
 
 export const LoginScreen = (props)=>{
 	/* Used to show ui till the app is loading */
@@ -50,7 +45,7 @@ export const LoginScreen = (props)=>{
 			<CommonHeaderComponent/>
 			<TextInputComponent
 				showFieldLabel={true}
-				fieldLabelText={enterMobilNumber}
+				fieldLabelText={transRef.t('enterMobilNumber')}
 				value={mobileNumber}
 				onChangeText={enteredText => onchangeMobileNumber(enteredText)}
 				keyboardType='number-pad'
@@ -58,7 +53,7 @@ export const LoginScreen = (props)=>{
 				maxLength={10}
 			/>
 			<ButtonComponent
-				title={submit}
+				title={transRef.t('submit')}
 				onPressIn={onPressSubmit}
 				disabled={mobileNumber.length < 10}
 			/>
