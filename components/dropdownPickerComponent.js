@@ -10,14 +10,12 @@ const DropdownPickerComponent = (props) => {
 			selectedValue={selectedItemValue}
 			mode={'dropdown'}
 			style={dropdownStyle}
-			itemStyle={{color:'#175491'}}
-			// selectionColor={'#D3D3D3'}
 			onValueChange={item =>props.onValueChange(item.label, item.value)}
 			{...rest}
 		>
 			{itemList.map((item , index)=> {
 				return(
-					<Picker.Item  key={index} label={item.label} value={item.value} />
+					<Picker.Item  key={index} label={item.label} value={item.value} style={item.value === selectedItemValue ?styles.selectedItemStyle :styles.itemStyle}/>
 				)
 			})}
 		</Picker>
@@ -32,6 +30,12 @@ const styles = StyleSheet.create({
 		width:wp('95%'),
 		paddingTop:10,
 	},
+	selectedItemStyle:{
+		color:'#175491',
+	},
+	itemStyle:{
+		color:'#808080',
+	}
 });
 
 DropdownPickerComponent.defaultProps = {

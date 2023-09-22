@@ -4,13 +4,12 @@ import {translationValues} from '../staticDataFiles/translationValues';
 const transRef = new I18n(translationValues)
 transRef.locale = 'en';	// By default set english
 transRef.enableFallback = true;	// When a value is missing from a language it'll fall back to another language with the key present.
-// To see the fallback mechanism uncomment the line below to force the app to use the Hindi language.
-// i18n.locale = 'hi';
 
 const initialValue = {
 	givenDigitValue:0,
 	transRef:transRef,
 	loginUserData:'',
+	partyDetails:[],
 }
 
 export const reducers = (state = initialValue, action)=>{

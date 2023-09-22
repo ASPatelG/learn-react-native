@@ -20,7 +20,7 @@ export const HomeScreen = (props)=>{ 	// props used to get user props and defaul
 			<UserShortDetails/>
 			<View style={styles.dropDownContainer}>
 				<DropdownPickerComponent
-					selectedItemValue={constantValues.workTypes[0].label}
+					selectedItemValue={constantValues.workTypes[0].value}
 					itemKey={constantValues.workTypes[0].value}
 					itemList={constantValues.workTypes}
 					onValueChange={onchanDropDownValue}
