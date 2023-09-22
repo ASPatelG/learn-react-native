@@ -25,6 +25,10 @@ export const reducers = (state = initialValue, action)=>{
 			const {loginUserData} = action.payload;
 			return { ...state, loginUserData:loginUserData}
 		}
+		case "addParty":{
+			const {partyData} = action.payload;
+			return {...state, partyDetails:[...state.partyDetails, partyData]}
+		}
 		default:{
 			return state;
 		}

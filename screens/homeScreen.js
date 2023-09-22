@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {View} from 'react-native';
 import {dataStore} from '../learnRedux/dataStore';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
@@ -7,11 +8,13 @@ import {styles} from './screens.styles/homeScreenStyles';
 import {constantValues} from '../staticDataFiles/constantValues';
 
 
-export const HomeScreen = (props)=>{ 	// props used to get user props and default props
+const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */
 
+	const [workType, setPartyType] = useState(constantValues.workTypes[0].value);
+
 	onchanDropDownValue = (itemKey, itemValue)=>{
-		console.log('onchanDropDownValue function called: ', itemKey, itemValue);
+		setPartyType(itemKey);
 	}
 
 	return(
@@ -20,8 +23,7 @@ export const HomeScreen = (props)=>{ 	// props used to get user props and defaul
 			<UserShortDetails/>
 			<View style={styles.dropDownContainer}>
 				<DropdownPickerComponent
-					selectedItemValue={constantValues.workTypes[0].value}
-					itemKey={constantValues.workTypes[0].value}
+					selectedItemValue={workType}
 					itemList={constantValues.workTypes}
 					onValueChange={onchanDropDownValue}
 					dropdownStyle={null}
@@ -30,3 +32,5 @@ export const HomeScreen = (props)=>{ 	// props used to get user props and defaul
 		</View>
 	);
 }
+
+export default HomeScreen;

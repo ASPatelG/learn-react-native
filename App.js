@@ -11,7 +11,7 @@ import {AppLoadingUI} from './components/AppLoadingUI';
 
 import {LoginScreen} from './screens/loginScreen';
 import {ChooseWork} from './screens/ChooseWork';
-import {HomeScreen} from './screens/homeScreen';
+import HomeScreen from './screens/homeScreen';
 
 import {dataStore} from './learnRedux/dataStore';
 
