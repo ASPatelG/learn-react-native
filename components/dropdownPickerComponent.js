@@ -4,7 +4,7 @@ import {Picker} from '@react-native-picker/picker';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const DropdownPickerComponent = (props) => {
-	const {selectedItemValue, itemKey, itemList, dropdownStyle, ...rest } = props
+	const {selectedItemValue, itemList, dropdownStyle, ...rest } = props
 	return (
 		<Picker
 			selectedValue={selectedItemValue}
@@ -15,14 +15,14 @@ const DropdownPickerComponent = (props) => {
 		>
 			{itemList.map((item , index)=> {
 				return(
-					<Picker.Item  key={index} label={item.label} value={item.value} style={item.value === selectedItemValue ?styles.selectedItemStyle :styles.itemStyle}/>
+					<Picker.Item  key={index} label={item.label} value={item.value} style={item.value === selectedItemValue ?styles.selectedItemStyle : index%2 === 0 ?styles.itemStyle :styles.oddIndexItemStyle}/>
 				)
 			})}
 		</Picker>
 	);
 }
 
-export default DropdownPickerComponent;
+export default React.memo(DropdownPickerComponent);		// memo used to create the component as purecomponent
 
 const styles = StyleSheet.create({
 	dropdownStyle:{
@@ -35,6 +35,13 @@ const styles = StyleSheet.create({
 	},
 	itemStyle:{
 		color:'#808080',
+		borderTopWidth:2,
+		backgroundColor:'#D9F3F9'
+	},
+	oddIndexItemStyle:{
+		color:'#808080',
+		borderTopWidth:2,
+		backgroundColor:'#FFEECC'
 	}
 });
 
