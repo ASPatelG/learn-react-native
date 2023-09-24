@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {View} from 'react-native';
+import {useState, useEffect} from 'react';
+import {View, BackHandler} from 'react-native';
 import {dataStore} from '../learnRedux/dataStore';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import DropdownPickerComponent from '../components/dropdownPickerComponent';
@@ -16,6 +16,22 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	onchanDropDownValue = (itemKey, itemValue)=>{
 		setPartyType(itemKey);
 	}
+
+	useEffect(() => {
+		const backAction = () => {
+			BackHandler.exitApp()	// To close the app
+			return true;
+		};
+
+		const backHandler = BackHandler.addEventListener(
+			'hardwareBackPress',
+			backAction,
+		);
+
+		// To remove event on onmount
+		return () => backHandler.remove();
+
+	}, []);
 
 	return(
 		<View style={styles.mainContainer}>
