@@ -17,7 +17,7 @@ export const translationValues = {
 		otpVerify:'OTP Verify',
 		verifyOTP:'Verify OTP',
 		otpSentTo:'OTP Sent To',
-		wronOTP:'Please Enter Correct OTP',
+		wrongOTP:'Please Enter Correct OTP',
 		loginSuccess:'App Login Successfully',
 	},
 	hi:{	// Hindi
@@ -38,7 +38,7 @@ export const translationValues = {
 		otpVerify:'OTP Verify',
 		verifyOTP:'Verify OTP',
 		otpSentTo:'OTP Sent To',
-		wronOTP:'Please Enter Correct OTP',
+		wrongOTP:'Please Enter Correct OTP',
 		loginSuccess:'App Login Successfully',
 	},
 }
