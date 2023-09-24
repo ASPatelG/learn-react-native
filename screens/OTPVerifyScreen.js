@@ -17,7 +17,7 @@ export const OTPVerifyScreen = (props)=>{
 	/* Used to show ui till the app is loading */
 	const {route:{params}} = props;
 
-	const [otp, setOTP] = useState('');
+	const [otp, setOTP] = useState(params.otp);
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchrefrence = useDispatch()		// To send the data in store
 
