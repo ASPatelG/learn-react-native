@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -16,6 +16,7 @@ import {styles} from './screens.styles/loginScreenStyle';
 export const LoginScreen = (props)=>{
 	/* Used to show ui till the app is loading */
 	const [mobileNumber, setMobileNumber] = useState('');
+	const [showGetOtp] = useState(true);
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchrefrence = useDispatch()		// To send the data in store
 
@@ -43,6 +44,8 @@ export const LoginScreen = (props)=>{
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
+			<Text style={styles.screenHeading}>{transRef.t('login')}</Text>
+			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
 			<TextInputComponent
 				showFieldLabel={true}
 				fieldLabelText={transRef.t('enterMobilNumber')}
@@ -51,11 +54,13 @@ export const LoginScreen = (props)=>{
 				keyboardType='number-pad'
 				inputIcon={()=>(<FontAwesome name="mobile-phone" size={24} color="black" />)}
 				maxLength={10}
+				placehodar={transRef.t('phoneNumber')}
 			/>
 			<ButtonComponent
 				title={transRef.t('submit')}
 				onPressIn={onPressSubmit}
 				disabled={mobileNumber.length < 10}
+				mainContainer={styles.buttonContainer}
 			/>
 		</View>
 	);

@@ -25,7 +25,6 @@ export const TextInputComponent = (props)=> {
 				<TextInput
 					style={styles.textInputStyle}
 					value={value}
-					placehodar='placeHolder'
 					maxLength={maxLength}
 					{...restProps}	// To remaingin props
 					onChangeText={(enteredText)=> onChangeText(enteredText)}

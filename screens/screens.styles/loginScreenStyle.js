@@ -5,6 +5,24 @@ export const styles = StyleSheet.create({
 		flex:1,
 		backgroundColor:'#ffffff',
 		alignitems:'center',
-		paddingTop:20,
 	},
+	screenHeading:{
+		fontSize:25,
+		fontWeight:'bold',
+		textAlign:'center',
+		marginTop:25,
+		marginBottom:30,
+	},
+	loginIcon:{
+		height:230,
+		width:230,
+		borderRadius:65,
+		borderWidth:2,
+		borderColor:'#D1D1D1',
+		marginBottom:45,
+		alignSelf:'center',
+	},
+	buttonContainer:{
+		marginTop:25,
+	}
 });
