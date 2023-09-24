@@ -40,7 +40,6 @@ export const OTPVerifyScreen = (props)=>{
 	}
 
 	// const onFocusBox = (index)=>{
-	// 	console.log('onFocusBox function called');
 	// 	focusInputBoxIndex = index;
 	// }
 
