@@ -10,6 +10,7 @@ import {CodingPractise} from './codingPractise';
 import {AppLoadingUI} from './components/AppLoadingUI';
 
 import {LoginScreen} from './screens/loginScreen';
+import {OTPVerifyScreen} from './screens/OTPVerifyScreen';
 import {ChooseWork} from './screens/ChooseWork';
 import HomeScreen from './screens/homeScreen';
 
@@ -29,6 +30,7 @@ function AppMainStack (){
 					<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
 					<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
 					<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
+					<ApploadingStack.Screen name="OTPVerifyScreen" component={OTPVerifyScreen} options={{headerShown:false}}/>
 					<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
 				</ApploadingStack.Navigator>
 			</Provider>

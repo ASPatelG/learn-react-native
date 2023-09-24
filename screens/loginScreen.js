@@ -1,4 +1,4 @@
-import {Text, View, Image} from 'react-native';
+import {Text, ScrollView, Image} from 'react-native';
 import {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -16,7 +16,8 @@ import {styles} from './screens.styles/loginScreenStyle';
 export const LoginScreen = (props)=>{
 	/* Used to show ui till the app is loading */
 	const [mobileNumber, setMobileNumber] = useState('');
-	const [showGetOtp] = useState(true);
+	const [countryCode, setContryCode] = useState('+91');
+	const [showOTPUI] = useState(true);		// to otp send ui(by default used mobileNumber)
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchrefrence = useDispatch()		// To send the data in store
 
@@ -32,9 +33,17 @@ export const LoginScreen = (props)=>{
 
 	function onPressSubmit(nativeEvent){
 		const {navigation} = props;
-		if(constantValues.registeredMobileNumber === mobileNumber){
+		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
 			dispatchrefrence(changeLoginUserData({loginUserData:{mobileNumber, userName:constantValues.registeredUserName}}));
-			navigation.navigate('CostEstimationCalculator');
+			if(showOTPUI){
+				navigation.navigate('OTPVerifyScreen', {
+					mobileNumber:countryCode+' '+mobileNumber,
+					otp:'5555',
+				});
+			}
+			else{
+				navigation.navigate('CostEstimationCalculator');
+			}
 		}
 		else{
 			crossPlatformToast(transRef.t('notRegistered'));
@@ -42,7 +51,7 @@ export const LoginScreen = (props)=>{
 	}
 
 	return(
-		<View style={styles.mainContainer}>
+		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
 			<CommonHeaderComponent/>
 			<Text style={styles.screenHeading}>{transRef.t('login')}</Text>
 			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
@@ -57,11 +66,16 @@ export const LoginScreen = (props)=>{
 				placehodar={transRef.t('phoneNumber')}
 			/>
 			<ButtonComponent
-				title={transRef.t('submit')}
+				title={showOTPUI ?transRef.t('getOTP') :transRef.t('submit')}
 				onPressIn={onPressSubmit}
 				disabled={mobileNumber.length < 10}
 				mainContainer={styles.buttonContainer}
 			/>
-		</View>
+			{
+				showOTPUI
+				? <Text style={styles.signupHintStyle}>{transRef.t('signupHint')}</Text>
+				: null
+			}
+		</ScrollView>
 	);
 }
