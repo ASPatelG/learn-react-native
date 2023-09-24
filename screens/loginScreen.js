@@ -10,6 +10,7 @@ import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import {ButtonComponent} from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
 import {changeLoginUserData} from '../learnRedux/actions';
+import {generateOTP} from '../javaScriptFunction/generateOTP';
 
 import {styles} from './screens.styles/loginScreenStyle';
 
@@ -36,9 +37,11 @@ export const LoginScreen = (props)=>{
 		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
 			dispatchrefrence(changeLoginUserData({loginUserData:{mobileNumber, userName:constantValues.registeredUserName}}));
 			if(showOTPUI){
+				let generatedOTP = generateOTP();
+				console.log('generatedOTP: ', generatedOTP);
 				navigation.navigate('OTPVerifyScreen', {
 					mobileNumber:countryCode+' '+mobileNumber,
-					otp:'5555',
+					otp:generatedOTP,
 				});
 			}
 			else{

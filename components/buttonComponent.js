@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 	},
 	buttonTitleStyle:{
 		textAlign:'center',
-		fontSize:14,
+		fontSize:18,
 		fontWeight:'bold',
 		color:'#ffffff',
 		paddingVertical:10,
