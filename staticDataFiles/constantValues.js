@@ -12,23 +12,23 @@ export const constantValues = {
 	crossPlatformToastDuration:1500,
 	workTypes:[
 		{
-			label:'शभी',
+			label:'all',
 			value:'all',
 		},
 		{
-			label:'छत',
+			label:'roof',
 			value:'roof',
 		},
 		{
-			label:'बीम',
+			label:'beem',
 			value:'beem',
 		},
 		{
-			label:'वॉल',
+			label:'wall',
 			value:'wall',
 		},
 		{
-			label:'फर्श',
+			label:'floor',
 			value:'floor',
 		}
 	]
