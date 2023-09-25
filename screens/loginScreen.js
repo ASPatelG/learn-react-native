@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {Text, ScrollView, Image} from 'react-native';
 import {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -10,12 +10,15 @@ import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import {ButtonComponent} from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
 import {changeLoginUserData} from '../learnRedux/actions';
+import {generateOTP} from '../javaScriptFunction/generateOTP';
 
 import {styles} from './screens.styles/loginScreenStyle';
 
 export const LoginScreen = (props)=>{
 	/* Used to show ui till the app is loading */
 	const [mobileNumber, setMobileNumber] = useState('');
+	const [countryCode, setContryCode] = useState('+91');
+	const [showOTPUI] = useState(true);		// to otp send ui(by default used mobileNumber)
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchrefrence = useDispatch()		// To send the data in store
 
@@ -31,9 +34,19 @@ export const LoginScreen = (props)=>{
 
 	function onPressSubmit(nativeEvent){
 		const {navigation} = props;
-		if(constantValues.registeredMobileNumber === mobileNumber){
+		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
 			dispatchrefrence(changeLoginUserData({loginUserData:{mobileNumber, userName:constantValues.registeredUserName}}));
-			navigation.navigate('CostEstimationCalculator');
+			if(showOTPUI){
+				let generatedOTP = generateOTP();
+				console.log('generatedOTP: ', generatedOTP);
+				navigation.navigate('OTPVerifyScreen', {
+					mobileNumber:countryCode+' '+mobileNumber,
+					otp:generatedOTP,
+				});
+			}
+			else{
+				navigation.navigate('CostEstimationCalculator');
+			}
 		}
 		else{
 			crossPlatformToast(transRef.t('notRegistered'));
@@ -41,8 +54,10 @@ export const LoginScreen = (props)=>{
 	}
 
 	return(
-		<View style={styles.mainContainer}>
+		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
 			<CommonHeaderComponent/>
+			<Text style={styles.screenHeading}>{transRef.t('login')}</Text>
+			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
 			<TextInputComponent
 				showFieldLabel={true}
 				fieldLabelText={transRef.t('enterMobilNumber')}
@@ -51,12 +66,19 @@ export const LoginScreen = (props)=>{
 				keyboardType='number-pad'
 				inputIcon={()=>(<FontAwesome name="mobile-phone" size={24} color="black" />)}
 				maxLength={10}
+				placehodar={transRef.t('phoneNumber')}
 			/>
 			<ButtonComponent
-				title={transRef.t('submit')}
+				title={showOTPUI ?transRef.t('getOTP') :transRef.t('submit')}
 				onPressIn={onPressSubmit}
 				disabled={mobileNumber.length < 10}
+				mainContainer={styles.buttonContainer}
 			/>
-		</View>
+			{
+				showOTPUI
+				? <Text style={styles.signupHintStyle}>{transRef.t('signupHint')}</Text>
+				: null
+			}
+		</ScrollView>
 	);
 }

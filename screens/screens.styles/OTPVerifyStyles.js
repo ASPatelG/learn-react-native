@@ -22,6 +22,19 @@ export const styles = StyleSheet.create({
 		marginBottom:45,
 		alignSelf:'center',
 	},
+	otpTitleStyle:{
+		fontSize:18,
+		textAlign:'center',
+		marginBottom:15,
+		color:'#808080',
+		paddingHorizontal:8,
+	},
+	mobileNumberStyle:{
+		fontSize:18,
+		textAlign:'center',
+		marginBottom:25,
+		paddingHorizontal:8,
+	},
 	buttonContainer:{
 		marginTop:25,
 	},
