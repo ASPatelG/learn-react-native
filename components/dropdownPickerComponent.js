@@ -1,10 +1,20 @@
 import React,{ Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import {useSelector} from 'react-redux';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const DropdownPickerComponent = (props) => {
-	const {selectedItemValue, itemList, dropdownStyle, ...rest } = props
+	const {
+		selectedItemValue,
+		itemList,
+		dropdownStyle,
+		showTranslatedLabel,
+		...rest
+	} = props
+
+	const transRef  = useSelector((state)=>state.transRef);
+
 	return (
 		<Picker
 			selectedValue={selectedItemValue}
@@ -15,7 +25,20 @@ const DropdownPickerComponent = (props) => {
 		>
 			{itemList.map((item , index)=> {
 				return(
-					<Picker.Item  key={index} label={item.label} value={item.value} style={item.value === selectedItemValue ?styles.selectedItemStyle : index%2 === 0 ?styles.itemStyle :styles.oddIndexItemStyle}/>
+					<Picker.Item 
+						key={index}
+						label={showTranslatedLabel
+							? transRef.t(item.label)
+							: item.label
+						}
+						value={item.value}
+						style={item.value === selectedItemValue
+							?styles.selectedItemStyle
+							:index%2 === 0
+							?styles.itemStyle
+							:styles.oddIndexItemStyle
+						}
+					/>
 				)
 			})}
 		</Picker>

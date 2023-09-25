@@ -43,6 +43,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 					itemList={constantValues.workTypes}
 					onValueChange={onchanDropDownValue}
 					dropdownStyle={null}
+					showTranslatedLabel={true}
 				/>
 			</View>
 		</View>
