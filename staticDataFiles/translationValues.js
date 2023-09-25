@@ -24,6 +24,12 @@ export const translationValues = {
 		beem:'Beem',
 		wall:'Wall',
 		floor:'Floor',
+		addPartyWork:'Add Party Work',
+		enterFirstName:'First Name',
+		enterLastName:'Last Name',
+		enterJobTitle:'Job Title',
+		enterSalary:'Enter Discount',
+		enterEmail:'Email',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
@@ -50,5 +56,6 @@ export const translationValues = {
 		beem:'बीम',
 		wall:'वॉल',
 		floor:'फर्श',
+		addPartyWork:'Add Party Work',
 	},
 }

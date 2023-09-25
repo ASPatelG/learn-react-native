@@ -13,6 +13,7 @@ import {LoginScreen} from './screens/loginScreen';
 import {OTPVerifyScreen} from './screens/OTPVerifyScreen';
 import {ChooseWork} from './screens/ChooseWork';
 import HomeScreen from './screens/homeScreen';
+import AddPartyWorkDetails from './screens/addPartyWorkDetails';
 
 import {dataStore} from './learnRedux/dataStore';
 
@@ -32,6 +33,7 @@ function AppMainStack (){
 					<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
 					<ApploadingStack.Screen name="OTPVerifyScreen" component={OTPVerifyScreen} options={{headerShown:false}}/>
 					<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
+					<ApploadingStack.Screen name="AddPartyWorkDetails" component={AddPartyWorkDetails} options={{headerShown:false}}/>
 				</ApploadingStack.Navigator>
 			</Provider>
 		</NavigationContainer>

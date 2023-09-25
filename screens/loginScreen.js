@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons'; 
 
 import {constantValues} from '../staticDataFiles/constantValues';
-import {TextInputComponent} from '../components/textInputComponent';
+import TextInputComponent from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import {ButtonComponent} from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';

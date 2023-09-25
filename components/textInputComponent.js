@@ -6,7 +6,7 @@ import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ enterMobilNumber}} = translationValues;
 
 
-export const TextInputComponent = (props)=> {
+const TextInputComponent = (props)=> {
 	/* Used to show ui till the app is loading */
 	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText, inputIcon, ...restProps} = props;
 
@@ -33,6 +33,8 @@ export const TextInputComponent = (props)=> {
 		</View>
 	);
 }
+
+export default TextInputComponent;
 
 const styles = StyleSheet.create({
 	textInputStyle:{
