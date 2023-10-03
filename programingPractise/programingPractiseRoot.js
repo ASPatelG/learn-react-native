@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import {Text, View, Pressable, StyleSheet} from 'react-native';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -16,6 +16,7 @@ import {contractorContext} from '../createContext/createdContext';
 
 import {ContextDataConsume} from '../createContext/contextDataConsume';
 import {ContextDataConsumeFourth} from '../createContext/contextDataConsumeFourth';
+import ButtonComponent from '../components/buttonComponent';
 
 export const ProgramingPractiseRoot = (props)=>{
 	/* Used to show ui till the app is loading */
@@ -40,27 +41,36 @@ export const ProgramingPractiseRoot = (props)=>{
 		setMobileNumber:'',
 	}
 	const [contractorDetails, setContractorDetails] = useState(contractorInitialDetails);
+	const [count, setCount] = useState(0);
+	const [value, SetValue]= useState(0);
 
-	function setContractorAllDetails(contractorAllDetails) {	// To set all contractor details
+	const setContractorAllDetails = useCallback((contractorAllDetails)=> {	// To set all contractor details
 		setContractorDetails({contractorAllDetails});
-	}
+	}, []);
 
-	function setContractorAddress(address) {
+	const setContractorAddress = useCallback((address)=> {
 		setContractorDetails({...contractorDetails, address});		// To set contractor address
-	}
+	}, []);
 
-	function setContractorName(contractorName) {
+	const setContractorName = useCallback((contractorName)=> {
 		let setContractorNameData = {...contractorDetails, contractorName};
 		setContractorDetails(setContractorNameData);
-	}
+	}, []);
 
-	function onPressButton(){
+	const onPressButton = useCallback(()=>{
 		// Functionality imaplementaion till now pending
 		crossPlatformToast(`Functionality imaplementaion till now pending`);
-	}
+	}, []);
 
 	const contractorInformationChange = {setContractorAllDetails, setContractorAddress,setContractorName };
 
+	const onPressIncrement = useCallback((onPressNativeEvent)=>{
+		setCount(count+1);
+	}, [count]);
+
+	const onPressDecrement = useCallback((onPressNativeEvent)=>{
+		SetValue(value+1);
+	}, [value]);
 
 	return(
 		<View style={{flex:1}}>
@@ -80,6 +90,18 @@ export const ProgramingPractiseRoot = (props)=>{
 			<contractorContext.Provider value={{contractorDetails, contractorInformationChange}}>
 				<ContextDataConsume/>
 			</contractorContext.Provider>
+			<ButtonComponent
+				title={'Press To Incremeant'}
+				onPressIn={onPressIncrement}
+				count={count}
+				isRerender={false}
+			/>
+			<ButtonComponent
+				title={'Press To DeCremeant'}
+				onPressIn={onPressDecrement}
+				value={value}
+				isRerender={false}
+			/>
 		</View>
 	);
 }
