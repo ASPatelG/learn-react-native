@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, memo} from 'react';
 import {Text, View, StyleSheet, TextInput} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -8,22 +8,22 @@ const {hi:{ enterMobilNumber}} = translationValues;
 
 const TextInputComponent = (props)=> {
 	/* Used to show ui till the app is loading */
-	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText, inputIcon, ...restProps} = props;
+	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText, inputIcon, inputBoxStyle, textInputStyle, ...restProps} = props;
 
 	return(
-		<View style={styles.inputBoxStyle}>
+		<View style={inputBoxStyle}>
 			{/* To show the text input */}
 			{ showFieldLabel
 				?<Text style={styles.inputFieldLabel}>{fieldLabelText}</Text>
 				: null
-			}
+			}{console.log('textInputconponent called')}
 			<View style={{flexdirectiono:'row'}}>
 				{/*{inputIcon
 					? <inputIcon/>
 					: null
 				}*/}
 				<TextInput
-					style={styles.textInputStyle}
+					style={textInputStyle}
 					value={value}
 					maxLength={maxLength}
 					{...restProps}	// To remaingin props
@@ -34,7 +34,7 @@ const TextInputComponent = (props)=> {
 	);
 }
 
-export default TextInputComponent;
+export default memo(TextInputComponent);
 
 const styles = StyleSheet.create({
 	textInputStyle:{
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 	},
 	inputBoxStyle:{
 		borderRadius:5,
-		bordrColor:'D3D3D3',
+		borderColor:'#D3D3D3',
 		borderWidth:1,
 		width:wp('90%'),
 		alignSelf:'center',
@@ -69,5 +69,7 @@ const styles = StyleSheet.create({
 
 TextInputComponent.defaultProps = {
 	maxLength:20,
-	fieldLabelText:'Enter Value'
+	fieldLabelText:'Enter Value',
+	inputBoxStyle:styles.inputBoxStyle,
+	textInputStyle:styles.textInputStyle,
 }

@@ -7,7 +7,7 @@ import DropdownPickerComponent from '../components/dropdownPickerComponent';
 import {UserShortDetails} from '../components/userShortDetails';
 import {styles} from './screens.styles/homeScreenStyles';
 import {constantValues} from '../staticDataFiles/constantValues';
-import {ButtonComponent} from '../components/buttonComponent';
+import ButtonComponent from '../components/buttonComponent';
 
 
 const HomeScreen = (props)=>{ 	// props used to get user props and default props

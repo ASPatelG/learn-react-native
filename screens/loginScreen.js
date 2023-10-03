@@ -1,5 +1,5 @@
 import {Text, ScrollView, Image} from 'react-native';
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
@@ -32,10 +32,12 @@ export const LoginScreen = (props)=>{
 		}
 	}
 
-	function onPressSubmit(nativeEvent){
+	// useCallback hook used to avoid rerendering of component if not changed props
+	const onPressSubmit = useCallback((nativeEvent)=>{
 		const {navigation} = props;
 		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
 			dispatchrefrence(changeLoginUserData({loginUserData:{mobileNumber, userName:constantValues.registeredUserName}}));
+			console.log('mobileNumber: ', mobileNumber);
 			if(showOTPUI){
 				let generatedOTP = generateOTP();
 				console.log('generatedOTP: ', generatedOTP);
@@ -51,7 +53,7 @@ export const LoginScreen = (props)=>{
 		else{
 			crossPlatformToast(transRef.t('notRegistered'));
 		}
-	}
+	}, []);
 
 	return(
 		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
