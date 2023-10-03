@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ connectorApp, programingPractis, enterMobilNumber, submit}} = translationValues;
 import {constantValues} from '../staticDataFiles/constantValues';
-import {ButtonComponent} from '../components/buttonComponent';
+import ButtonComponent from '../components/buttonComponent';
 
 import {addValueWithInitial, changeSelectedLanguage} from './actions';
 

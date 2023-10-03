@@ -1,12 +1,14 @@
+import {memo, useEffect} from 'react';
 import {Text, View, Pressable, StyleSheet} from 'react-native';
 import {translationValues} from '../staticDataFiles/translationValues';
 const { hi:{ submit } } = translationValues;
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-export const ButtonComponent = (props)=>{
+const ButtonComponent = (props)=>{
 	/* Used to show ui till the app is loading */
 
-	const {navigation,
+	const {
+		navigation,
 		onPressIn,
 		pressableProps,
 		textProps,
@@ -14,7 +16,10 @@ export const ButtonComponent = (props)=>{
 		disabled,
 		// Styles
 		mainContainer,
+		isRerender,
 	} = props;
+
+	useEffect(()=>{}, [isRerender]);
 
 	return(
 		<View style={mainContainer}>
@@ -35,6 +40,8 @@ export const ButtonComponent = (props)=>{
 		</View>
 	);
 }
+
+export default memo(ButtonComponent);
 
 const styles = StyleSheet.create({
 	mainContainer:{

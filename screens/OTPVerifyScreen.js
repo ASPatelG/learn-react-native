@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import {constantValues} from '../staticDataFiles/constantValues';
 import BoxOTPInput from '../components/boxOTPInput';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
-import {ButtonComponent} from '../components/buttonComponent';
+import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
 import {changeLoginUserData} from '../learnRedux/actions';
 
