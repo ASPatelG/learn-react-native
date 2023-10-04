@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
 	},
 	inputBoxStyle:{
 		borderRadius:5,
-		bordrColor:'#D3D3D3',
+		borderColor:'#D3D3D3',
 		borderWidth:1,
 		width:wp('90%'),
 		alignSelf:'center',
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
 	},
 	workRateBoxStyle:{
 		borderRadius:5,
-		bordrColor:'#D3D3D3',
+		borderColor:'#D3D3D3',
 		borderWidth:1,
 		width:wp('43%'),
 		alignSelf:'center',

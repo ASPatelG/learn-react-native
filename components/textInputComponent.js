@@ -27,7 +27,7 @@ const TextInputComponent = (props)=> {
 					value={value}
 					maxLength={maxLength}
 					{...restProps}	// To remaingin props
-					onChangeText={(enteredText)=> onChangeText(enteredText)}
+					onChangeText={onChangeText}
 				/>
 			</View>
 		</View>

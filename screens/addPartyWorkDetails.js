@@ -13,14 +13,24 @@ import {styles} from './screens.styles/addPartyDetailsStyle';
 const AddPartyWorkDetails = (props)=>{
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchRefrence = useDispatch()		// To send the data in store
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [mobileNumber, setMobileNumber] = useState('');
-	const [salary, setSalary] = useState('');
-	const [email, setEmail] = useState('');
-
+	const [partyDetails, setPartyDetails] = useState({
+		firstName:'',
+		lastName:'',
+		mobileNumber:'',
+		email:'',
+		workType:'wall',
+		rate:'',
+		length:'',
+		width:'',
+		height:'',
+		totalArea:'',
+		totalAmount:'',
+		discount:'',
+	});
+	const regularExpressionOnlyDigit = /^[0-9]+$/;
+	console.log('partyDetails:::::::::::::::::::::::');
 	const disableSave = ()=>{
-		if(!firstName?.length || !jobTitle || !salary || !email){
+		if(!partyDetails?.firstName?.length || !partyDetails?.mobileNumer || !partyDetails?.rate || !partyDetails?.length){
 			return true;
 		}
 		else{
@@ -28,30 +38,74 @@ const AddPartyWorkDetails = (props)=>{
 		}
 	}
 
-	const onchangeSalary = (enteredText)=>{
-		const regularExpression = /^[0-9]+$/;
-		if(regularExpression.test(enteredText) || enteredText === ''){
-			setSalary(enteredText);
+	const setFirstName = useCallback((enteredText)=>{
+		setPartyDetails({...partyDetails, firstName:enteredText});
+	}, [partyDetails.firstName]);
+
+	const setLastName = useCallback((enteredText)=>{
+		setPartyDetails({...partyDetails, lastName:enteredText});
+	}, [partyDetails.setLastName]);
+
+	const onChangeMobileNumber = useCallback((enteredText)=>{
+		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+			setPartyDetails({...partyDetails, mobileNumber:enteredText});
 		}
 		else{
 			null
 		}
-	}
+	}, [partyDetails.mobileNumer]);
+
+	const setEmail = useCallback((enteredText)=>{
+		setPartyDetails({...partyDetails, email:enteredText});
+	}, [partyDetails.email]);
+
+	const setWorkType = useCallback((enteredText)=>{
+		setPartyDetails({...partyDetails, workType:enteredText});
+	}, [partyDetails.workType]);
+
+	const setRate = useCallback((enteredText)=>{
+		setPartyDetails({...partyDetails, rate:enteredText});
+	}, [partyDetails.rate]);
+
+	const setLength = useCallback((enteredText)=>{
+		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+			setPartyDetails({...partyDetails, length:enteredText});
+		}
+		else{
+			null
+		}
+	}, [partyDetails.length]);
+
+	const setWidth = useCallback((enteredText)=>{
+		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+			setPartyDetails({...partyDetails, width:enteredText});
+		}
+		else{
+			null
+		}
+	}, [partyDetails.width]);
+
+	const setHeight = useCallback((enteredText)=>{
+		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+			setPartyDetails({...partyDetails, height:enteredText});
+		}
+		else{
+			null
+		}
+	}, [partyDetails.height]);
+
+	const setDiscount = useCallback((enteredText)=>{
+		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+			setPartyDetails({...partyDetails, discount:enteredText});
+		}
+		else{
+			null
+		}
+	}, [partyDetails.height]);
 
 	const onPressSave = useCallback(()=>{
 		const {navigation} = props;
-		dispatchRefrence(addEmployeeData({employeeInfromation:{
-			firstName,	// Since if we want to use same name of key we can use like this {name}
-			lastName,
-			jobTitle,
-			salary,
-			email,
-		}}));		// Passed data will be in payload
-		setFirstName('');
-		setLastName('');
-		setMobileNumber('');
-		setSalary('');
-		setEmail('');
+		dispatchRefrence(addEmployeeData({partyDetails:partyDetails}));		// Passed data will be in payload
 		navigation.goBack();
 	}, []);
 
@@ -63,8 +117,8 @@ const AddPartyWorkDetails = (props)=>{
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterFirstName')}
-					value={firstName}
-					onChangeText={enteredText => setFirstName(enteredText)}
+					value={partyDetails.firstName}
+					onChangeText={setFirstName}
 					maxLength={30}
 					isItRequired={true}
 					inputBoxStyle={styles.inputBoxStyle}
@@ -72,16 +126,16 @@ const AddPartyWorkDetails = (props)=>{
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterLastName')}
-					value={lastName}
-					onChangeText={enteredText => setLastName(enteredText)}
+					value={partyDetails.lastName}
+					onChangeText={setLastName}
 					maxLength={30}
 					inputBoxStyle={styles.inputBoxStyle}
 				/>
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterMobilNumber')}
-					value={mobileNumber}
-					onChangeText={enteredText => setMobileNumber(enteredText)}
+					value={partyDetails.mobileNumber}
+					onChangeText={onChangeMobileNumber}
 					maxLength={10}
 					isItRequired={true}
 					inputBoxStyle={styles.inputBoxStyle}
@@ -90,7 +144,7 @@ const AddPartyWorkDetails = (props)=>{
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterEmail')}
-					value={email}
+					value={partyDetails.email}
 					onChangeText={enteredText => setEmail(enteredText)}
 					keyboardType='email-address'
 					isItRequired={true}
@@ -101,24 +155,23 @@ const AddPartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('workType')}
-						value={email}
-						onChangeText={enteredText => setEmail(enteredText)}
+						value={partyDetails.workType}
+						onChangeText={enteredText => setWorkType(enteredText)}
 						keyboardType='email-address'
 						isItRequired={true}
 						inputBoxStyle={styles.workRateBoxStyle}
 						textInputStyle={styles.workRateInput}
-						maxLength={20}
 					/>
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('workRate')}
-						value={email}
-						onChangeText={enteredText => setEmail(enteredText)}
-						keyboardType='email-address'
+						value={partyDetails.rate}
+						onChangeText={enteredText => setRate(enteredText)}
+						keyboardType='number-pad'
 						isItRequired={true}
 						inputBoxStyle={styles.workRateBoxStyle}
 						textInputStyle={styles.workRateInput}
-						maxLength={20}
+						maxLength={10}
 					/>
 				</View>
 				<Text style={styles.workAreaHeading}>{transRef.t('workArea')}</Text>
@@ -126,8 +179,8 @@ const AddPartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('length')}
-						value={salary}
-						onChangeText={enteredText => onchangeSalary(enteredText)}
+						value={partyDetails.length}
+						onChangeText={enteredText => setLength(enteredText)}
 						keyboardType='number-pad'
 						maxLength={10}
 						isItRequired={true}
@@ -137,8 +190,8 @@ const AddPartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('width')}
-						value={salary}
-						onChangeText={enteredText => onchangeSalary(enteredText)}
+						value={partyDetails.width}
+						onChangeText={enteredText => setWidth(enteredText)}
 						keyboardType='number-pad'
 						maxLength={10}
 						isItRequired={true}
@@ -148,8 +201,8 @@ const AddPartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('height')}
-						value={salary}
-						onChangeText={enteredText => onchangeSalary(enteredText)}
+						value={partyDetails.height}
+						onChangeText={enteredText => setHeight(enteredText)}
 						keyboardType='number-pad'
 						maxLength={10}
 						isItRequired={true}
@@ -161,7 +214,7 @@ const AddPartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('totalArea')}
-						value={salary}
+						value={partyDetails.totalArea}
 						onChangeText={enteredText => onchangeSalary(enteredText)}
 						keyboardType='number-pad'
 						maxLength={10}
@@ -172,7 +225,7 @@ const AddPartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('totalAmount')}
-						value={salary}
+						value={partyDetails.totalAmount}
 						onChangeText={enteredText => onchangeSalary(enteredText)}
 						keyboardType='number-pad'
 						maxLength={10}
@@ -184,8 +237,8 @@ const AddPartyWorkDetails = (props)=>{
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterDiscount')}
-					value={salary}
-					onChangeText={enteredText => onchangeSalary(enteredText)}
+					value={partyDetails.discount}
+					onChangeText={enteredText => setDiscount(enteredText)}
 					keyboardType='number-pad'
 					maxLength={10}
 					isItRequired={true}
