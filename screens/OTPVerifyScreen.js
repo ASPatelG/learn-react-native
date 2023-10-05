@@ -1,6 +1,6 @@
 import {Text, ScrollView, Image} from 'react-native';
 import {useState, useCallback, useMemo} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
 
@@ -19,7 +19,6 @@ export const OTPVerifyScreen = (props)=>{
 
 	const [otp, setOTP] = useState(params.otp);
 	const transRef  = useSelector((state)=>state.transRef);
-	const dispatchrefrence = useDispatch()		// To send the data in store
 	const [focusInputBoxIndex, setfocusInputBoxIndex] = useState(null);
 	// let focusInputBoxIndex = null;
 	const [otpValueArray, setOtpValueArray] = useState(params.otp.toString().split('')); 	// To fill generated otp automatically
