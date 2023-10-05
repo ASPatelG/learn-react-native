@@ -1,5 +1,5 @@
-import {View, Text, SafeAreaView, ScrollView} from 'react-native';
-import {useState, useCallback} from 'react';
+import {View, Text, SafeAreaView, ScrollView, BackHandler} from 'react-native';
+import {useState,  useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 // import {addEmployeeData, changeSelectedLanguage} from '../redux/actions';
@@ -36,21 +36,38 @@ const AddPartyWorkDetails = (props)=>{
 		}
 	}
 
-	const onChangeFirstName = useCallback((enteredText)=>{
+	useEffect(() => {
+		const backAction = () => {
+			const {navigation} = props;
+			navigation.goBack()	// To close the app
+			return true;
+		};
+
+		const backHandler = BackHandler.addEventListener(
+			'hardwareBackPress',
+			backAction,
+		);
+
+		// To remove event on onmount
+		return () => backHandler.remove();
+
+	});
+
+	const onChangeFirstName = (enteredText)=>{
 		setPartyDetails((previous)=>({
 			...previous,
 			firstName:enteredText,
 		}));
-	}, []);
+	}
 
-	const onChangeLastName = useCallback((enteredText)=>{
+	const onChangeLastName = (enteredText)=>{
 		setPartyDetails((previous)=>({
 			...previous,
 			lastName:enteredText,
 		}));
-	}, []);
+	}
 
-	const onChangeMobileNumber = useCallback((enteredText)=>{
+	const onChangeMobileNumber = (enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
 			setPartyDetails((previous)=>({
 				...previous,
@@ -60,25 +77,47 @@ const AddPartyWorkDetails = (props)=>{
 		else{
 			null
 		}
-	}, []);
+	}
 
-	const onChangeEmail = useCallback((enteredText)=>{
+	const onChangeEmail = (enteredText)=>{
 		setPartyDetails((previous)=>({
 			...previous,
 			email:enteredText,
 		}));
-	}, []);
+	}
 
-	const onChangeWorkType = useCallback((enteredText)=>{
+	const onChangeWorkType = (enteredText)=>{
 		setPartyDetails((previous)=>({
 			...previous,
 			workType:enteredText,
 		}));
-	}, []);
+	}
 
-	const onChangeRate = useCallback((enteredText)=>{
+	const calculateTotalAmount = (totalArea=1, rate=1)=>{
+		totalArea = Number(totalArea);	// because it's possible string value
+		rate = Number(rate);
+		let calculatedTotalAmount = totalArea * rate;
+		//	To round the value
+		calculatedTotalAmount = Math.round(calculatedTotalAmount*100)/100;
+		return calculatedTotalAmount;
+	}
+
+	const calculateTotalArea = (length=1, width=1, height=1)=>{
+		length = Number(length);	// because it's possible string value
+		width = Number(width);
+		height = Number(height);
+		if(!height){	// Since height is optional
+			height = 1;
+		}
+		let calculatedTotalArea = length * width * height;
+		//	To round the value
+		calculatedTotalArea = Math.round(calculatedTotalArea*100)/100;
+		return calculatedTotalArea;
+	}
+
+	const onChangeRate = (enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-			const calculatedTotalAmount = Number(partyDetails.totalArea) * Number(enteredText);
+			const calculatedTotalAmount = calculateTotalAmount(partyDetails.totalArea, enteredText);
 			setPartyDetails((previous)=>({
 				...previous,
 				rate:enteredText,
@@ -88,18 +127,12 @@ const AddPartyWorkDetails = (props)=>{
 		else{
 			null
 		}
-	}, []);
+	}
 
-	const onChangeLength = useCallback((enteredText)=>{
+	const onChangeLength = (enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-			let height = Number(partyDetails.height);
-
-			if(height <= 0 || height === ''){
-				height = 1;
-			}
-
-			const calculatedTotalArea = Number(enteredText) * Number(partyDetails.width) * height;
-			const calculatedTotalAmount = calculatedTotalArea * Number(partyDetails.rate);
+			const calculatedTotalArea = calculateTotalArea(enteredText, partyDetails.width, partyDetails.height);
+			const calculatedTotalAmount = calculateTotalAmount(calculatedTotalArea, partyDetails.rate);
 			setPartyDetails((previous)=>({
 				...previous,
 				totalArea:calculatedTotalArea,
@@ -110,19 +143,12 @@ const AddPartyWorkDetails = (props)=>{
 		else{
 			null
 		}
-	}, []);
+	}
 
-	const onChangeWidth = useCallback((enteredText)=>{
+	const onChangeWidth = (enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-
-			let height = Number(partyDetails.height);
-
-			if(height <= 0 || height === ''){
-				height = 1;
-			}
-
-			const calculatedTotalArea = Number(enteredText) * Number(partyDetails.length) * height;
-			const calculatedTotalAmount = calculatedTotalArea * Number(partyDetails.rate);
+			const calculatedTotalArea = calculateTotalArea(partyDetails.length, enteredText, partyDetails.height);
+			const calculatedTotalAmount = calculateTotalAmount(calculatedTotalArea, partyDetails.rate);
 			setPartyDetails((previous)=>({
 				...previous,
 				totalArea:calculatedTotalArea,
@@ -133,18 +159,12 @@ const AddPartyWorkDetails = (props)=>{
 		else{
 			null
 		}
-	}, []);
+	}
 
-	const onChangeHeight = useCallback((enteredText)=>{
+	const onChangeHeight = (enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-			let height = Number(enteredText);
-
-			if(height <= 0 || height === ''){
-				height = 1;
-			}
-
-			const calculatedTotalArea = height * Number(partyDetails.width) * Number(partyDetails.length);
-			const calculatedTotalAmount = calculatedTotalArea * Number(partyDetails.rate);
+			const calculatedTotalArea = calculateTotalArea(partyDetails.length, partyDetails.width, enteredText);
+			const calculatedTotalAmount = calculateTotalAmount(calculatedTotalArea, partyDetails.rate);
 			setPartyDetails((previous)=>({
 				...previous,
 				totalArea:calculatedTotalArea,
@@ -155,9 +175,9 @@ const AddPartyWorkDetails = (props)=>{
 		else{
 			null
 		}
-	}, []);
+	}
 
-	const onChangeDiscount = useCallback((enteredText)=>{
+	const onChangeDiscount = (enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
 			setPartyDetails((previous)=>({
 				...previous,
@@ -167,13 +187,13 @@ const AddPartyWorkDetails = (props)=>{
 		else{
 			null
 		}
-	}, []);
+	}
 
-	const onPressSave = useCallback(()=>{
+	const onPressSave = ()=>{
 		const {navigation} = props;
 		dispatchRefrence(addEmployeeData({}));		// Passed data will be in payload
 		navigation.goBack();
-	}, []);
+	}
 
 	return(
 		<SafeAreaView style={styles.mainContainer}>

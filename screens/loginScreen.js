@@ -33,11 +33,10 @@ export const LoginScreen = (props)=>{
 	}
 
 	// useCallback hook used to avoid rerendering of component if not changed props
-	const onPressSubmit = useCallback((nativeEvent)=>{
+	const onPressSubmit = (nativeEvent)=>{
 		const {navigation} = props;
 		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
 			dispatchrefrence(changeLoginUserData({loginUserData:{mobileNumber, userName:constantValues.registeredUserName}}));
-			console.log('mobileNumber: ', mobileNumber);
 			if(showOTPUI){
 				let generatedOTP = generateOTP();
 				console.log('generatedOTP: ', generatedOTP);
@@ -53,7 +52,7 @@ export const LoginScreen = (props)=>{
 		else{
 			crossPlatformToast(transRef.t('notRegistered'));
 		}
-	}, []);
+	}
 
 	return(
 		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
@@ -64,7 +63,7 @@ export const LoginScreen = (props)=>{
 				showFieldLabel={true}
 				fieldLabelText={transRef.t('enterMobilNumber')}
 				value={mobileNumber}
-				onChangeText={enteredText => onchangeMobileNumber(enteredText)}
+				onChangeText={onchangeMobileNumber}
 				keyboardType='number-pad'
 				inputIcon={()=>(<FontAwesome name="mobile-phone" size={24} color="black" />)}
 				maxLength={10}
