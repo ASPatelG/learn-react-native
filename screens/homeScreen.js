@@ -41,7 +41,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 
 	const onPressAddWork = ()=>{
 		const {navigation} = props;
-		navigation.navigate('AddPartyWorkDetails');
+		navigation.navigate('AddUpdatePartyWorkDetails');
 	}
 
 	return(
@@ -64,6 +64,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 						key={index}
 						index={index}
 						partySomeDetails={item}
+						navigation={props.navigation}
 					/>}
 					keyExtractor={(item, index) => index.toString()}
 					keyboardShouldPersistTaps='always'

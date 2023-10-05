@@ -8,11 +8,11 @@ import {useSelector} from 'react-redux';
 const PartiesWorkTableHeader = (props)=>{
 	const transRef  = useSelector((state)=>state.transRef);
 	return(
-		<View style={styles.employeeDetailsContainer}>
-			<Text>{transRef.t('partyName')}</Text>
-			<Text style={styles.eployeeNameStyle}>{transRef.t('mobile')}</Text>
-			<Text>{transRef.t('amount')}</Text>
-			<Text>{transRef.t('workType')}</Text>
+		<View style={styles.tableHeadingContainer}>
+			<Text style={styles.headingTextStyle}>{transRef.t('partyName')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('mobile')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('amount')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('workType')}</Text>
 		</View>
 	);
 }
@@ -20,44 +20,22 @@ const PartiesWorkTableHeader = (props)=>{
 export default memo(PartiesWorkTableHeader);
 
 const styles = StyleSheet.create({
-	leftAvtarStyle:{
-		backgroundColor:'#B3B3B3',
-		borderRadius:25,
-		padding:15,
-	},
-	oneCharacterLeftAvtar:{
-		backgroundColor:'#B3B3B3',
-		borderRadius:25,
-		paddingVertical:15,
-		paddingHorizontal:20,
-	},
-	employeeDetailsContainer:{
-		width:wp('97%'),
+	tableHeadingContainer:{
+		width:wp('100%'),
 		flexDirection:'row',
-		paddingVertical:10,
-		paddingHorizontal:15,
 		alignItems:'center',
-		borderWidth:0.3,
+		borderWidth:0.9,
 		borderColor:'#D1D1D1',
 		justifyContent:'space-between',
 		alignSelf:'center',
-		elevation:3,
-		borderRadius:15,
-		marginTop:10,
+		marginTop:8,
 	},
-	leftContainer:{
-		flexDirection:'row',
-		width:wp('65%'),
+	headingTextStyle:{
+		width:wp('25%'),
+		paddingVertical:15,
+		paddingHorizontal:3,
+		borderLeftColor:'#d3d3d3',
+		borderLeftWidth:1,
+		textAlign:'center',
 	},
-	eployeeDetails:{
-		marginLeft:10,
-		paddingVertical:10,
-	},
-	eployeeNameStyle:{
-		fontSize:20,
-		fontWeight:'bold',
-		color:'#00CF35',
-		marginBottom:11,
-		width:wp('62%'),
-	}
 });
