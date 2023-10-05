@@ -1,5 +1,5 @@
 import {Text, ScrollView, Image} from 'react-native';
-import {useState} from 'react';
+import {useState, useCallback, useMemo} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
@@ -57,7 +57,7 @@ export const OTPVerifyScreen = (props)=>{
 	}
 
 
-	function onPressVerify(nativeEvent){
+	const onPressVerify = useCallback((nativeEvent)=>{
 		const {navigation} = props;
 		const enteredOTP = otpValueArray.join('');
 		if(otp === enteredOTP){
@@ -67,11 +67,12 @@ export const OTPVerifyScreen = (props)=>{
 		else{
 			crossPlatformToast(transRef.t('wrongOTP'));
 		}
-	}
+	}, []);
 
 	const disableVerifyButton = ()=> {
-		return otpValueArray.some(item => item === '');
-	}
+		let disableButton = otpValueArray.some(item => item === '');
+		return disableButton
+	};
 
 	return(
 		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>

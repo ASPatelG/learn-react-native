@@ -1,11 +1,11 @@
 import {Text, ScrollView, Image} from 'react-native';
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
 
 import {constantValues} from '../staticDataFiles/constantValues';
-import {TextInputComponent} from '../components/textInputComponent';
+import TextInputComponent from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
@@ -32,7 +32,8 @@ export const LoginScreen = (props)=>{
 		}
 	}
 
-	function onPressSubmit(nativeEvent){
+	// useCallback hook used to avoid rerendering of component if not changed props
+	const onPressSubmit = (nativeEvent)=>{
 		const {navigation} = props;
 		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
 			dispatchrefrence(changeLoginUserData({loginUserData:{mobileNumber, userName:constantValues.registeredUserName}}));
@@ -62,7 +63,7 @@ export const LoginScreen = (props)=>{
 				showFieldLabel={true}
 				fieldLabelText={transRef.t('enterMobilNumber')}
 				value={mobileNumber}
-				onChangeText={enteredText => onchangeMobileNumber(enteredText)}
+				onChangeText={onchangeMobileNumber}
 				keyboardType='number-pad'
 				inputIcon={()=>(<FontAwesome name="mobile-phone" size={24} color="black" />)}
 				maxLength={10}

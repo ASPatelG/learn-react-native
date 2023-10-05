@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, memo} from 'react';
 import {Text, View, StyleSheet, TextInput} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -6,15 +6,15 @@ import {translationValues} from '../staticDataFiles/translationValues';
 const {hi:{ enterMobilNumber}} = translationValues;
 
 
-export const TextInputComponent = (props)=> {
+const TextInputComponent = (props)=> {
 	/* Used to show ui till the app is loading */
-	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText, inputIcon, ...restProps} = props;
+	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText, inputIcon, inputBoxStyle, textInputStyle, isItRequired, ...restProps} = props;
 
 	return(
-		<View style={styles.inputBoxStyle}>
+		<View style={inputBoxStyle}>
 			{/* To show the text input */}
 			{ showFieldLabel
-				?<Text style={styles.inputFieldLabel}>{fieldLabelText}</Text>
+				?<Text style={styles.inputFieldLabel}>{fieldLabelText}<Text style={styles.requiredIconStyle}>{isItRequired ?'*' :null}</Text></Text>
 				: null
 			}
 			<View style={{flexdirectiono:'row'}}>
@@ -23,16 +23,18 @@ export const TextInputComponent = (props)=> {
 					: null
 				}*/}
 				<TextInput
-					style={styles.textInputStyle}
+					style={textInputStyle}
 					value={value}
 					maxLength={maxLength}
 					{...restProps}	// To remaingin props
-					onChangeText={(enteredText)=> onChangeText(enteredText)}
+					onChangeText={onChangeText}
 				/>
 			</View>
 		</View>
 	);
 }
+
+export default memo(TextInputComponent);
 
 const styles = StyleSheet.create({
 	textInputStyle:{
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
 	},
 	inputBoxStyle:{
 		borderRadius:5,
-		bordrColor:'D3D3D3',
+		borderColor:'#D3D3D3',
 		borderWidth:1,
 		width:wp('90%'),
 		alignSelf:'center',
@@ -62,10 +64,18 @@ const styles = StyleSheet.create({
 		paddingHorizontal:5,
 		backgroundColor:'#ffffff',
 	},
+	requiredIconStyle:{
+		fontWeight:'bold',
+		color:'red',
+		fontSize:15
+	},
 });
 
 
 TextInputComponent.defaultProps = {
 	maxLength:20,
-	fieldLabelText:'Enter Value'
+	fieldLabelText:'Enter Value',
+	inputBoxStyle:styles.inputBoxStyle,
+	textInputStyle:styles.textInputStyle,
+	requiredIconStyle:styles.requiredIconStyle,
 }
