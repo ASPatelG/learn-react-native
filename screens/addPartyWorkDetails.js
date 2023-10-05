@@ -2,11 +2,10 @@ import {View, Text, SafeAreaView, ScrollView, BackHandler} from 'react-native';
 import {useState,  useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-// import {addEmployeeData, changeSelectedLanguage} from '../redux/actions';
-
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
+import {addPartyDetails} from '../learnRedux/actions';
 
 import {styles} from './screens.styles/addPartyDetailsStyle';
 
@@ -191,7 +190,7 @@ const AddPartyWorkDetails = (props)=>{
 
 	const onPressSave = ()=>{
 		const {navigation} = props;
-		dispatchRefrence(addEmployeeData({}));		// Passed data will be in payload
+		dispatchRefrence(addPartyDetails({partyData:partyDetails}));
 		navigation.goBack();
 	}
 

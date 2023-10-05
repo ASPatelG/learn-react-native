@@ -39,6 +39,9 @@ export const translationValues = {
 		workType:'Work Type',
 		totalArea:'Total Area',
 		totalAmount:'Total Amount',
+		amount:'Amount',
+		partyName:'Party Name',
+		mobile:'Mobile',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',

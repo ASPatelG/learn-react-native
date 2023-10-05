@@ -1,4 +1,9 @@
-import {addGivenValue, changeLanguage, saveLoginUserData} from './actionsType';
+import {
+	addGivenValue,
+	changeLanguage,
+	saveLoginUserData,
+	addParty
+} from './actionsType';
 
 /* File to map the action and data */
 
@@ -19,5 +24,10 @@ export const changeLoginUserData = (data)=>({
 
 export const changeWorkType = (data)=>({
 	type:changeWorkType,
+	payload:data
+});
+
+export const addPartyDetails = (data)=>({
+	type:addParty,
 	payload:data
 });

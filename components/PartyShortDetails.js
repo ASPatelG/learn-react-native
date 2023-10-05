@@ -1,10 +1,11 @@
+import {memo} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Entypo } from '@expo/vector-icons';
 import {useDispatch} from 'react-redux';
 // import { markEmployeeAsStar} from '../redux/actions';
 
-export const PartyShortDetails = (props)=>{
+const PartyShortDetails = (props)=>{
 	const dispatchRefrence = useDispatch()		// To send the data in store
 	const {partySomeDetails, index}  = props;
 	const onPressStar = (isStarEmployee, index)=>{
@@ -16,23 +17,25 @@ export const PartyShortDetails = (props)=>{
 
 	return(
 		<View style={styles.employeeDetailsContainer}>
-			<View style={employeeSomeDetails?.lastName ?styles.leftAvtarStyle :styles.oneCharacterLeftAvtar}>
-				<Text>{employeeSomeDetails?.firstName?.charAt(0)}{employeeSomeDetails?.lastName?.charAt(0)}</Text>
+			<View style={partySomeDetails?.lastName ?styles.leftAvtarStyle :styles.oneCharacterLeftAvtar}>
+				<Text>{partySomeDetails?.firstName?.charAt(0)}{partySomeDetails?.lastName?.charAt(0)}</Text>
 			</View>
 			<View style={styles.leftContainer}>
 				<View style={styles.eployeeDetails}>
-					<Text style={styles.eployeeNameStyle}>{employeeSomeDetails?.firstName} {employeeSomeDetails?.lastName}</Text>
-					<Text>{employeeSomeDetails?.jobTitle}</Text>
+					<Text style={styles.eployeeNameStyle}>{partySomeDetails?.firstName} {partySomeDetails?.lastName}</Text>
+					<Text>{partySomeDetails?.jobTitle}</Text>
 				</View>
 			</View>
 			<Pressable
-				onPressIn={(nativeEvent)=>onPressStar(employeeSomeDetails.isStarEmployee, index)}
+				onPressIn={(nativeEvent)=>onPressStar(partySomeDetails.isStarEmployee, index)}
 			>
-				<Entypo name={employeeSomeDetails.isStarEmployee === true ?'star' :"star-outlined"} size={45} color={employeeSomeDetails.isStarEmployee === true ?"#F5EC42" :"#808080"} />
+				<Entypo name={partySomeDetails.isStarEmployee === true ?'star' :"star-outlined"} size={45} color={partySomeDetails.isStarEmployee === true ?"#F5EC42" :"#808080"} />
 			</Pressable>
 		</View>
 	);
 }
+
+export default memo(PartyShortDetails);
 
 const styles = StyleSheet.create({
 	leftAvtarStyle:{

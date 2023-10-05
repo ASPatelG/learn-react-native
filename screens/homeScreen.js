@@ -4,17 +4,19 @@ import {useSelector} from 'react-redux';
 import {dataStore} from '../learnRedux/dataStore';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import DropdownPickerComponent from '../components/dropdownPickerComponent';
+import ButtonComponent from '../components/buttonComponent';
+import PartyShortDetails from '../components/PartyShortDetails';
 import {UserShortDetails} from '../components/userShortDetails';
+import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
+
 import {styles} from './screens.styles/homeScreenStyles';
 import {constantValues} from '../staticDataFiles/constantValues';
-import ButtonComponent from '../components/buttonComponent';
-
 
 const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */
 
 	const [workType, setPartyType] = useState(constantValues.workTypes[0].value);
-	const [allPartiesWorkArray, setAllPartiesWorkArray] = useState([]);
+	const allPartiesWorkArray = useSelector((state)=>state.partyDetails);
 	const transRef  = useSelector((state)=>state.transRef);
 
 	onchanDropDownValue = (itemKey, itemValue)=>{
@@ -58,13 +60,14 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			{allPartiesWorkArray.length
 				? <FlatList 
 					data={allPartiesWorkArray} 
-					renderItem={({item, index})=> <PartyWorkShortDetails
+					renderItem={({item, index})=> <PartyShortDetails
 						key={index}
 						index={index}
-						employeeSomeDetails={item}
+						partySomeDetails={item}
 					/>}
 					keyExtractor={(item, index) => index.toString()}
 					keyboardShouldPersistTaps='always'
+					ListHeaderComponent={<PartiesWorkTableHeader/>}
 				/>
 				: null
 			}
