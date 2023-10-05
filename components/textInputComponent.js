@@ -8,15 +8,15 @@ const {hi:{ enterMobilNumber}} = translationValues;
 
 const TextInputComponent = (props)=> {
 	/* Used to show ui till the app is loading */
-	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText, inputIcon, inputBoxStyle, textInputStyle, ...restProps} = props;
+	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText, inputIcon, inputBoxStyle, textInputStyle, isItRequired, ...restProps} = props;
 
 	return(
 		<View style={inputBoxStyle}>
 			{/* To show the text input */}
 			{ showFieldLabel
-				?<Text style={styles.inputFieldLabel}>{fieldLabelText}</Text>
+				?<Text style={styles.inputFieldLabel}>{fieldLabelText}<Text style={styles.requiredIconStyle}>{isItRequired ?'*' :null}</Text></Text>
 				: null
-			}{console.log('textInputconponent called')}
+			}
 			<View style={{flexdirectiono:'row'}}>
 				{/*{inputIcon
 					? <inputIcon/>
@@ -64,6 +64,11 @@ const styles = StyleSheet.create({
 		paddingHorizontal:5,
 		backgroundColor:'#ffffff',
 	},
+	requiredIconStyle:{
+		fontWeight:'bold',
+		color:'red',
+		fontSize:15
+	},
 });
 
 
@@ -72,4 +77,5 @@ TextInputComponent.defaultProps = {
 	fieldLabelText:'Enter Value',
 	inputBoxStyle:styles.inputBoxStyle,
 	textInputStyle:styles.textInputStyle,
+	requiredIconStyle:styles.requiredIconStyle,
 }

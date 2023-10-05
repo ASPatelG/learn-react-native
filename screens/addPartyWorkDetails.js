@@ -19,18 +19,16 @@ const AddPartyWorkDetails = (props)=>{
 		mobileNumber:'',
 		email:'',
 		workType:'wall',
-		rate:'',
-		length:'',
+		rate:'', length:'',
 		width:'',
 		height:'',
 		totalArea:'',
 		totalAmount:'',
-		discount:'',
+		discount:''
 	});
 	const regularExpressionOnlyDigit = /^[0-9]+$/;
-	console.log('partyDetails:::::::::::::::::::::::');
 	const disableSave = ()=>{
-		if(!partyDetails?.firstName?.length || !partyDetails?.mobileNumer || !partyDetails?.rate || !partyDetails?.length){
+		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || !partyDetails.rate || !partyDetails.length){
 			return true;
 		}
 		else{
@@ -38,74 +36,142 @@ const AddPartyWorkDetails = (props)=>{
 		}
 	}
 
-	const setFirstName = useCallback((enteredText)=>{
-		setPartyDetails({...partyDetails, firstName:enteredText});
-	}, [partyDetails.firstName]);
+	const onChangeFirstName = useCallback((enteredText)=>{
+		setPartyDetails((previous)=>({
+			...previous,
+			firstName:enteredText,
+		}));
+	}, []);
 
-	const setLastName = useCallback((enteredText)=>{
-		setPartyDetails({...partyDetails, lastName:enteredText});
-	}, [partyDetails.setLastName]);
+	const onChangeLastName = useCallback((enteredText)=>{
+		setPartyDetails((previous)=>({
+			...previous,
+			lastName:enteredText,
+		}));
+	}, []);
 
 	const onChangeMobileNumber = useCallback((enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-			setPartyDetails({...partyDetails, mobileNumber:enteredText});
+			setPartyDetails((previous)=>({
+				...previous,
+				mobileNumber:enteredText,
+			}));
 		}
 		else{
 			null
 		}
-	}, [partyDetails.mobileNumer]);
+	}, []);
 
-	const setEmail = useCallback((enteredText)=>{
-		setPartyDetails({...partyDetails, email:enteredText});
-	}, [partyDetails.email]);
+	const onChangeEmail = useCallback((enteredText)=>{
+		setPartyDetails((previous)=>({
+			...previous,
+			email:enteredText,
+		}));
+	}, []);
 
-	const setWorkType = useCallback((enteredText)=>{
-		setPartyDetails({...partyDetails, workType:enteredText});
-	}, [partyDetails.workType]);
+	const onChangeWorkType = useCallback((enteredText)=>{
+		setPartyDetails((previous)=>({
+			...previous,
+			workType:enteredText,
+		}));
+	}, []);
 
-	const setRate = useCallback((enteredText)=>{
-		setPartyDetails({...partyDetails, rate:enteredText});
-	}, [partyDetails.rate]);
-
-	const setLength = useCallback((enteredText)=>{
+	const onChangeRate = useCallback((enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-			setPartyDetails({...partyDetails, length:enteredText});
+			const calculatedTotalAmount = Number(partyDetails.totalArea) * Number(enteredText);
+			setPartyDetails((previous)=>({
+				...previous,
+				rate:enteredText,
+				totalAmount:calculatedTotalAmount,
+			}));
 		}
 		else{
 			null
 		}
-	}, [partyDetails.length]);
+	}, []);
 
-	const setWidth = useCallback((enteredText)=>{
+	const onChangeLength = useCallback((enteredText)=>{
 		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-			setPartyDetails({...partyDetails, width:enteredText});
-		}
-		else{
-			null
-		}
-	}, [partyDetails.width]);
+			let height = Number(partyDetails.height);
 
-	const setHeight = useCallback((enteredText)=>{
-		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-			setPartyDetails({...partyDetails, height:enteredText});
-		}
-		else{
-			null
-		}
-	}, [partyDetails.height]);
+			if(height <= 0 || height === ''){
+				height = 1;
+			}
 
-	const setDiscount = useCallback((enteredText)=>{
-		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
-			setPartyDetails({...partyDetails, discount:enteredText});
+			const calculatedTotalArea = Number(enteredText) * Number(partyDetails.width) * height;
+			const calculatedTotalAmount = calculatedTotalArea * Number(partyDetails.rate);
+			setPartyDetails((previous)=>({
+				...previous,
+				totalArea:calculatedTotalArea,
+				totalAmount:calculatedTotalAmount,
+				length:enteredText
+			}));
 		}
 		else{
 			null
 		}
-	}, [partyDetails.height]);
+	}, []);
+
+	const onChangeWidth = useCallback((enteredText)=>{
+		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+
+			let height = Number(partyDetails.height);
+
+			if(height <= 0 || height === ''){
+				height = 1;
+			}
+
+			const calculatedTotalArea = Number(enteredText) * Number(partyDetails.length) * height;
+			const calculatedTotalAmount = calculatedTotalArea * Number(partyDetails.rate);
+			setPartyDetails((previous)=>({
+				...previous,
+				totalArea:calculatedTotalArea,
+				totalAmount:calculatedTotalAmount,
+				width:enteredText
+			}));
+		}
+		else{
+			null
+		}
+	}, []);
+
+	const onChangeHeight = useCallback((enteredText)=>{
+		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+			let height = Number(enteredText);
+
+			if(height <= 0 || height === ''){
+				height = 1;
+			}
+
+			const calculatedTotalArea = height * Number(partyDetails.width) * Number(partyDetails.length);
+			const calculatedTotalAmount = calculatedTotalArea * Number(partyDetails.rate);
+			setPartyDetails((previous)=>({
+				...previous,
+				totalArea:calculatedTotalArea,
+				totalAmount:calculatedTotalAmount,
+				height:enteredText
+			}));
+		}
+		else{
+			null
+		}
+	}, []);
+
+	const onChangeDiscount = useCallback((enteredText)=>{
+		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+			setPartyDetails((previous)=>({
+				...previous,
+				discount:enteredText
+			}));
+		}
+		else{
+			null
+		}
+	}, []);
 
 	const onPressSave = useCallback(()=>{
 		const {navigation} = props;
-		dispatchRefrence(addEmployeeData({partyDetails:partyDetails}));		// Passed data will be in payload
+		dispatchRefrence(addEmployeeData({}));		// Passed data will be in payload
 		navigation.goBack();
 	}, []);
 
@@ -118,7 +184,7 @@ const AddPartyWorkDetails = (props)=>{
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterFirstName')}
 					value={partyDetails.firstName}
-					onChangeText={setFirstName}
+					onChangeText={onChangeFirstName}
 					maxLength={30}
 					isItRequired={true}
 					inputBoxStyle={styles.inputBoxStyle}
@@ -127,7 +193,7 @@ const AddPartyWorkDetails = (props)=>{
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterLastName')}
 					value={partyDetails.lastName}
-					onChangeText={setLastName}
+					onChangeText={onChangeLastName}
 					maxLength={30}
 					inputBoxStyle={styles.inputBoxStyle}
 				/>
@@ -145,9 +211,8 @@ const AddPartyWorkDetails = (props)=>{
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterEmail')}
 					value={partyDetails.email}
-					onChangeText={enteredText => setEmail(enteredText)}
+					onChangeText={onChangeEmail}
 					keyboardType='email-address'
-					isItRequired={true}
 					inputBoxStyle={styles.inputBoxStyle}
 					maxLength={80}
 				/>
@@ -156,8 +221,7 @@ const AddPartyWorkDetails = (props)=>{
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('workType')}
 						value={partyDetails.workType}
-						onChangeText={enteredText => setWorkType(enteredText)}
-						keyboardType='email-address'
+						onChangeText={onChangeWorkType}
 						isItRequired={true}
 						inputBoxStyle={styles.workRateBoxStyle}
 						textInputStyle={styles.workRateInput}
@@ -166,13 +230,13 @@ const AddPartyWorkDetails = (props)=>{
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('workRate')}
 						value={partyDetails.rate}
-						onChangeText={enteredText => setRate(enteredText)}
+						onChangeText={onChangeRate}
 						keyboardType='number-pad'
 						isItRequired={true}
 						inputBoxStyle={styles.workRateBoxStyle}
 						textInputStyle={styles.workRateInput}
 						maxLength={10}
-					/>
+                   />
 				</View>
 				<Text style={styles.workAreaHeading}>{transRef.t('workArea')}</Text>
 				<View style={styles.workAreaDetails}>
@@ -180,7 +244,7 @@ const AddPartyWorkDetails = (props)=>{
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('length')}
 						value={partyDetails.length}
-						onChangeText={enteredText => setLength(enteredText)}
+						onChangeText={onChangeLength}
 						keyboardType='number-pad'
 						maxLength={10}
 						isItRequired={true}
@@ -191,7 +255,7 @@ const AddPartyWorkDetails = (props)=>{
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('width')}
 						value={partyDetails.width}
-						onChangeText={enteredText => setWidth(enteredText)}
+						onChangeText={onChangeWidth}
 						keyboardType='number-pad'
 						maxLength={10}
 						isItRequired={true}
@@ -202,10 +266,9 @@ const AddPartyWorkDetails = (props)=>{
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('height')}
 						value={partyDetails.height}
-						onChangeText={enteredText => setHeight(enteredText)}
+						onChangeText={onChangeHeight}
 						keyboardType='number-pad'
 						maxLength={10}
-						isItRequired={true}
 						textInputStyle={styles.workAreaInput}
 						inputBoxStyle={styles.workAreaInputBox}
 					/>
@@ -214,34 +277,35 @@ const AddPartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('totalArea')}
-						value={partyDetails.totalArea}
-						onChangeText={enteredText => onchangeSalary(enteredText)}
+						value={partyDetails.totalArea.toString()}
+						// onChangeText={onChangeHeight}
 						keyboardType='number-pad'
 						maxLength={10}
 						isItRequired={true}
 						textInputStyle={styles.totalValueInput}
 						inputBoxStyle={styles.totalValueBox}
-					/>
-					<TextInputComponent
+						editable={false}
+                   />
+                   <TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('totalAmount')}
-						value={partyDetails.totalAmount}
-						onChangeText={enteredText => onchangeSalary(enteredText)}
+						value={partyDetails.totalAmount.toString()}
+						// onChangeText={onChangeHeight}
 						keyboardType='number-pad'
 						maxLength={10}
 						isItRequired={true}
 						textInputStyle={styles.totalValueInput}
 						inputBoxStyle={styles.totalValueBox}
-					/>
+						editable={false}  
+                    />
 				</View>
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterDiscount')}
 					value={partyDetails.discount}
-					onChangeText={enteredText => setDiscount(enteredText)}
+					onChangeText={onChangeDiscount}
 					keyboardType='number-pad'
 					maxLength={10}
-					isItRequired={true}
 					inputBoxStyle={styles.inputBoxStyle}
 				/>
 			</ScrollView>
