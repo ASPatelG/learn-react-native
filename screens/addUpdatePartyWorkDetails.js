@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
-import {addPartyDetails} from '../learnRedux/actions';
+import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
 
 import {styles} from './screens.styles/addPartyDetailsStyle';
 
@@ -38,9 +38,8 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	}
 
 	useEffect(() => {
-		if(params){
+		if(params){		// To set data according to party details
 			const {partySomeDetails}  = params;
-			console.log('partySomeDetails after get from params: ', partySomeDetails);
 			const {discount, email, firstName, height, lastName, length, mobileNumber, rate, amount, totalArea, width, workType} = partySomeDetails;
 			setPartyDetails(previous=>({...previous, discount, email, firstName, height, lastName, length, mobileNumber, rate, amount, totalArea, width, workType}));
 		}
@@ -203,6 +202,13 @@ const AddUpdatePartyWorkDetails = (props)=>{
 		navigation.goBack();
 	}
 
+	const onPressUpdate = ()=>{
+		console.log('params activeIndex: ', params.activeIndex);
+		const {navigation} = props;
+		dispatchRefrence(updatePartyDetails({partyData:partyDetails, activeIndex:params.activeIndex}));
+		navigation.goBack();
+	}
+
 	return(
 		<SafeAreaView style={styles.mainContainer}>
 			<CommonHeaderComponent/>
@@ -339,7 +345,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 			</ScrollView>
 			<ButtonComponent
 				title={transRef.t(params ?'update' :'save')}
-				onPressIn={onPressSave}
+				onPressIn={params ?onPressUpdate :onPressSave}
 				disabled={disableSave()}
 			/>
 		</SafeAreaView>

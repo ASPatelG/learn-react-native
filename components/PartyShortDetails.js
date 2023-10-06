@@ -11,7 +11,7 @@ const PartyShortDetails = (props)=>{
 
 	const onPress = (partySomeDetails, index)=>{
 		const {navigation} = props;
-		navigation.navigate('AddUpdatePartyWorkDetails', {partySomeDetails});
+		navigation.navigate('AddUpdatePartyWorkDetails', {partySomeDetails, activeIndex:index});
 	}
 
 	return(
