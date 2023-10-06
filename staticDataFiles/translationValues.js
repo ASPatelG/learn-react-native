@@ -42,6 +42,7 @@ export const translationValues = {
 		amount:'Amount',
 		partyName:'Party Name',
 		mobile:'Mobile',
+		update:'Update',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
