@@ -1,9 +1,7 @@
 import {memo} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-// import { Entypo } from '@expo/vector-icons';
 import {useSelector} from 'react-redux';
-// import { markEmployeeAsStar} from '../redux/actions';
 
 const PartiesWorkTableHeader = (props)=>{
 	const transRef  = useSelector((state)=>state.transRef);

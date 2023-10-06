@@ -11,7 +11,7 @@ const PartyShortDetails = (props)=>{
 
 	const onPress = (partySomeDetails, index)=>{
 		const {navigation} = props;
-		navigation.navigate('AddUpdatePartyWorkDetails', {partySomeDetails});
+		navigation.navigate('AddUpdatePartyWorkDetails', {partySomeDetails, activeIndex:index});
 	}
 
 	return(
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal:3,
 		width:wp('25.07%'),
 		// alignItems:'center',
-		height:hp('12%'),
+		// height:hp('12%'),
 		borderLeftWidth:1,
 		borderLeftColor:'#B3B3B3',
 		flexDirection:'row',
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
 	partySomeDetailsContainer:{
 		width:wp('100%'),
 		flexDirection:'row',
-		alignItems:'center',
 		justifyContent:'space-between',
 		alignSelf:'center',
 		borderBottomWidth:1,
