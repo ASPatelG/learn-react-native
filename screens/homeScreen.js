@@ -1,6 +1,9 @@
 import {useState, useEffect} from 'react';
-import {View, BackHandler, FlatList} from 'react-native';
+import {View, BackHandler, FlatList, Pressable} from 'react-native';
 import {useSelector} from 'react-redux';
+
+import { FontAwesome5 } from '@expo/vector-icons';
+
 import {dataStore} from '../learnRedux/dataStore';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import DropdownPickerComponent from '../components/dropdownPickerComponent';
@@ -8,9 +11,12 @@ import ButtonComponent from '../components/buttonComponent';
 import PartyShortDetails from '../components/PartyShortDetails';
 import {UserShortDetails} from '../components/userShortDetails';
 import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
+import {showErrorAlert} from '../components/showErrorAlert';
 
 import {styles} from './screens.styles/homeScreenStyles';
 import {constantValues} from '../staticDataFiles/constantValues';
+
+import {generateWorkPaymentPDF} from '../javaScriptFunction/generateWorkPaymentPDF';
 
 const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */
@@ -44,18 +50,35 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		navigation.navigate('AddUpdatePartyWorkDetails');
 	}
 
+	const onPressPDF = (nativeEvent)=>{
+		if(allPartiesWorkArray.length > 0){
+			generateWorkPaymentPDF(allPartiesWorkArray);
+		}
+		else{
+			showErrorAlert(transRef.t('noWorkError'));
+		}
+	}
+
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
 			<UserShortDetails/>
-			<View style={styles.dropDownContainer}>
-				<DropdownPickerComponent
-					selectedItemValue={workType}
-					itemList={constantValues.workTypes}
-					onValueChange={onchanDropDownValue}
-					dropdownStyle={null}
-					showTranslatedLabel={true}
-				/>
+			<View style={styles.screenChangeContent}>
+				<View style={styles.dropDownContainer}>
+					<DropdownPickerComponent
+						selectedItemValue={workType}
+						itemList={constantValues.workTypes}
+						onValueChange={onchanDropDownValue}
+						dropdownStyle={styles.dropdownStyle}
+						showTranslatedLabel={true}
+					/>
+				</View>
+				<Pressable
+					onPressIn={onPressPDF}
+					style={styles.downloadIconContainer}
+				>
+					<FontAwesome5 name="file-download" size={45} color="#F5EC42"/>
+				</Pressable>
 			</View>
 			{allPartiesWorkArray.length
 				? <FlatList 
@@ -75,6 +98,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			<ButtonComponent
 				title={transRef.t('addPartyWork')}
 				onPressIn={onPressAddWork}
+				mainContainer={styles.mainContainer}
 			/>
 		</View>
 	);

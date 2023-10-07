@@ -26,7 +26,7 @@ function AppMainStack (){
 		<NavigationContainer>
 			<Provider store={dataStore}>
 				<ApploadingStack.Navigator
-					initialRouteName='ChooseWork'
+					initialRouteName='LoginScreen'	// To programing practise set ChooseWork
 				>
 					<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
 					<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>

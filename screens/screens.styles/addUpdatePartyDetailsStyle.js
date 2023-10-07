@@ -82,6 +82,7 @@ export const styles = StyleSheet.create({
 		alignSelf:'center',
 		alignItems:'flex-start',
 		marginTop:30,
+		backgroundColor:'#EDF7F7',
 	},
 	totalValueInput:{
 		paddingLeft:15,
@@ -93,5 +94,8 @@ export const styles = StyleSheet.create({
 		fontWeight:'bold',
 		fontSize:18,
 		color:'#808080',
-	}
+	},
+	buttonContainer:{
+		marginVertical:5,
+	},
 });
