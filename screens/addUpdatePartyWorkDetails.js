@@ -203,7 +203,6 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	}
 
 	const onPressUpdate = ()=>{
-		console.log('params activeIndex: ', params.activeIndex);
 		const {navigation} = props;
 		dispatchRefrence(updatePartyDetails({partyData:partyDetails, activeIndex:params.activeIndex}));
 		navigation.goBack();

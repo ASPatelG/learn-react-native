@@ -43,6 +43,8 @@ export const translationValues = {
 		partyName:'Party Name',
 		mobile:'Mobile',
 		update:'Update',
+		partyName:'Party Name',
+		connectorName:'Connector name',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
