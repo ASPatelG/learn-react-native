@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
 		paddingRight:8,
 	},
 	dropDownContainer:{
-		padding:5,
+		paddingHorizontal:5,
 		borderRadius:5,
 		borderColor:'#D1D1D1',
 		borderWidth:1,
@@ -32,5 +32,8 @@ export const styles = StyleSheet.create({
 		borderRadius:5,
 		padding:4,
 		marginTop:8,
-	}
+	},
+	buttonContainer:{
+		marginVertical:5,
+	},
 });

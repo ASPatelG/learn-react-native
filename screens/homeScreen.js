@@ -11,6 +11,7 @@ import ButtonComponent from '../components/buttonComponent';
 import PartyShortDetails from '../components/PartyShortDetails';
 import {UserShortDetails} from '../components/userShortDetails';
 import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
+import {showErrorAlert} from '../components/showErrorAlert';
 
 import {styles} from './screens.styles/homeScreenStyles';
 import {constantValues} from '../staticDataFiles/constantValues';
@@ -50,7 +51,12 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onPressPDF = (nativeEvent)=>{
-		generateWorkPaymentPDF(allPartiesWorkArray);
+		if(allPartiesWorkArray.length > 0){
+			generateWorkPaymentPDF(allPartiesWorkArray);
+		}
+		else{
+			showErrorAlert(transRef.t('noWorkError'));
+		}
 	}
 
 	return(
@@ -71,7 +77,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 					onPressIn={onPressPDF}
 					style={styles.downloadIconContainer}
 				>
-					<FontAwesome5 name="file-download" size={50} color="#F5EC42"/>
+					<FontAwesome5 name="file-download" size={45} color="#F5EC42"/>
 				</Pressable>
 			</View>
 			{allPartiesWorkArray.length
@@ -92,6 +98,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			<ButtonComponent
 				title={transRef.t('addPartyWork')}
 				onPressIn={onPressAddWork}
+				mainContainer={styles.mainContainer}
 			/>
 		</View>
 	);

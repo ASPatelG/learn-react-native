@@ -6,6 +6,14 @@ const {en} = translationValues		// Destructure the translation value
 
 export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 	// Define the HTML content with the table data
+
+	let totalAmount = dataToAddInPDF.reduce((accumulator, currentObject)=> {
+		return accumulator + Number(currentObject.amount)
+	}, 0);
+	let totalDiscount = dataToAddInPDF.reduce((accumulator, currentObject)=> accumulator + Number(currentObject.discount), 0);
+
+	let totalPayableAmount = totalAmount - totalDiscount;
+
 	const htmlContent = `
 		<html>
 			<head>
@@ -56,6 +64,16 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 						</tr>`)
 						.join('')
 					}
+					<tr>
+						<td colspan=${2}>${en.totalAmount}</td>
+						<td>${totalAmount}</td>
+						<td colspan=${2}>${en.discount}</td>
+						<td>${totalDiscount}</td>
+					</tr>
+					<tr>
+						<td colspan=${3}>${en.payableAmount}</td>
+						<td colspan=${3}>${totalPayableAmount}</td>
+					</tr>
 				</table>
 			</body>
 		</html>

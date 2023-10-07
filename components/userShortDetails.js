@@ -21,14 +21,14 @@ export const UserShortDetails = (props)=>{
 const styles = StyleSheet.create({
 	userDetailsContainer:{
 		flexDirection:'row',
-		padding:10,
+		paddingHorizontal:10,
 		alignItems:'center',
 		borderWidth:0.3,
 		borderColor:'#D1D1D1',
 	},
 	userDetails:{
 		marginLeft:10,
-		paddingVertical:10,
+		paddingVertical:8,
 	},
 	userNameStyle:{
 		fontSize:20,

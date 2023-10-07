@@ -45,7 +45,7 @@ export default memo(ButtonComponent);
 
 const styles = StyleSheet.create({
 	mainContainer:{
-		marginTop:10,
+		marginVertical:7,
 	},
 	pressableButtonStyle:{
 		backgroundColor:'#175491',

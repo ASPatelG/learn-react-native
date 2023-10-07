@@ -7,7 +7,7 @@ import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
 
-import {styles} from './screens.styles/addPartyDetailsStyle';
+import {styles} from './screens.styles/addUpdatePartyDetailsStyle';
 
 const AddUpdatePartyWorkDetails = (props)=>{
 	const {route:{params}} = props;
@@ -29,7 +29,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	});
 	const regularExpressionOnlyDigit = /^[0-9]+$/;
 	const disableSave = ()=>{
-		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || !partyDetails.rate || !partyDetails.length){
+		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || !partyDetails.rate || !partyDetails.length || !partyDetails.width || !partyDetails.rate ){
 			return true;
 		}
 		else{
@@ -334,7 +334,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				</View>
 				<TextInputComponent
 					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterDiscount')}
+					fieldLabelText={transRef.t('discount')}
 					value={partyDetails.discount}
 					onChangeText={onChangeDiscount}
 					keyboardType='number-pad'
@@ -346,6 +346,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				title={transRef.t(params ?'update' :'save')}
 				onPressIn={params ?onPressUpdate :onPressSave}
 				disabled={disableSave()}
+				mainContainer={styles.buttonContainer}
 			/>
 		</SafeAreaView>
 	);
