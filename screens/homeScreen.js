@@ -13,8 +13,10 @@ import {UserShortDetails} from '../components/userShortDetails';
 import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
 import {showErrorAlert} from '../components/showErrorAlert';
 
-import {styles} from './screens.styles/homeScreenStyles';
+import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
 import {constantValues} from '../staticDataFiles/constantValues';
+
+import {styles} from './screens.styles/homeScreenStyles';
 
 import {generateWorkPaymentPDF} from '../javaScriptFunction/generateWorkPaymentPDF';
 
@@ -40,6 +42,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			backAction,
 		);
 
+		createOwnerTable();		// To store business owner details
+		createPartyTable();		// To store party's works details
 		// To remove event on onmount
 		return () => backHandler.remove();
 
@@ -80,26 +84,26 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 					<FontAwesome5 name="file-download" size={45} color="#F5EC42"/>
 				</Pressable>
 			</View>
-			{allPartiesWorkArray.length
-				? <FlatList 
-					data={allPartiesWorkArray} 
-					renderItem={({item, index})=> <PartyShortDetails
-						key={index}
-						index={index}
-						partySomeDetails={item}
-						navigation={props.navigation}
-					/>}
-					keyExtractor={(item, index) => index.toString()}
-					keyboardShouldPersistTaps='always'
-					ListHeaderComponent={<PartiesWorkTableHeader/>}
+				{allPartiesWorkArray.length
+					? <FlatList 
+						data={allPartiesWorkArray} 
+						renderItem={({item, index})=> <PartyShortDetails
+							key={index}
+							index={index}
+							partySomeDetails={item}
+							navigation={props.navigation}
+						/>}
+						keyExtractor={(item, index) => index.toString()}
+						keyboardShouldPersistTaps='always'
+						ListHeaderComponent={<PartiesWorkTableHeader/>}
+					/>
+					: null
+				}
+				<ButtonComponent
+					title={transRef.t('addPartyWork')}
+					onPressIn={onPressAddWork}
+					mainContainer={styles.mainContainer}
 				/>
-				: null
-			}
-			<ButtonComponent
-				title={transRef.t('addPartyWork')}
-				onPressIn={onPressAddWork}
-				mainContainer={styles.mainContainer}
-			/>
 		</View>
 	);
 }
