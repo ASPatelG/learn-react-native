@@ -62,7 +62,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
-			<UserShortDetails/>
+			<UserShortDetails navigation={props.navigation}/>
 			<View style={styles.screenChangeContent}>
 				<View style={styles.dropDownContainer}>
 					<DropdownPickerComponent

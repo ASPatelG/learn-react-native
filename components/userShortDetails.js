@@ -1,11 +1,26 @@
+import {useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import {getAnObjectFromAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
+
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+import LogoutUI from './LogoutUI';
 
 import { FontAwesome } from '@expo/vector-icons';
 
 export const UserShortDetails = (props)=>{
 
-	const loginUserData  = useSelector((state)=>state.loginUserData);
+	let loginUserData  = useSelector((state)=>state.loginUserData);
+
+	useEffect( ()=>{
+		const getBusinessUserData = async ()=>{
+			if(!loginUserData){
+				loginUserData = await getAnObjectFromAsyncStorage('businessUserData');
+			}
+		}
+		getBusinessUserData();
+	}, []);
 
 	return(
 		<View style={styles.userDetailsContainer}>
@@ -14,6 +29,7 @@ export const UserShortDetails = (props)=>{
 				<Text style={styles.userNameStyle}>{loginUserData.userName}</Text>
 				<Text>{loginUserData.mobileNumber}</Text>
 			</View>
+			<LogoutUI navigation={props.navigation}/>
 		</View>
 	);
 }
@@ -35,5 +51,6 @@ const styles = StyleSheet.create({
 		fontWeight:'bold',
 		color:'#175491',
 		marginBottom:11,
+		width:wp('66%'),
 	}
 });

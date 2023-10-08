@@ -1,5 +1,5 @@
 import {Text, ScrollView, Image} from 'react-native';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
@@ -11,6 +11,7 @@ import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
 import {changeLoginUserData} from '../learnRedux/actions';
 import {generateOTP} from '../javaScriptFunction/generateOTP';
+import {getAnObjectFromAsyncStorage, saveAnObjectInAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
 
 import {styles} from './screens.styles/loginScreenStyle';
 
@@ -21,6 +22,17 @@ export const LoginScreen = (props)=>{
 	const [showOTPUI] = useState(true);		// to otp send ui(by default used mobileNumber)
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchrefrence = useDispatch()		// To send the data in store
+
+	useEffect(()=>{
+		const nagigateOnHomeScreen = async ()=>{	// It will navigate on home screen if businessUserData will exist in async Storage
+			const businessUserData = await getAnObjectFromAsyncStorage('businessUserData');
+			if(businessUserData){
+				const {navigation} = props;
+				navigation.navigate('CostEstimationCalculator');
+			}
+		}
+		nagigateOnHomeScreen();
+	}, [])
 
 	function onchangeMobileNumber(enteredText){
 		const regularExpression = /^[0-9]+$/;
@@ -46,6 +58,13 @@ export const LoginScreen = (props)=>{
 				});
 			}
 			else{
+				saveAnObjectInAsyncStorage(
+					'businessUserData',
+					{
+						mobileNumber:constantValues.registeredMobileNumber,
+						userName:constantValues.registeredUserName
+					}
+				);
 				navigation.navigate('CostEstimationCalculator');
 			}
 		}

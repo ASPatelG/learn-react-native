@@ -10,6 +10,7 @@ import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
 import {changeLoginUserData} from '../learnRedux/actions';
+import {saveAnObjectInAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
 
 import {styles} from './screens.styles/OTPVerifyStyles';
 
@@ -61,6 +62,15 @@ export const OTPVerifyScreen = (props)=>{
 		const enteredOTP = otpValueArray.join('');
 		if(otp === enteredOTP){
 			crossPlatformToast(transRef.t('loginSuccess'));
+			saveAnObjectInAsyncStorage(
+				'businessUserData',
+				{
+					mobileNumber:constantValues.registeredMobileNumber,
+					userName:constantValues.registeredUserName
+				}
+			);
+			/* userData has set from constant because i will register user before creating build */
+
 			navigation.navigate('CostEstimationCalculator');
 		}
 		else{
