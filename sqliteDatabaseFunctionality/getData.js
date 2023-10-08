@@ -7,7 +7,7 @@ export function getData(ownerData) {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transaction => {
 			transaction.executeSql(
-				'SELECT * FROM busines_owner',
+				'SELECT * FROM business_table',
 				[],
 				(_tx, results) => {
 					const data = [];

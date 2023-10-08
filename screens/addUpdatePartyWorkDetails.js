@@ -6,6 +6,7 @@ import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
+import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
 
 import {styles} from './screens.styles/addUpdatePartyDetailsStyle';
 
@@ -196,8 +197,10 @@ const AddUpdatePartyWorkDetails = (props)=>{
 		}
 	}
 
-	const onPressSave = ()=>{
+	const onPressSave = async ()=>{
 		const {navigation} = props;
+		const insertDataOutput = await insertPartyDetail(partyDetails);
+		console.log('insertDataOutput: ', insertDataOutput);
 		dispatchRefrence(addPartyDetails({partyData:partyDetails}));
 		navigation.goBack();
 	}
