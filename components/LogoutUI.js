@@ -28,7 +28,7 @@ const LogoutUI = (props)=>{
 			<AntDesign
 				name="logout"
 				size={35}
-				color="#00B95E"
+				color="#FCA203"
 				style={styles.iconStyle}
 			/>
 		</TouchableOpacity>
