@@ -30,7 +30,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	});
 	const regularExpressionOnlyDigit = /^[0-9]+$/;
 	const disableSave = ()=>{
-		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || !partyDetails.rate || !partyDetails.length || !partyDetails.width || !partyDetails.rate ){
+		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || partyDetails.mobileNumber.length < 10 || !partyDetails.rate || !partyDetails.length || !partyDetails.width || !partyDetails.rate ){
 			return true;
 		}
 		else{
@@ -200,7 +200,6 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	const onPressSave = async ()=>{
 		const {navigation} = props;
 		const insertDataOutput = await insertPartyDetail(partyDetails);
-		console.log('insertDataOutput: ', insertDataOutput);
 		dispatchRefrence(addPartyDetails({partyData:partyDetails}));
 		navigation.goBack();
 	}

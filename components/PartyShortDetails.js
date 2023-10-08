@@ -20,13 +20,13 @@ const PartyShortDetails = (props)=>{
 			style={styles.partySomeDetailsContainer}
 		>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{partySomeDetails.firstName}</Text>
+				<Text style={styles.columnValueStyle}>{partySomeDetails.firstName} {partySomeDetails.lastName}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{partySomeDetails?.firstName} {partySomeDetails?.lastName}</Text>
+				<Text style={styles.columnValueStyle}>{partySomeDetails.mobileNumber}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{partySomeDetails?.firstName} {partySomeDetails?.lastName}</Text>
+				<Text style={styles.columnValueStyle}>{partySomeDetails.amount}</Text>
 			</View>
 			<Pressable
 				onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
