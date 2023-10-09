@@ -20,10 +20,10 @@ const PartyShortDetails = (props)=>{
 			style={styles.partySomeDetailsContainer}
 		>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{partySomeDetails.firstName} {partySomeDetails.lastName}</Text>
+				<Text style={styles.columnValueStyle}>{partySomeDetails.first_name} {partySomeDetails.lastName}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{partySomeDetails.mobileNumber}</Text>
+				<Text style={styles.columnValueStyle}>{partySomeDetails.mobile_number}</Text>
 			</View>
 			<View style={styles.columnStyle}>
 				<Text style={styles.columnValueStyle}>{partySomeDetails.amount}</Text>
@@ -32,7 +32,7 @@ const PartyShortDetails = (props)=>{
 				onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
 				style={styles.columnStyle}
 			>
-				<Text style={styles.rightColumnValueStyle}>{partySomeDetails.workType}</Text>
+				<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
 				<AntDesign name="right" size={26} color="#808080" />
 			</Pressable>
 		</View>

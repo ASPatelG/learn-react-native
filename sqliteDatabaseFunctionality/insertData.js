@@ -27,8 +27,8 @@ export function insertPartyDetail(partyData) {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transactionObject => {
 			transactionObject.executeSql(
-				'INSERT INTO party_table (first_name, last_name, mobile_number, emai, work_type, length, width, height, total_area, amount, discount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-				[partyData.firstName, partyData.lastName, partyData.mobileNumber, partyData.emai, partyData.workType, partyData.length, partyData.width, partyData.height, partyData.totalArea, partyData.amount, partyData.discount],
+				'INSERT INTO party_table (first_name, last_name, mobile_number, email, work_type, length, width, height, total_area, amount, discount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+				[partyData.firstName, partyData.lastName, partyData.mobileNumber, partyData.email, partyData.workType, partyData.length, partyData.width, partyData.height, partyData.totalArea, partyData.amount, partyData.discount],
 				(transactionObject, results) => {
 					const insertedId = results.insertId;
 					resolve(`data has been created with id: ${insertedId}`);

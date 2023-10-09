@@ -4,7 +4,10 @@ import {
 	saveLoginUserData,
 	addParty,
 	updateParty,
+	addPartyTableData
 } from './actionsType';
+
+import {getPartyData} from '../sqliteDatabaseFunctionality/getData';
 
 /* File to map the action and data */
 
@@ -30,6 +33,11 @@ export const changeWorkType = (data)=>({
 
 export const addPartyDetails = (data)=>({
 	type:addParty,
+	payload:data
+});
+
+export const setPartyTableDataInStore = (data)=>({
+	type:addPartyTableData,
 	payload:data
 });
 
