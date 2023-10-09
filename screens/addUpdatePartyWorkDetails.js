@@ -202,14 +202,16 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	const onPressSave = async ()=>{
 		const {navigation} = props;
 		const insertDataOutput = await insertPartyDetail(partyDetails);
-		// dispatchRefrence(addPartyDetails({partyData:partyDetails}));
+		const bodyData = {first_name:partyDetails.firstName, last_name:partyDetails.lastName, mobile_number:partyDetails.mobileNumber, email:partyDetails.email, work_type:partyDetails.workType, length:partyDetails.length, width:partyDetails.width, height:partyDetails.height, rate:partyDetails.rate, total_area:partyDetails.totalArea, amount:partyDetails.amount, discount:partyDetails.discount};
+		dispatchRefrence(addPartyDetails({partyData:bodyData}));	// Since useEffect Not Calling again
 		navigation.goBack();
 	}
 
 	const onPressUpdate = async ()=>{
 		const {navigation} = props;
 		const updateDataResult = await updatePartyDetail(partyDetails);
-		// dispatchRefrence(updatePartyDetails({partyData:partyDetails, activeIndex:params.activeIndex}));
+		const bodyData = {first_name:partyDetails.firstName, last_name:partyDetails.lastName, mobile_number:partyDetails.mobileNumber, email:partyDetails.email, work_type:partyDetails.workType, length:partyDetails.length, width:partyDetails.width, height:partyDetails.height, rate:partyDetails.rate, total_area:partyDetails.totalArea, amount:partyDetails.amount, discount:partyDetails.discount};
+		dispatchRefrence(updatePartyDetails({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
 		navigation.goBack();
 	}
 

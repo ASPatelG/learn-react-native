@@ -48,7 +48,12 @@ export const LoginScreen = (props)=>{
 	const onPressSubmit = (nativeEvent)=>{
 		const {navigation} = props;
 		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
-			dispatchrefrence(changeLoginUserData({loginUserData:{mobileNumber, userName:constantValues.registeredUserName}}));
+			dispatchrefrence(changeLoginUserData({
+				loginUserData:{
+					mobileNumber:constantValues.registeredMobileNumber,
+					userName:constantValues.registeredUserName
+				}
+			}));
 			if(showOTPUI){
 				let generatedOTP = generateOTP();
 				console.log('generatedOTP: ', generatedOTP);
