@@ -1,7 +1,10 @@
 import {useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import {changeLoginUserData} from '../learnRedux/actions';
+
 import {getAnObjectFromAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
+import {constantValues} from '../staticDataFiles/constantValues';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -12,11 +15,18 @@ import { FontAwesome } from '@expo/vector-icons';
 export const UserShortDetails = (props)=>{
 
 	let loginUserData  = useSelector((state)=>state.loginUserData);
+	const dispatchrefrence = useDispatch()		// To send the data in store
 
 	useEffect( ()=>{
 		const getBusinessUserData = async ()=>{
 			if(!loginUserData){
-				loginUserData = await getAnObjectFromAsyncStorage('businessUserData');
+				// await getAnObjectFromAsyncStorage('businessUserData');
+				dispatchrefrence(changeLoginUserData({
+					loginUserData:{
+						mobileNumber:constantValues.registeredMobileNumber,
+						userName:constantValues.registeredUserName
+					}
+				}));
 			}
 		}
 		getBusinessUserData();

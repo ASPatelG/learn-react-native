@@ -2,7 +2,7 @@
 import { openDatabase } from './openDatabase';
 
 /* This function will be use to open database  */
-export function insertBusinessDetail(ownerData) {
+export function updateBusinessDetail(ownerData) {
 	const databaseObject = openDatabase();
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transactionObject => {
@@ -17,27 +17,25 @@ export function insertBusinessDetail(ownerData) {
 					reject(error);
 				}
 			);
-			// databaseObject.closeAsync();		// to close database but unusable
 		});
 	});
 };
 
-export function insertPartyDetail(partyData) {
+export function updatePartyDetail(partyData) {
 	const databaseObject = openDatabase();
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transactionObject => {
 			transactionObject.executeSql(
-				'INSERT INTO party_table (first_name, last_name, mobile_number, email, work_type, length, width, height, rate, total_area, amount, discount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-				[partyData.firstName, partyData.lastName, partyData.mobileNumber, partyData.email, partyData.workType, partyData.length, partyData.width, partyData.height, partyData.rate, partyData.totalArea, partyData.amount, partyData.discount],
+				`UPDATE party_table SET first_name=?, last_name=?, mobile_number=?, email=?, work_type=?, length=?, width=?, height=?, rate=?, total_area=?, amount=?, discount=? WHERE id = ?;`,
+				[partyData.firstName, partyData.lastName, partyData.mobileNumber, partyData.email, partyData.workType, partyData.length, partyData.width, partyData.height, partyData.rate, partyData.totalArea, partyData.amount, partyData.discount, partyData.id],
 				(transactionObject, results) => {
-					const insertedId = results.insertId;
-					resolve(`data has been created with id: ${insertedId}`);
+					const {rowsAffected} = results;
+					resolve(`data has been updated rowsAffected: ${rowsAffected}`);
 				},
 				(transactionObject, error) => {
 					reject(error);
 				}
 			);
-			// databaseObject.closeAsync();		// to close database but unusable
 		});
 	});
 };
