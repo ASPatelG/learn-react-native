@@ -8,7 +8,7 @@ const {hi:{ connectorApp, programingPractis, offlineCheck, checkContext, offline
 import {crossPlatformToast} from '../components/crossPlatformToast';
 
 import { createOwnerTable } from '../sqliteDatabaseFunctionality/createTable';
-import { getData } from '../sqliteDatabaseFunctionality/getData';
+import { getBusinessData } from '../sqliteDatabaseFunctionality/getData';
 import { insertBusinessDetail } from '../sqliteDatabaseFunctionality/insertData';
 
 import {contractorContext} from '../createContext/createdContext';
@@ -28,7 +28,7 @@ export const ProgramingPractiseRoot = (props)=>{
 		// 	const createTableOutput = await createTable();
 		// 	let ownerData = {owner_name:'Anil singh patel', owner_mobile:'8349587093'};
 		// 	const isertDataOutput = await insertBusinessDetail(ownerData);
-		// 	const getDataOutput = await getData();
+		// 	const getDataOutput = await getBusinessData();
 		// }
 		// createGetOfflineData();  // to check offline functionality
 		// crossPlatformToast(offlineSuccess);

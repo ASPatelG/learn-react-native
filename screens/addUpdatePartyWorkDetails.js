@@ -41,8 +41,9 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	useEffect(() => {
 		if(params){		// To set data according to party details
 			const {partySomeDetails}  = params;
-			const {discount, email, firstName, height, lastName, length, mobileNumber, rate, amount, totalArea, width, workType} = partySomeDetails;
-			setPartyDetails(previous=>({...previous, discount, email, firstName, height, lastName, length, mobileNumber, rate, amount, totalArea, width, workType}));
+			const {discount, email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type} = partySomeDetails;
+
+			setPartyDetails(previous=>({...previous, discount, email, firstName:first_name, height, lastName:last_name, length, mobileNumber:mobile_number, rate, amount, totalArea:total_area, width, workType:work_type}));
 		}
 
 		const backAction = () => {
@@ -235,7 +236,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterMobilNumber')}
-					value={partyDetails.mobileNumber}
+					value={partyDetails.mobileNumber?.toString()}
 					onChangeText={onChangeMobileNumber}
 					maxLength={10}
 					isItRequired={true}
@@ -264,7 +265,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('workRate')}
-						value={partyDetails.rate}
+						value={partyDetails.rate?.toString()}
 						onChangeText={onChangeRate}
 						keyboardType='number-pad'
 						isItRequired={true}
@@ -278,7 +279,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('length')}
-						value={partyDetails.length}
+						value={partyDetails.length?.toString()}
 						onChangeText={onChangeLength}
 						keyboardType='number-pad'
 						maxLength={10}
@@ -289,7 +290,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('width')}
-						value={partyDetails.width}
+						value={partyDetails.width?.toString()}
 						onChangeText={onChangeWidth}
 						keyboardType='number-pad'
 						maxLength={10}
@@ -300,7 +301,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('height')}
-						value={partyDetails.height}
+						value={partyDetails.height?.toString()}
 						onChangeText={onChangeHeight}
 						keyboardType='number-pad'
 						maxLength={10}
@@ -312,7 +313,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 					<TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('totalArea')}
-						value={partyDetails.totalArea ?partyDetails.totalArea.toString() :''}
+						value={partyDetails.totalArea ?partyDetails.totalArea?.toString() :''}
 						// onChangeText={onChangeHeight}
 						keyboardType='number-pad'
 						maxLength={10}
@@ -324,7 +325,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
                    <TextInputComponent
 						showFieldLabel={true}
 						fieldLabelText={transRef.t('totalAmount')}
-						value={partyDetails.amount ?partyDetails.amount.toString() :''}
+						value={partyDetails.amount ?partyDetails.amount?.toString() :''}
 						// onChangeText={onChangeHeight}
 						keyboardType='number-pad'
 						maxLength={10}
@@ -337,7 +338,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('discount')}
-					value={partyDetails.discount}
+					value={partyDetails.discount?.toString()}
 					onChangeText={onChangeDiscount}
 					keyboardType='number-pad'
 					maxLength={10}

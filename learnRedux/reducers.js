@@ -29,6 +29,10 @@ export const reducers = (state = initialValue, action)=>{
 			const {partyData} = action.payload;
 			return {...state, partyDetails:[...state.partyDetails, partyData]}
 		}
+		case "addPartyTableData":{
+			const {partyData} = action.payload;
+			return {...state, partyDetails:[...state.partyDetails, ...partyData]}
+		}
 		case "updateParty":{
 			const {partyData, activeIndex} = action.payload;
 			const {partyDetails} = state;

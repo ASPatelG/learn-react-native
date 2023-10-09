@@ -1,10 +1,12 @@
 import {useState, useEffect} from 'react';
 import {View, BackHandler, FlatList, Pressable} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import {dataStore} from '../learnRedux/dataStore';
+import {addPartyDetails, setPartyTableDataInStore} from '../learnRedux/actions';
+
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import DropdownPickerComponent from '../components/dropdownPickerComponent';
 import ButtonComponent from '../components/buttonComponent';
@@ -14,6 +16,7 @@ import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
 import {showErrorAlert} from '../components/showErrorAlert';
 
 import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
+import { getPartyData } from '../sqliteDatabaseFunctionality/getData';
 import {constantValues} from '../staticDataFiles/constantValues';
 
 import {styles} from './screens.styles/homeScreenStyles';
@@ -26,6 +29,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	const [workType, setPartyType] = useState(constantValues.workTypes[0].value);
 	const allPartiesWorkArray = useSelector((state)=>state.partyDetails);
 	const transRef  = useSelector((state)=>state.transRef);
+	const dispatchRefrence = useDispatch()		// To send the data in store
 
 	onchanDropDownValue = (itemKey, itemValue)=>{
 		setPartyType(itemKey);
@@ -37,6 +41,11 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			return true;
 		};
 
+		setPartyDataInStore = async() => {
+			let tablePartyData = await getPartyData();
+			dispatchRefrence(setPartyTableDataInStore({partyData:tablePartyData}));
+		};
+
 		const backHandler = BackHandler.addEventListener(
 			'hardwareBackPress',
 			backAction,
@@ -44,6 +53,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 
 		createOwnerTable();		// To store business owner details
 		createPartyTable();		// To store party's works details
+		setPartyDataInStore();	// To store table data in readux-store
 		// To remove event on onmount
 		return () => backHandler.remove();
 
