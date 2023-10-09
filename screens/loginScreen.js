@@ -56,6 +56,7 @@ export const LoginScreen = (props)=>{
 					mobileNumber:countryCode+' '+mobileNumber,
 					otp:generatedOTP,
 				});
+				setMobileNumber('');
 			}
 			else{
 				saveAnObjectInAsyncStorage(
@@ -65,6 +66,7 @@ export const LoginScreen = (props)=>{
 						userName:constantValues.registeredUserName
 					}
 				);
+				setMobileNumber('');
 				navigation.navigate('CostEstimationCalculator');
 			}
 		}

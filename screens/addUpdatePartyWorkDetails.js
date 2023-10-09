@@ -7,6 +7,7 @@ import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
 import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
+import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
 
 import {styles} from './screens.styles/addUpdatePartyDetailsStyle';
 
@@ -30,7 +31,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	});
 	const regularExpressionOnlyDigit = /^[0-9]+$/;
 	const disableSave = ()=>{
-		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || partyDetails.mobileNumber.length < 10 || !partyDetails.rate || !partyDetails.length || !partyDetails.width || !partyDetails.rate ){
+		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || partyDetails.mobileNumber.length < 10 || !partyDetails.rate || !partyDetails.length || !partyDetails.width || !partyDetails.rate || !partyDetails.workType){
 			return true;
 		}
 		else{
@@ -41,9 +42,9 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	useEffect(() => {
 		if(params){		// To set data according to party details
 			const {partySomeDetails}  = params;
-			const {discount, email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type} = partySomeDetails;
+			const {discount, email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type, id} = partySomeDetails;
 
-			setPartyDetails(previous=>({...previous, discount, email, firstName:first_name, height, lastName:last_name, length, mobileNumber:mobile_number, rate, amount, totalArea:total_area, width, workType:work_type}));
+			setPartyDetails(previous=>({...previous, discount, email, firstName:first_name, height, lastName:last_name, length, mobileNumber:mobile_number, rate, amount, totalArea:total_area, width, workType:work_type, id}));
 		}
 
 		const backAction = () => {
@@ -201,13 +202,14 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	const onPressSave = async ()=>{
 		const {navigation} = props;
 		const insertDataOutput = await insertPartyDetail(partyDetails);
-		dispatchRefrence(addPartyDetails({partyData:partyDetails}));
+		// dispatchRefrence(addPartyDetails({partyData:partyDetails}));
 		navigation.goBack();
 	}
 
-	const onPressUpdate = ()=>{
+	const onPressUpdate = async ()=>{
 		const {navigation} = props;
-		dispatchRefrence(updatePartyDetails({partyData:partyDetails, activeIndex:params.activeIndex}));
+		const updateDataResult = await updatePartyDetail(partyDetails);
+		// dispatchRefrence(updatePartyDetails({partyData:partyDetails, activeIndex:params.activeIndex}));
 		navigation.goBack();
 	}
 

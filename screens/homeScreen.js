@@ -43,7 +43,9 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 
 		setPartyDataInStore = async() => {
 			let tablePartyData = await getPartyData();
-			dispatchRefrence(setPartyTableDataInStore({partyData:tablePartyData}));
+			if(tablePartyData.length > 0 ){
+				dispatchRefrence(setPartyTableDataInStore({partyData:tablePartyData}));
+			}
 		};
 
 		const backHandler = BackHandler.addEventListener(
@@ -57,7 +59,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		// To remove event on onmount
 		return () => backHandler.remove();
 
-	}, []);
+	}, [dispatchRefrence]);		// dispatchRef.. to rerender on change data in store;
 
 	const onPressAddWork = ()=>{
 		const {navigation} = props;
