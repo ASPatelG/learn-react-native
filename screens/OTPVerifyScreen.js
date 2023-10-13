@@ -42,10 +42,10 @@ export const OTPVerifyScreen = (props)=>{
 		const regularExpression = /^[0-9]+$/;
 		if(regularExpression.test(value) || value === ''){
 			otpValueArray[index] = value;
+			setOtpValueArray([...otpValueArray]);
 			if(myRefsArray[index+1]?.current && value){
 				myRefsArray[index+1]?.current.focus();
 			}
-			setOtpValueArray([...otpValueArray]);
 		}
 		else{
 			null
@@ -63,7 +63,7 @@ export const OTPVerifyScreen = (props)=>{
 	}
 
 
-	const onPressVerify = useCallback((nativeEvent)=>{
+	const onPressVerify = (nativeEvent)=>{
 		const {navigation} = props;
 		const enteredOTP = otpValueArray.join('');
 		if(otp === enteredOTP){
@@ -82,7 +82,7 @@ export const OTPVerifyScreen = (props)=>{
 		else{
 			crossPlatformToast(transRef.t('wrongOTP'));
 		}
-	}, []);
+	};
 
 	const disableVerifyButton = ()=> {
 		let disableButton = otpValueArray.some(item => item === '');
