@@ -27,7 +27,9 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */
 
 	const [workType, setPartyType] = useState(constantValues.workTypes[0].value);
-	const allPartiesWorkArray = useSelector((state)=>state.partyDetails);
+	// const allPartiesWorkArray = useSelector((state)=>state.partyDetails);
+	let [allPartiesWorkArray, setPartyData] = useState([]);
+	let [isAppliedWorkType, changedAppliedFilter] = useState(false);
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchRefrence = useDispatch()		// To send the data in store
 
@@ -36,15 +38,18 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	useEffect(() => {
+		const { navigation } = props;
+
 		const backAction = () => {
 			BackHandler.exitApp()	// To close the app
 			return true;
 		};
 
-		setPartyDataInStore = async() => {
+		const setPartyDataInStore = async() => {
 			let tablePartyData = await getPartyData();
 			if(tablePartyData.length > 0 ){
-				dispatchRefrence(setPartyTableDataInStore({partyData:tablePartyData}));
+				setPartyData(tablePartyData);
+				// dispatchRefrence(setPartyTableDataInStore({partyData:tablePartyData}));
 			}
 		};
 
@@ -53,13 +58,23 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			backAction,
 		);
 
-		createOwnerTable();		// To store business owner details
-		createPartyTable();		// To store party's works details
-		setPartyDataInStore();	// To store table data in readux-store
-		// To remove event on onmount
-		return () => backHandler.remove();
+		const willFocusSubscription = navigation.addListener('focus', ()=> {
+			createOwnerTable();		// To store business owner details
+			createPartyTable();		// To store party's works details
+			setPartyDataInStore();	// To store table data in readux-store
+		});
 
-	}, [dispatchRefrence]);		// dispatchRef.. to rerender on change data in store;
+		// To remove event on onmount
+		return () => {
+			backHandler.remove();
+			willFocusSubscription.remove();
+		}
+	// }, [allPartiesWorkArray]);		// dispatchRef.. to rerender on change data in store;
+	}, []);
+
+	const searchPartyDataWithWorkType = ()=>{
+
+	}
 
 	const onPressAddWork = ()=>{
 		const {navigation} = props;

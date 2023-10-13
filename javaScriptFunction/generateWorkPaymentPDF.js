@@ -58,7 +58,7 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 							<td>${item.length}</td>
 							<td>${item.width}</td>
 							<td>${item.height}</td>
-							<td>${item.totalArea}</td>
+							<td>${item.total_area}</td>
 							<td>${item.rate}</td>
 							<td>${item.amount}</td>
 						</tr>`)
