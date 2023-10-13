@@ -4,13 +4,15 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 const BoxOTPInput = (props)=> {
 	/* Used to show ui till the app is loading */
-	const { otpValueArray, onchangeBoxValue, focusInputBoxIndex, otpMaxLength, boxValueLength, ...restProps} = props;
+	const { otpValueArray, onchangeBoxValue, focusInputBoxIndex, otpMaxLength, boxValueLength, myRefsArray, onFocusTextInput, ...restProps} = props;
 	return(
 		<View style={styles.inputBoxContainer}>
 			{otpValueArray.map((item, index)=>
 				<TextInput
 					key={index}
-					autoFocus={index === focusInputBoxIndex}
+					ref={myRefsArray[index]}
+					// autoFocus={index === focusInputBoxIndex}
+					onFocus={(nativeEvent)=> onFocusTextInput(index)}
 					style={styles.textInputStyle}
 					value={otpValueArray[index]}
 					maxLength={boxValueLength}

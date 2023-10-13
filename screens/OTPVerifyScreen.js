@@ -1,5 +1,5 @@
 import {Text, ScrollView, Image} from 'react-native';
-import {useState, useCallback, useMemo} from 'react';
+import {useState, useCallback, useMemo, useRef} from 'react';
 import {useSelector} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
@@ -20,9 +20,7 @@ export const OTPVerifyScreen = (props)=>{
 
 	const [otp, setOTP] = useState(params.otp);
 	const transRef  = useSelector((state)=>state.transRef);
-	const [focusInputBoxIndex, setfocusInputBoxIndex] = useState(null);
-	// let focusInputBoxIndex = null;
-	const [otpValueArray, setOtpValueArray] = useState(params.otp.toString().split('')); 	// To fill generated otp automatically
+	const [otpValueArray, setOtpValueArray] = useState(['', '', '', '']); 	// To fill generated otp automatically
 
 	function onchangeOTP(enteredText){
 		const regularExpression = /^[0-9]+$/;
@@ -36,23 +34,31 @@ export const OTPVerifyScreen = (props)=>{
 
 	const clearValueOnFocus = (index)=>{
 		otpValueArray.fill('', index, otpValueArray.length - 1);
-		setfocusInputBoxIndex(index);
 	}
 
-	// const onFocusBox = (index)=>{
-	// 	focusInputBoxIndex = index;
-	// }
+	const myRefsArray = Array(4).fill(null).map(() => useRef());
 
 	const onchangeBoxValue = (value, index)=>{
 		const regularExpression = /^[0-9]+$/;
 		if(regularExpression.test(value) || value === ''){
 			otpValueArray[index] = value;
-			// focusInputBoxIndex = focusInputBoxIndex + 1;
-			setfocusInputBoxIndex(index + 1)
+			if(myRefsArray[index+1]?.current && value){
+				myRefsArray[index+1]?.current.focus();
+			}
 			setOtpValueArray([...otpValueArray]);
 		}
 		else{
 			null
+		}
+	}
+
+	const onFocusTextInput = (index)=>{
+		let localOtpValueArray = otpValueArray;
+		if(otpValueArray[index]){
+			for(index; index < otpValueArray?.length; index++){
+				localOtpValueArray[index] = '';
+			}
+			setOtpValueArray([...localOtpValueArray]);
 		}
 	}
 
@@ -91,12 +97,12 @@ export const OTPVerifyScreen = (props)=>{
 			<Text style={styles.otpTitleStyle}>{transRef.t('otpSentTo')}</Text>
 			<Text style={styles.mobileNumberStyle}>{params.mobileNumber}</Text>
 			<BoxOTPInput
-				focusInputBoxIndex={focusInputBoxIndex}
 				onchangeBoxValue={onchangeBoxValue}
 				otpValueArray={otpValueArray}
-				// onFocusBox={onFocusBox}
+				myRefsArray={myRefsArray}
 				boxValueLength = {1}
 				otpMaxLength = {4}
+				onFocusTextInput={onFocusTextInput}
 			/>
 			<ButtonComponent
 				title={transRef.t('verifyOTP')}
