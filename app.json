@@ -4,7 +4,7 @@
     "slug": "react-native-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./appImage/splashScreenIcon.png",  // Have to fix the image sige of appIcon not supproting
+    "icon": "./appImage/splashScreenIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./appImage/splashScreenIcon.png",
@@ -22,10 +22,15 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["SEND_SMS"]
+      "permissions": [
+        "SEND_SMS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }
