@@ -60,6 +60,7 @@ export const LoginScreen = (props)=>{
 			}));
 			if(showOTPUI){
 				let generatedOTP = generateOTP();
+				console.log('generatedOTP: ', generatedOTP);
 				const mobileNumbersArray = [constantValues.registeredMobileNumber];
 				const otpSMSText = `Generated OTP --> ${generatedOTP} On ASPatel App`;
 				const sendSMSResponse = await sendSMS(mobileNumbersArray, otpSMSText);

@@ -1,4 +1,4 @@
-import { View, StyleSheet, StatusBar} from 'react-native';
+import { View, StyleSheet, StatusBar, Platform} from 'react-native';
 
 import {getStatusBarHeight} from '../javaScriptFunction/getStatusBarHeight';
 
@@ -7,7 +7,7 @@ export const CommonHeaderComponent = (props)=> {
 	/* Used to show ui till the app is loading */
 	const {statusBarContainer} = props;
 	return(
-		<View>
+		<View style = {Platform.OS === 'ios' ?statusBarContainer :null}>
 			<StatusBar
 				animated={true}
 				backgroundColor="#61dafb"
