@@ -36,12 +36,7 @@ export const styles = StyleSheet.create({
 	buttonContainer:{
 		marginVertical:5,
 	},
-	// containerWithSpacebetween:{
-	// 	justifyContent:'space-between',
-	// 	height:hp('50%'),
-	// },
-	// containerWithoutSpacebetween:{
-	// 	justifyContent:'center',
-	// 	height:hp('50%'),
-	// }
+	flatlistContainer:{
+		height:hp('70%'),
+	},
 });

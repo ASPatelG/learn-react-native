@@ -14,7 +14,6 @@ import {crossPlatformToast} from '../components/crossPlatformToast';
 import {changeLoginUserData} from '../learnRedux/actions';
 
 import {generateOTP} from '../javaScriptFunction/generateOTP';
-import {sendSMS} from '../javaScriptFunction/sendSMS';
 import {getAnObjectFromAsyncStorage, saveAnObjectInAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
 
 import {styles} from './screens.styles/loginScreenStyle';
@@ -60,10 +59,7 @@ export const LoginScreen = (props)=>{
 			}));
 			if(showOTPUI){
 				let generatedOTP = generateOTP();
-				console.log('generatedOTP: ', generatedOTP);
 				const mobileNumbersArray = [constantValues.registeredMobileNumber];
-				const otpSMSText = `Generated OTP --> ${generatedOTP} On ASPatel App`;
-				const sendSMSResponse = await sendSMS(mobileNumbersArray, otpSMSText);
 				navigation.navigate('OTPVerifyScreen', {
 					mobileNumber:countryCode+' '+mobileNumber,
 					otp:generatedOTP,

@@ -112,7 +112,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 				</Pressable>
 			</View>
 				{allPartiesWorkArray.length
-					? <FlatList 
+					? <View style={styles.flatlistContainer}>
+					<FlatList 
 						data={allPartiesWorkArray} 
 						renderItem={({item, index})=> <PartyShortDetails
 							key={index}
@@ -123,7 +124,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 						keyExtractor={(item, index) => index.toString()}
 						keyboardShouldPersistTaps='always'
 						ListHeaderComponent={<PartiesWorkTableHeader/>}
-					/>
+					/></View>
 					: null
 				}
 				<ButtonComponent

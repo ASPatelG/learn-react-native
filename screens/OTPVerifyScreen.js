@@ -1,5 +1,5 @@
 import {Text, ScrollView, Image} from 'react-native';
-import {useState, useCallback, useMemo, useRef} from 'react';
+import {useState, useCallback, useMemo, useRef, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 
 import { FontAwesome } from '@expo/vector-icons'; 
@@ -11,6 +11,7 @@ import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
 import {changeLoginUserData} from '../learnRedux/actions';
 import {saveAnObjectInAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
+import {sendSMS} from '../javaScriptFunction/sendSMS';
 
 import {styles} from './screens.styles/OTPVerifyStyles';
 
@@ -21,6 +22,15 @@ export const OTPVerifyScreen = (props)=>{
 	const [otp, setOTP] = useState(params.otp);
 	const transRef  = useSelector((state)=>state.transRef);
 	const [otpValueArray, setOtpValueArray] = useState(['', '', '', '']); 	// To fill generated otp automatically
+
+	useEffect(()=>{
+		const openSMSApp = async ()=>{
+			console.log('generatedOTP: ', otp);
+			const otpSMSText = `Generated OTP --> ${otp} On ASPatel App`;
+			const sendSMSResponse = await sendSMS(params.mobileNumber, otpSMSText);
+		}
+		openSMSApp();
+	}, []);
 
 	function onchangeOTP(enteredText){
 		const regularExpression = /^[0-9]+$/;
