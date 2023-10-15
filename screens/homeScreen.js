@@ -57,15 +57,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		};
 
 		const setPartyDataInStore = async() => {
-			let tablePartyData = [];
-			if(state.appliedFilter.isApplied){
-				tablePartyData = await filterPartyData(state.appliedFilter);
-				setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData]}));
-			}	// To fetch filter data
-			else{
-				tablePartyData = await getPartyData();
-				setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData]}));
-			}
+			let tablePartyData = await getPartyData();
+			setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}}));
 		};
 
 		const backHandler = BackHandler.addEventListener(
