@@ -48,6 +48,11 @@ export const translationValues = {
 		ok:'OK',
 		noWorkError:'You have not added the work details of any "Party-Work!"',
 		payableAmount:'Payable Amount',
+		filterBy:'Filter By',
+		clearAll:'Clear All',
+		apply:'Apply',
+		notFoundPartyData:'Not found applied filter data',
+		clearFilter:'Clear Filter',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',

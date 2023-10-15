@@ -8,6 +8,7 @@ import ButtonComponent from '../components/buttonComponent';
 import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
 import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
 import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
+import {regularExpressionOnlyDigit} from '../staticDataFiles/constantValues';
 
 import {styles} from './screens.styles/addUpdatePartyDetailsStyle';
 
@@ -29,7 +30,6 @@ const AddUpdatePartyWorkDetails = (props)=>{
 		amount:'',
 		discount:''
 	});
-	const regularExpressionOnlyDigit = /^[0-9]+$/;
 	const disableSave = ()=>{
 		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || partyDetails.mobileNumber.length < 10 || !partyDetails.rate || !partyDetails.length || !partyDetails.width || !partyDetails.rate || !partyDetails.workType){
 			return true;

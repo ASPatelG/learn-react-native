@@ -16,6 +16,8 @@ const ButtonComponent = (props)=>{
 		disabled,
 		// Styles
 		mainContainer,
+		pressableButtonStyle,
+		disabledButtonStyle,
 		isRerender,
 	} = props;
 
@@ -25,7 +27,7 @@ const ButtonComponent = (props)=>{
 		<View style={mainContainer}>
 			<Pressable
 				disabled={disabled}
-				style={disabled ? styles.disabledButtonStyle :styles.pressableButtonStyle}
+				style={disabled ? disabledButtonStyle :pressableButtonStyle}
 				onPressIn={({nativeEvent})=> onPressIn(nativeEvent)}
 				// ...pressableProps
 			>
@@ -79,5 +81,7 @@ const styles = StyleSheet.create({
 });
 
 ButtonComponent.defaultProps = {
-	mainContainer: styles.mainContainer
+	mainContainer: styles.mainContainer,
+	disabledButtonStyle:styles.disabledButtonStyle,
+	pressableButtonStyle:styles.pressableButtonStyle,
 }

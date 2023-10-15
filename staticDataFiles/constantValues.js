@@ -34,3 +34,5 @@ export const constantValues = {
 	],
 	alertTitle:'Anil Developer',
 }
+
+export const regularExpressionOnlyDigit = /^[0-9]+$/;

@@ -27,7 +27,7 @@ const LogoutUI = (props)=>{
 		>
 			<AntDesign
 				name="logout"
-				size={35}
+				size={33}
 				color="#FCA203"
 				style={styles.iconStyle}
 			/>
@@ -40,6 +40,7 @@ export default memo(LogoutUI);
 const styles = StyleSheet.create({
 	logoutIconContainer:{
 		padding:5,
+		alignItems:'center',
 	},
 	iconStyle:{
 		// transform: [{ scaleY: 2 }], // Double the height to create a semicircular shape
