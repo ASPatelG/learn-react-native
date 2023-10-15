@@ -37,6 +37,13 @@ export const styles = StyleSheet.create({
 		marginVertical:5,
 	},
 	flatlistContainer:{
-		height:hp('79.7%'),
+		height:hp('79%'),
 	},
+	noFilterPartyData:{
+		color:'#808080',
+		fontSize:18,
+		fontWeight:'bold',
+		paddingHorizontal:10,
+		textAlign:'center',
+	}
 });

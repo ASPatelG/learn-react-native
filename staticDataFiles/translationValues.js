@@ -51,6 +51,8 @@ export const translationValues = {
 		filterBy:'Filter By',
 		clearAll:'Clear All',
 		apply:'Apply',
+		notFoundPartyData:'Not found applied filter data',
+		clearFilter:'Clear Filter',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',

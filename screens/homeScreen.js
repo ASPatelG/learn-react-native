@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import {View, BackHandler, FlatList, Pressable} from 'react-native';
+import {View, BackHandler, FlatList, Pressable, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
@@ -16,9 +16,10 @@ import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
 import {showErrorAlert} from '../components/showErrorAlert';
 import LogoutUI from '../components/LogoutUI';
 import PartyWorkFilter from '../components/PartyWorkFilter';
+import CommonGuiToApplyFilter from '../components/CommonGuiToApplyFilter';
 
 import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
-import { getPartyData } from '../sqliteDatabaseFunctionality/getData';
+import { getPartyData, filterPartyData } from '../sqliteDatabaseFunctionality/getData';
 import {constantValues} from '../staticDataFiles/constantValues';
 
 import {styles} from './screens.styles/homeScreenStyles';
@@ -30,10 +31,13 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 
 	const [workType, setPartyType] = useState(constantValues.workTypes[0].value);
 	// const allPartiesWorkArray = useSelector((state)=>state.partyDetails);
-	const [allPartiesWorkArray, setPartyData] = useState([]);
-	const [appliedFilter, changedAppliedFilter] = useState({
-		isAppliedMobile:false,
-		isAppliedWorkType:false,
+	const [state, setState] = useState({
+		allPartiesWorkArray:[],
+		appliedFilter:{
+			isApplied:false,
+			mobileNumber:'',
+			workType:''
+		},
 		isOpenFilterUI:false,
 	});
 	const transRef  = useSelector((state)=>state.transRef);
@@ -55,7 +59,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		const setPartyDataInStore = async() => {
 			let tablePartyData = await getPartyData();
 			if(tablePartyData.length > 0 ){
-				setPartyData(tablePartyData);
+				setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData]}));
 				// dispatchRefrence(setPartyTableDataInStore({partyData:tablePartyData}));
 			}
 		};
@@ -76,7 +80,6 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			backHandler.remove();
 			willFocusSubscription();
 		}
-	// }, [allPartiesWorkArray]);		// dispatchRef.. to rerender on change data in store;
 	}, []);
 
 	const onPressAddWork = ()=>{
@@ -85,8 +88,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onPressPDF = (nativeEvent)=>{
-		if(allPartiesWorkArray.length > 0){
-			generateWorkPaymentPDF(allPartiesWorkArray);
+		if(state.allPartiesWorkArray.length > 0){
+			generateWorkPaymentPDF(state.allPartiesWorkArray);
 		}
 		else{
 			showErrorAlert(transRef.t('noWorkError'));
@@ -94,18 +97,45 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onPressCross = ()=>{
-		// if(RBSheetRef?.current){
-		// 	RBSheetRef?.close();
-		// }
-		changedAppliedFilter((previous)=>({...previous, isOpenFilterUI:false}));
+		if(state?.appliedFilter?.isApplied){
+			setState((previous)=>({...previous, appliedFilter:{...state.appliedFilter}, isOpenFilterUI:false}));
+		}
+		else{
+			setState((previous)=>({
+				...previous,
+				appliedFilter:{
+					...state.appliedFilter,
+					isApplied:false,
+					mobileNumber:'',
+					workType:'',
+				},
+				isOpenFilterUI:false,
+			}));
+		}
 	}
 
 	const onOpenFilterUI = (nativeEvent)=>{
-		changedAppliedFilter((previous)=>({...previous, isOpenFilterUI:true}));
-		console.log('onOpenFilterUI function called: ', RBSheetRef);
-		// if(RBSheetRef?.current){
-		// 	RBSheetRef?.open();
-		// }
+		setState((previous)=>({...previous, appliedFilter:{...state.appliedFilter}, isOpenFilterUI:true}));
+	}
+
+	onPressApply = async(filterData)=>{
+		let tablePartyData = await filterPartyData(filterData);
+		setState((previous)=>({
+			...previous,
+			allPartiesWorkArray:[...tablePartyData],
+			appliedFilter:{
+				...state.appliedFilter,
+				isApplied:true,
+				mobileNumber:filterData.mobileNumber,
+				workType:filterData.workType,
+			},
+			isOpenFilterUI:false,
+		}));
+	}
+
+	const onClearFilter = async()=>{
+		let tablePartyData = await getPartyData();
+		setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{ ...state.appliedFilter, isApplied:false, mobileNumber:'', workType:''}}));
 	}
 
 	return(
@@ -124,20 +154,19 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 					style={styles.downloadIconContainer}
 				>
 					<FontAwesome name="filter" size={35} color="#38C6F4" />
-					{/*{appliedFilter?.isAppliedMobile || appliedFilter?.isAppliedWorkType
-						? <Badge //Badge will be show if applied any filter
-							status="error"
-							containerStyle={styles.filterBadgeIcon}
-						/>
-						: null
-					}*/}
 				</Pressable>
 				<LogoutUI navigation={props.navigation}/>
 			</View>
-				{allPartiesWorkArray.length
+				{state?.appliedFilter?.isApplied
+					? <CommonGuiToApplyFilter //Badge will be show if applied any filter
+						onClearFilter={onClearFilter}
+					/>
+					: null
+				}
+				{state.allPartiesWorkArray.length
 					? <View style={styles.flatlistContainer}>
 					<FlatList 
-						data={allPartiesWorkArray} 
+						data={state.allPartiesWorkArray} 
 						renderItem={({item, index})=> <PartyShortDetails
 							key={index}
 							index={index}
@@ -150,6 +179,10 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 					/></View>
 					: null
 				}
+				{state?.appliedFilter?.isApplied && !state?.allPartiesWorkArray?.length
+					? <Text style={styles.noFilterPartyData}>{transRef.t('notFoundPartyData')}</Text>
+					: null
+				}
 				<ButtonComponent
 					title={transRef.t('addPartyWork')}
 					onPressIn={onPressAddWork}
@@ -158,7 +191,9 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			<PartyWorkFilter
 				RBSheetRef={RBSheetRef}
 				onPressCross={onPressCross}
-				filterData={appliedFilter}
+				onPressApply={onPressApply}
+				filterData={state.appliedFilter}
+				isOpenFilterUI={state.isOpenFilterUI}
 			/>
 		</View>
 	);
