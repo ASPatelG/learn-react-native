@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
 		marginVertical:5,
 	},
 	flatlistContainer:{
-		height:hp('79%'),
+		height:hp('77%'),
 	},
 	noFilterPartyData:{
 		color:'#808080',
@@ -45,5 +45,27 @@ export const styles = StyleSheet.create({
 		fontWeight:'bold',
 		paddingHorizontal:10,
 		textAlign:'center',
+	},
+	pressableButtonStyle:{
+		backgroundColor:'#175491',
+		width:wp('60%'),
+		paddingVertical:12,
+		alignitems:'center',
+		paddingVertical:5,
+		paddingHorizontal:5,
+		borderRadius:5,
+		marginTop:5,
+		alignSelf:'center',
+	},
+	disabledButtonStyle:{
+		backgroundColor:'#D1D1D1',
+		width:wp('60%'),
+		paddingVertical:12,
+		alignitems:'center',
+		paddingVertical:5,
+		paddingHorizontal:5,
+		borderRadius:5,
+		marginTop:5,
+		alignSelf:'center',
 	}
 });
