@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {View, BackHandler, FlatList, Pressable} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
 import {dataStore} from '../learnRedux/dataStore';
 import {addPartyDetails, setPartyTableDataInStore} from '../learnRedux/actions';
@@ -14,6 +14,8 @@ import PartyShortDetails from '../components/PartyShortDetails';
 import {UserShortDetails} from '../components/userShortDetails';
 import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
 import {showErrorAlert} from '../components/showErrorAlert';
+import LogoutUI from '../components/LogoutUI';
+import PartyWorkFilter from '../components/PartyWorkFilter';
 
 import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
 import { getPartyData } from '../sqliteDatabaseFunctionality/getData';
@@ -28,10 +30,15 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 
 	const [workType, setPartyType] = useState(constantValues.workTypes[0].value);
 	// const allPartiesWorkArray = useSelector((state)=>state.partyDetails);
-	let [allPartiesWorkArray, setPartyData] = useState([]);
-	let [isAppliedWorkType, changedAppliedFilter] = useState(false);
+	const [allPartiesWorkArray, setPartyData] = useState([]);
+	const [appliedFilter, changedAppliedFilter] = useState({
+		isAppliedMobile:false,
+		isAppliedWorkType:false,
+		isOpenFilterUI:false,
+	});
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchRefrence = useDispatch()		// To send the data in store
+	const RBSheetRef = useRef(null);
 
 	onchanDropDownValue = (itemKey, itemValue)=>{
 		setPartyType(itemKey);
@@ -67,14 +74,10 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		// To remove event on onmount
 		return () => {
 			backHandler.remove();
-			willFocusSubscription.remove();
+			willFocusSubscription();
 		}
 	// }, [allPartiesWorkArray]);		// dispatchRef.. to rerender on change data in store;
 	}, []);
-
-	const searchPartyDataWithWorkType = ()=>{
-
-	}
 
 	const onPressAddWork = ()=>{
 		const {navigation} = props;
@@ -90,26 +93,46 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		}
 	}
 
+	const onPressCross = ()=>{
+		// if(RBSheetRef?.current){
+		// 	RBSheetRef?.close();
+		// }
+		changedAppliedFilter((previous)=>({...previous, isOpenFilterUI:false}));
+	}
+
+	const onOpenFilterUI = (nativeEvent)=>{
+		changedAppliedFilter((previous)=>({...previous, isOpenFilterUI:true}));
+		console.log('onOpenFilterUI function called: ', RBSheetRef);
+		// if(RBSheetRef?.current){
+		// 	RBSheetRef?.open();
+		// }
+	}
+
 	return(
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
-			<UserShortDetails navigation={props.navigation}/>
-			<View style={styles.screenChangeContent}>
-				<View style={styles.dropDownContainer}>
-					<DropdownPickerComponent
-						selectedItemValue={workType}
-						itemList={constantValues.workTypes}
-						onValueChange={onchanDropDownValue}
-						dropdownStyle={styles.dropdownStyle}
-						showTranslatedLabel={true}
-					/>
-				</View>
+			<View style={{flexDirection:'row', alignItems:'center'}}>
+				<UserShortDetails navigation={props.navigation}/>
 				<Pressable
 					onPressIn={onPressPDF}
 					style={styles.downloadIconContainer}
 				>
-					<FontAwesome5 name="file-download" size={45} color="#F5EC42"/>
+					<FontAwesome5 name="file-download" size={33} color="#F5EC42"/>
 				</Pressable>
+				<Pressable
+					onPressIn={onOpenFilterUI}
+					style={styles.downloadIconContainer}
+				>
+					<FontAwesome name="filter" size={35} color="#38C6F4" />
+					{/*{appliedFilter?.isAppliedMobile || appliedFilter?.isAppliedWorkType
+						? <Badge //Badge will be show if applied any filter
+							status="error"
+							containerStyle={styles.filterBadgeIcon}
+						/>
+						: null
+					}*/}
+				</Pressable>
+				<LogoutUI navigation={props.navigation}/>
 			</View>
 				{allPartiesWorkArray.length
 					? <View style={styles.flatlistContainer}>
@@ -132,6 +155,11 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 					onPressIn={onPressAddWork}
 					mainContainer={styles.mainContainer}
 				/>
+			<PartyWorkFilter
+				RBSheetRef={RBSheetRef}
+				onPressCross={onPressCross}
+				filterData={appliedFilter}
+			/>
 		</View>
 	);
 }

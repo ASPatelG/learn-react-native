@@ -17,7 +17,7 @@ const TextInputComponent = (props)=> {
 				?<Text style={styles.inputFieldLabel}>{fieldLabelText}<Text style={styles.requiredIconStyle}>{isItRequired ?'*' :null}</Text></Text>
 				: null
 			}
-			<View style={{flexdirectiono:'row'}}>
+			<View style={{flexdirection:'row'}}>
 				{/*{inputIcon
 					? <inputIcon/>
 					: null

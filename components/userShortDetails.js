@@ -39,7 +39,7 @@ export const UserShortDetails = (props)=>{
 				<Text style={styles.userNameStyle}>{loginUserData.userName}</Text>
 				<Text>{loginUserData.mobileNumber}</Text>
 			</View>
-			<LogoutUI navigation={props.navigation}/>
+			{/*<LogoutUI navigation={props.navigation}/>*/}
 		</View>
 	);
 }
@@ -49,8 +49,6 @@ const styles = StyleSheet.create({
 		flexDirection:'row',
 		paddingHorizontal:10,
 		alignItems:'center',
-		borderWidth:0.3,
-		borderColor:'#D1D1D1',
 	},
 	userDetails:{
 		marginLeft:10,
@@ -61,6 +59,6 @@ const styles = StyleSheet.create({
 		fontWeight:'bold',
 		color:'#175491',
 		marginBottom:11,
-		width:wp('66%'),
+		width:wp('39%'),
 	}
 });

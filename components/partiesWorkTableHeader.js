@@ -32,8 +32,10 @@ const styles = StyleSheet.create({
 		width:wp('25%'),
 		paddingVertical:15,
 		paddingHorizontal:3,
-		borderLeftColor:'#d3d3d3',
+		borderLeftColor:'#B3B3B3',
 		borderLeftWidth:1,
 		textAlign:'center',
+		fontWeight:'bold',
+		fontSize:15,
 	},
 });

@@ -31,12 +31,12 @@ export const styles = StyleSheet.create({
 		borderColor:'#D3D3D3',
 		borderRadius:5,
 		padding:4,
-		marginTop:8,
+		marginRight:10,
 	},
 	buttonContainer:{
 		marginVertical:5,
 	},
 	flatlistContainer:{
-		height:hp('70%'),
+		height:hp('79.7%'),
 	},
 });
