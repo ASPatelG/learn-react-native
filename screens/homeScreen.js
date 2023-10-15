@@ -57,10 +57,14 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		};
 
 		const setPartyDataInStore = async() => {
-			let tablePartyData = await getPartyData();
-			if(tablePartyData.length > 0 ){
+			let tablePartyData = [];
+			if(state.appliedFilter.isApplied){
+				tablePartyData = await filterPartyData(state.appliedFilter);
 				setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData]}));
-				// dispatchRefrence(setPartyTableDataInStore({partyData:tablePartyData}));
+			}	// To fetch filter data
+			else{
+				tablePartyData = await getPartyData();
+				setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData]}));
 			}
 		};
 
