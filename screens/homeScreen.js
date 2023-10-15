@@ -112,7 +112,12 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onOpenFilterUI = (nativeEvent)=>{
-		setState((previous)=>({...previous, appliedFilter:{...state.appliedFilter}, isOpenFilterUI:true}));
+		if(state.allPartiesWorkArray.length === 0 && !state.appliedFilter.isApplied){
+			showErrorAlert(transRef.t('noWorkError'));
+		}
+		else{
+			setState((previous)=>({...previous, appliedFilter:{...state.appliedFilter}, isOpenFilterUI:true}));
+		}
 	}
 
 	onPressApply = async(filterData)=>{
@@ -183,7 +188,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 				<ButtonComponent
 					title={transRef.t('addPartyWork')}
 					onPressIn={onPressAddWork}
-					mainContainer={styles.mainContainer}
+					disabledButtonStyle={styles.disabledButtonStyle}
+					pressableButtonStyle={styles.pressableButtonStyle}
 				/>
 			<PartyWorkFilter
 				RBSheetRef={RBSheetRef}

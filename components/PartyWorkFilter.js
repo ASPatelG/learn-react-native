@@ -64,9 +64,6 @@ const PartyWorkFilter = (props)=>{
 			animationType="slide"
 			onRequestClose={onPressCross}
 			visible={isOpenFilterUI}
-			// onDismiss={()=>{
-			// 	setFilterScreenData({mobileNumber:'', workType:''});
-			// }}
 		><View style={styles.bottomSheetContainer}>
 			<ScrollView>
 				<View style={styles.filterHeadingView}>
@@ -142,7 +139,11 @@ const styles = StyleSheet.create({
 		position:'absolute',
 		bottom:0,
 		background:'transparent',
-		width:wp('100%')
+		width:wp('100%'),
+		borderRadius:30,
+		borderWidth:0.8,
+		borderColor:'#808080',
+		backgroundColor:'#FFFFFF',
 	},
 	filterTextStyle:{
 		color: "#175491",
