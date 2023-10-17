@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aspatel.reactnativeapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,13 +25,19 @@
       },
       "permissions": [
         "SEND_SMS"
-      ]
+      ],
+      "package": "com.aspatel.reactnativeapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "82cc6ac4-09f9-48c6-a6d0-d659491abaf7"
+      }
+    }
   }
 }
