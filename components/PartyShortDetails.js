@@ -33,7 +33,7 @@ const PartyShortDetails = (props)=>{
 				style={styles.columnStyle}
 			>
 				<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
-				<AntDesign name="right" size={26} color="#808080" />
+				<AntDesign name="edit" size={22} color="#808080" />
 			</Pressable>
 		</View>
 	);
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
 		borderLeftWidth:1,
 		borderLeftColor:'#B3B3B3',
 		flexDirection:'row',
+		alignItems:'center',
 	},
 	partySomeDetailsContainer:{
 		width:wp('100%'),
