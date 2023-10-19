@@ -1,0 +1,7 @@
+take clone of repository.
+Run--> npm install.
+apart from 1 ownerid not possible to other id because data has been stored in sqllite(table) device.
+onLogout the table data can't delete.
+this app will we use for personal to operate the required registaration by app develeoper.
+This code is written by usining expo cli.
+Supportable version--> expo sdk 49.
