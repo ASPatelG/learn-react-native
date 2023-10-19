@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
+import ScreenUILoading from '../components/ScreenUILoading';
 import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
 import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
 import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
@@ -28,7 +29,8 @@ const AddUpdatePartyWorkDetails = (props)=>{
 		height:'',
 		totalArea:'',
 		amount:'',
-		discount:''
+		discount:'',
+		isLoading:true,
 	});
 	const disableSave = ()=>{
 		if(!partyDetails.firstName?.length || !partyDetails.mobileNumber || partyDetails.mobileNumber.length < 10 || !partyDetails.rate || !partyDetails.length || !partyDetails.width || !partyDetails.rate || !partyDetails.workType){
@@ -40,12 +42,18 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	}
 
 	useEffect(() => {
-		if(params){		// To set data according to party details
-			const {partySomeDetails}  = params;
-			const {discount, email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type, id} = partySomeDetails;
+		const {navigation} = props;
+		const willFocusSubscription = navigation.addListener('focus', ()=> {
+			if(params){		// To set data according to party details
+				const {partySomeDetails}  = params;
+				const {discount, email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type, id} = partySomeDetails;
 
-			setPartyDetails(previous=>({...previous, discount, email, firstName:first_name, height, lastName:last_name, length, mobileNumber:mobile_number, rate, amount, totalArea:total_area, width, workType:work_type, id}));
-		}
+				setPartyDetails(previous=>({...previous, discount, email, firstName:first_name, height, lastName:last_name, length, mobileNumber:mobile_number, rate, amount, totalArea:total_area, width, workType:work_type, id, isLoading:false}));
+			}
+			else{
+				setPartyDetails((previous)=>({...previous, isLoading:false}));
+			}
+		});
 
 		const backAction = () => {
 			const {navigation} = props;
@@ -59,8 +67,10 @@ const AddUpdatePartyWorkDetails = (props)=>{
 		);
 
 		// To remove event on onmount
-		return () => backHandler.remove();
-
+		return () => {
+			backHandler.remove();
+			willFocusSubscription();
+		}
 	}, []);
 
 	const onChangeFirstName = (enteredText)=>{
@@ -215,148 +225,161 @@ const AddUpdatePartyWorkDetails = (props)=>{
 		navigation.goBack();
 	}
 
-	return(
-		<SafeAreaView style={styles.mainContainer}>
-			<CommonHeaderComponent/>
-			<Text style={styles.eployeeDetailsStyle}>{transRef.t('addPartyWork')}</Text>
-			<ScrollView>
-				<TextInputComponent
-					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterFirstName')}
-					value={partyDetails.firstName}
-					onChangeText={onChangeFirstName}
-					maxLength={30}
-					isItRequired={true}
-					inputBoxStyle={styles.inputBoxStyle}
-				/>
-				<TextInputComponent
-					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterLastName')}
-					value={partyDetails.lastName}
-					onChangeText={onChangeLastName}
-					maxLength={30}
-					inputBoxStyle={styles.inputBoxStyle}
-				/>
-				<TextInputComponent
-					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterMobilNumber')}
-					value={partyDetails.mobileNumber?.toString()}
-					onChangeText={onChangeMobileNumber}
-					maxLength={10}
-					isItRequired={true}
-					inputBoxStyle={styles.inputBoxStyle}
-					keyboardType='number-pad'
-				/>
-				<TextInputComponent
-					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterEmail')}
-					value={partyDetails.email}
-					onChangeText={onChangeEmail}
-					keyboardType='email-address'
-					inputBoxStyle={styles.inputBoxStyle}
-					maxLength={80}
-				/>
-				<View style={styles.workAreaDetails}>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('workType')}
-						value={partyDetails.workType}
-						onChangeText={onChangeWorkType}
-						isItRequired={true}
-						inputBoxStyle={styles.workRateBoxStyle}
-						textInputStyle={styles.workRateInput}
-					/>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('workRate')}
-						value={partyDetails.rate?.toString()}
-						onChangeText={onChangeRate}
-						keyboardType='number-pad'
-						isItRequired={true}
-						inputBoxStyle={styles.workRateBoxStyle}
-						textInputStyle={styles.workRateInput}
-						maxLength={10}
-                   />
-				</View>
-				<Text style={styles.workAreaHeading}>{transRef.t('workArea')}</Text>
-				<View style={styles.workAreaDetails}>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('length')}
-						value={partyDetails.length?.toString()}
-						onChangeText={onChangeLength}
-						keyboardType='number-pad'
-						maxLength={10}
-						isItRequired={true}
-						textInputStyle={styles.workAreaInput}
-						inputBoxStyle={styles.workAreaInputBox}
-					/>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('width')}
-						value={partyDetails.width?.toString()}
-						onChangeText={onChangeWidth}
-						keyboardType='number-pad'
-						maxLength={10}
-						isItRequired={true}
-						textInputStyle={styles.workAreaInput}
-						inputBoxStyle={styles.workAreaInputBox}
-					/>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('height')}
-						value={partyDetails.height?.toString()}
-						onChangeText={onChangeHeight}
-						keyboardType='number-pad'
-						maxLength={10}
-						textInputStyle={styles.workAreaInput}
-						inputBoxStyle={styles.workAreaInputBox}
-					/>
-				</View>
-				<View style={styles.workAreaDetails}>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('totalArea')}
-						value={partyDetails.totalArea ?partyDetails.totalArea?.toString() :''}
-						// onChangeText={onChangeHeight}
-						keyboardType='number-pad'
-						maxLength={10}
-						isItRequired={true}
-						textInputStyle={styles.totalValueInput}
-						inputBoxStyle={styles.totalValueBox}
-						editable={false}
-                   />
-                   <TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('totalAmount')}
-						value={partyDetails.amount ?partyDetails.amount?.toString() :''}
-						// onChangeText={onChangeHeight}
-						keyboardType='number-pad'
-						maxLength={10}
-						isItRequired={true}
-						textInputStyle={styles.totalValueInput}
-						inputBoxStyle={styles.totalValueBox}
-						editable={false}  
-                    />
-				</View>
-				<TextInputComponent
-					showFieldLabel={true}
-					fieldLabelText={transRef.t('discount')}
-					value={partyDetails.discount?.toString()}
-					onChangeText={onChangeDiscount}
-					keyboardType='number-pad'
-					maxLength={10}
-					inputBoxStyle={styles.inputBoxStyle}
-				/>
-			</ScrollView>
-			<ButtonComponent
-				title={transRef.t(params ?'update' :'save')}
-				onPressIn={params ?onPressUpdate :onPressSave}
-				disabled={disableSave()}
-				mainContainer={styles.buttonContainer}
+	const setLoading = ()=>{
+		setPartyDetails({...partyDetails, isLoading:!partyDetails.isLoading});
+	}
+
+	if(partyDetails.isLoading){
+		return(
+			<ScreenUILoading
+				showLoadingIndicator={partyDetails.isLoading}
 			/>
-		</SafeAreaView>
-	);
+		);
+	}
+	else{
+		return(
+			<SafeAreaView style={styles.mainContainer}>
+				<CommonHeaderComponent/>
+				<Text style={styles.eployeeDetailsStyle}>{transRef.t('addPartyWork')}</Text>
+				<ScrollView>
+					<TextInputComponent
+						showFieldLabel={true}
+						fieldLabelText={transRef.t('enterFirstName')}
+						value={partyDetails.firstName}
+						onChangeText={onChangeFirstName}
+						maxLength={30}
+						isItRequired={true}
+						inputBoxStyle={styles.inputBoxStyle}
+					/>
+					<TextInputComponent
+						showFieldLabel={true}
+						fieldLabelText={transRef.t('enterLastName')}
+						value={partyDetails.lastName}
+						onChangeText={onChangeLastName}
+						maxLength={30}
+						inputBoxStyle={styles.inputBoxStyle}
+					/>
+					<TextInputComponent
+						showFieldLabel={true}
+						fieldLabelText={transRef.t('enterMobilNumber')}
+						value={partyDetails.mobileNumber?.toString()}
+						onChangeText={onChangeMobileNumber}
+						maxLength={10}
+						isItRequired={true}
+						inputBoxStyle={styles.inputBoxStyle}
+						keyboardType='number-pad'
+					/>
+					<TextInputComponent
+						showFieldLabel={true}
+						fieldLabelText={transRef.t('enterEmail')}
+						value={partyDetails.email}
+						onChangeText={onChangeEmail}
+						keyboardType='email-address'
+						inputBoxStyle={styles.inputBoxStyle}
+						maxLength={80}
+					/>
+					<View style={styles.workAreaDetails}>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('workType')}
+							value={partyDetails.workType}
+							onChangeText={onChangeWorkType}
+							isItRequired={true}
+							inputBoxStyle={styles.workRateBoxStyle}
+							textInputStyle={styles.workRateInput}
+						/>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('workRate')}
+							value={partyDetails.rate?.toString()}
+							onChangeText={onChangeRate}
+							keyboardType='number-pad'
+							isItRequired={true}
+							inputBoxStyle={styles.workRateBoxStyle}
+							textInputStyle={styles.workRateInput}
+							maxLength={10}
+	                   />
+					</View>
+					<Text style={styles.workAreaHeading}>{transRef.t('workArea')}</Text>
+					<View style={styles.workAreaDetails}>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('length')}
+							value={partyDetails.length?.toString()}
+							onChangeText={onChangeLength}
+							keyboardType='number-pad'
+							maxLength={10}
+							isItRequired={true}
+							textInputStyle={styles.workAreaInput}
+							inputBoxStyle={styles.workAreaInputBox}
+						/>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('width')}
+							value={partyDetails.width?.toString()}
+							onChangeText={onChangeWidth}
+							keyboardType='number-pad'
+							maxLength={10}
+							isItRequired={true}
+							textInputStyle={styles.workAreaInput}
+							inputBoxStyle={styles.workAreaInputBox}
+						/>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('height')}
+							value={partyDetails.height?.toString()}
+							onChangeText={onChangeHeight}
+							keyboardType='number-pad'
+							maxLength={10}
+							textInputStyle={styles.workAreaInput}
+							inputBoxStyle={styles.workAreaInputBox}
+						/>
+					</View>
+					<View style={styles.workAreaDetails}>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('totalArea')}
+							value={partyDetails.totalArea ?partyDetails.totalArea?.toString() :''}
+							// onChangeText={onChangeHeight}
+							keyboardType='number-pad'
+							maxLength={10}
+							isItRequired={true}
+							textInputStyle={styles.totalValueInput}
+							inputBoxStyle={styles.totalValueBox}
+							editable={false}
+	                   />
+	                   <TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('totalAmount')}
+							value={partyDetails.amount ?partyDetails.amount?.toString() :''}
+							// onChangeText={onChangeHeight}
+							keyboardType='number-pad'
+							maxLength={10}
+							isItRequired={true}
+							textInputStyle={styles.totalValueInput}
+							inputBoxStyle={styles.totalValueBox}
+							editable={false}  
+	                    />
+					</View>
+					<TextInputComponent
+						showFieldLabel={true}
+						fieldLabelText={transRef.t('discount')}
+						value={partyDetails.discount?.toString()}
+						onChangeText={onChangeDiscount}
+						keyboardType='number-pad'
+						maxLength={10}
+						inputBoxStyle={styles.inputBoxStyle}
+					/>
+				</ScrollView>
+				<ButtonComponent
+					title={transRef.t(params ?'update' :'save')}
+					onPressIn={params ?onPressUpdate :onPressSave}
+					disabled={disableSave()}
+					mainContainer={styles.buttonContainer}
+				/>
+			</SafeAreaView>
+		);
+	}
 }
 
 export default AddUpdatePartyWorkDetails;

@@ -17,6 +17,7 @@ import {showErrorAlert} from '../components/showErrorAlert';
 import LogoutUI from '../components/LogoutUI';
 import PartyWorkFilter from '../components/PartyWorkFilter';
 import CommonGuiToApplyFilter from '../components/CommonGuiToApplyFilter';
+import ScreenUILoading from '../components/ScreenUILoading';
 
 import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
 import { getPartyData, filterPartyData } from '../sqliteDatabaseFunctionality/getData';
@@ -29,8 +30,6 @@ import {generateWorkPaymentPDF} from '../javaScriptFunction/generateWorkPaymentP
 const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */
 
-	const [workType, setPartyType] = useState(constantValues.workTypes[0].value);
-	// const allPartiesWorkArray = useSelector((state)=>state.partyDetails);
 	const [state, setState] = useState({
 		allPartiesWorkArray:[],
 		appliedFilter:{
@@ -39,13 +38,15 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			workType:''
 		},
 		isOpenFilterUI:false,
+		workType:constantValues.workTypes[0].value,
+		isLoading:true,
 	});
 	const transRef  = useSelector((state)=>state.transRef);
 	const dispatchRefrence = useDispatch()		// To send the data in store
 	const RBSheetRef = useRef(null);
 
 	onchanDropDownValue = (itemKey, itemValue)=>{
-		setPartyType(itemKey);
+		setState((previous)=> ({...previous, workType:itemValue}));
 	}
 
 	useEffect(() => {
@@ -58,7 +59,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 
 		const setPartyDataInStore = async() => {
 			let tablePartyData = await getPartyData();
-			setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}}));
+			setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
 		};
 
 		const backHandler = BackHandler.addEventListener(
@@ -80,6 +81,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}, []);
 
 	const onPressAddWork = ()=>{
+		setState(previous=>({...previous, isLoading:true}));
 		const {navigation} = props;
 		navigation.navigate('AddUpdatePartyWorkDetails');
 	}
@@ -140,66 +142,75 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{ ...state.appliedFilter, isApplied:false, mobileNumber:'', workType:''}}));
 	}
 
-	return(
-		<View style={styles.mainContainer}>
-			<CommonHeaderComponent/>
-			<View style={{flexDirection:'row', alignItems:'center'}}>
-				<UserShortDetails navigation={props.navigation}/>
-				<Pressable
-					onPressIn={onPressPDF}
-					style={styles.downloadIconContainer}
-				>
-					<FontAwesome5 name="file-download" size={33} color="#F5EC42"/>
-				</Pressable>
-				<Pressable
-					onPressIn={onOpenFilterUI}
-					style={styles.downloadIconContainer}
-				>
-					<FontAwesome name="filter" size={35} color="#38C6F4" />
-				</Pressable>
-				<LogoutUI navigation={props.navigation}/>
-			</View>
-				{state?.appliedFilter?.isApplied
-					? <CommonGuiToApplyFilter //Badge will be show if applied any filter
-						onClearFilter={onClearFilter}
-					/>
-					: null
-				}
-				{state.allPartiesWorkArray.length
-					? <View style={styles.flatlistContainer}>
-					<FlatList 
-						data={state.allPartiesWorkArray} 
-						renderItem={({item, index})=> <PartyShortDetails
-							key={index}
-							index={index}
-							partySomeDetails={item}
-							navigation={props.navigation}
-						/>}
-						keyExtractor={(item, index) => index.toString()}
-						keyboardShouldPersistTaps='always'
-						ListHeaderComponent={<PartiesWorkTableHeader/>}
-					/></View>
-					: null
-				}
-				{state?.appliedFilter?.isApplied && !state?.allPartiesWorkArray?.length
-					? <Text style={styles.noFilterPartyData}>{transRef.t('notFoundPartyData')}</Text>
-					: null
-				}
-				<ButtonComponent
-					title={transRef.t('addPartyWork')}
-					onPressIn={onPressAddWork}
-					disabledButtonStyle={styles.disabledButtonStyle}
-					pressableButtonStyle={styles.pressableButtonStyle}
-				/>
-			<PartyWorkFilter
-				RBSheetRef={RBSheetRef}
-				onPressCross={onPressCross}
-				onPressApply={onPressApply}
-				filterData={state.appliedFilter}
-				isOpenFilterUI={state.isOpenFilterUI}
+	if(state.isLoading){
+		return(
+			<ScreenUILoading
+				showLoadingIndicator={state.isLoading}
 			/>
-		</View>
-	);
+		);
+	}
+	else{
+		return(
+			<View style={styles.mainContainer}>
+				<CommonHeaderComponent/>
+				<View style={{flexDirection:'row', alignItems:'center'}}>
+					<UserShortDetails navigation={props.navigation}/>
+					<Pressable
+						onPressIn={onPressPDF}
+						style={styles.downloadIconContainer}
+					>
+						<FontAwesome5 name="file-download" size={33} color="#F5EC42"/>
+					</Pressable>
+					<Pressable
+						onPressIn={onOpenFilterUI}
+						style={styles.downloadIconContainer}
+					>
+						<FontAwesome name="filter" size={35} color="#38C6F4" />
+					</Pressable>
+					<LogoutUI navigation={props.navigation}/>
+				</View>
+					{state?.appliedFilter?.isApplied
+						? <CommonGuiToApplyFilter //Badge will be show if applied any filter
+							onClearFilter={onClearFilter}
+						/>
+						: null
+					}
+					{state.allPartiesWorkArray.length
+						? <View style={styles.flatlistContainer}>
+						<FlatList 
+							data={state.allPartiesWorkArray} 
+							renderItem={({item, index})=> <PartyShortDetails
+								key={index}
+								index={index}
+								partySomeDetails={item}
+								navigation={props.navigation}
+							/>}
+							keyExtractor={(item, index) => index.toString()}
+							keyboardShouldPersistTaps='always'
+							ListHeaderComponent={<PartiesWorkTableHeader/>}
+						/></View>
+						: null
+					}
+					{state?.appliedFilter?.isApplied && !state?.allPartiesWorkArray?.length
+						? <Text style={styles.noFilterPartyData}>{transRef.t('notFoundPartyData')}</Text>
+						: null
+					}
+					<ButtonComponent
+						title={transRef.t('addPartyWork')}
+						onPressIn={onPressAddWork}
+						disabledButtonStyle={styles.disabledButtonStyle}
+						pressableButtonStyle={styles.pressableButtonStyle}
+					/>
+				<PartyWorkFilter
+					RBSheetRef={RBSheetRef}
+					onPressCross={onPressCross}
+					onPressApply={onPressApply}
+					filterData={state.appliedFilter}
+					isOpenFilterUI={state.isOpenFilterUI}
+				/>
+			</View>
+		);
+	}
 }
 
 export default HomeScreen;

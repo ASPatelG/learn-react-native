@@ -2,12 +2,13 @@ import {ActivityIndicator, View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 export default function ScreenUILoading(props){
+	const {showLoadingIndicator, loadingIndicatorContainer, size} = props;
 	if(props.showLoadingIndicator === true){
 		return(
-			<View style={[ StyleSheet.absoluteFillObject, props.loadingIndicatorContainer ]}>
+			<View style={[ StyleSheet.absoluteFillObject, loadingIndicatorContainer ]}>
 				<ActivityIndicator
-					size={props.size}
-					animating={props.showLoadingIndicator}
+					size={size}
+					animating={showLoadingIndicator}
 				/>
 			</View>
 		);
