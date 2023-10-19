@@ -10,6 +10,7 @@ import TextInputComponent from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
+import ScreenUILoading from '../components/ScreenUILoading';
 
 import {changeLoginUserData} from '../learnRedux/actions';
 
@@ -97,33 +98,41 @@ export const LoginScreen = (props)=>{
 			crossPlatformToast(transRef.t('notRegistered'));
 		}
 	}
-
-	return(
-		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
-			<CommonHeaderComponent/>
-			<Text style={styles.screenHeading}>{transRef.t('login')}</Text>
-			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
-			<TextInputComponent
-				showFieldLabel={true}
-				fieldLabelText={transRef.t('enterMobilNumber')}
-				value={state?.mobileNumber}
-				onChangeText={onchangeMobileNumber}
-				keyboardType='number-pad'
-				inputIcon={()=>(<FontAwesome name="mobile-phone" size={24} color="black" />)}
-				maxLength={10}
-				placehodar={transRef.t('phoneNumber')}
+	if(state.isLoading){
+		return(
+			<ScreenUILoading
+				showLoadingIndicator={state.isLoading}
 			/>
-			<ButtonComponent
-				title={state.showOTPUI ?transRef.t('getOTP') :transRef.t('submit')}
-				onPressIn={onPressSubmit}
-				disabled={state?.mobileNumber.length < 10}
-				mainContainer={styles.buttonContainer}
-			/>
-			{
-				state.showOTPUI
-				? <Text style={styles.signupHintStyle}>{transRef.t('signupHint')}</Text>
-				: null
-			}
-		</ScrollView>
-	);
+		);
+	}
+	else{
+		return(
+			<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
+				<CommonHeaderComponent/>
+				<Text style={styles.screenHeading}>{transRef.t('login')}</Text>
+				<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
+				<TextInputComponent
+					showFieldLabel={true}
+					fieldLabelText={transRef.t('enterMobilNumber')}
+					value={state?.mobileNumber}
+					onChangeText={onchangeMobileNumber}
+					keyboardType='number-pad'
+					inputIcon={()=>(<FontAwesome name="mobile-phone" size={24} color="black" />)}
+					maxLength={10}
+					placehodar={transRef.t('phoneNumber')}
+				/>
+				<ButtonComponent
+					title={state.showOTPUI ?transRef.t('getOTP') :transRef.t('submit')}
+					onPressIn={onPressSubmit}
+					disabled={state?.mobileNumber.length < 10}
+					mainContainer={styles.buttonContainer}
+				/>
+				{
+					state.showOTPUI
+					? <Text style={styles.signupHintStyle}>{transRef.t('signupHint')}</Text>
+					: null
+				}
+			</ScrollView>
+		);
+	}
 }
