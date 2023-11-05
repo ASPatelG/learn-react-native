@@ -56,6 +56,10 @@ export const translationValues = {
 		logout:'Logout',
 		call_us:'Call us',
 		choose_language:'Choose Language',
+		appName:'Anil Developer',
+		cancel:"Cancel",
+		yes:'Yes',
+		logout_message:'Are you sure you want to logout?',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
@@ -86,5 +90,8 @@ export const translationValues = {
 		logout:'बाहर जाये',
 		call_us:'संपर्क करें',
 		choose_language:'भाषा चुनें',
+		cancel:'नहीं',
+		yes:'हाँ',
+		logout_message:'क्या आप इस अकाउंट से बाहर जाना चाहते है',
 	},
 }

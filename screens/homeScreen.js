@@ -14,7 +14,7 @@ import PartyShortDetails from '../components/PartyShortDetails';
 import {UserShortDetails} from '../components/userShortDetails';
 import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
 import {showErrorAlert} from '../components/showErrorAlert';
-import LogoutUI from '../components/LogoutUI';
+// import LogoutUI from '../components/LogoutUI';
 import PartyWorkFilter from '../components/PartyWorkFilter';
 import CommonGuiToApplyFilter from '../components/CommonGuiToApplyFilter';
 import ScreenUILoading from '../components/ScreenUILoading';
@@ -178,7 +178,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 					>
 						<FontAwesome name="filter" size={35} color="#38C6F4" />
 					</Pressable>
-					<LogoutUI navigation={props.navigation}/>
+					{/*<LogoutUI navigation={props.navigation}/>*/}
 				</View>
 					{state?.appliedFilter?.isApplied
 						? <CommonGuiToApplyFilter //Badge will be show if applied any filter

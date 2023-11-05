@@ -8,6 +8,8 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
 import ScreenUILoading from '../components/ScreenUILoading';
 
+import {removeAnObjectFromAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
+
 function DrawerContentComponent(props){
 	const [state, setState] = useState({
 		isLoading: false,
@@ -29,48 +31,21 @@ function DrawerContentComponent(props){
 	})
 	
 	onPressYesLogout  = async () => {
-		const response = await client.logoutTokenDelete();
-		if((response.data.statusCode && badRequestErrorStatus.includes(response.data.statusCode)) || (response.status && badRequestErrorStatus.includes(response.status))){
-			Alert.alert(
-				'GoPaani',
-				transRef.t('badRequest'),
-				[
-					{text: transRef.t('ok'),},
-				],
-				{ cancelable: false }
-			)
-		}
-		else if(response.data.success){
-			logout(props.navigation);
-		}
+		const {navigation} = props;
+		await removeAnObjectFromAsyncStorage("businessUserData");
+		navigation.navigate('LoginScreen');
 	}
 
 	logoutPermission = async () => {
-		const userTokenData = await getAnObjectFromAsyncStorage('userTokenData');
-		const JsonUserTokenData = JSON.parse(userTokenData);
-		if(JsonUserTokenData.is_superuser_login){
-			Alert.alert(
-				transRef.t('logout'),
-				transRef.t('logout_message'),
-				[
-					{text: transRef.t('cancel')},
-					// {text:  transRef.t('yes'), onPress: () => logout(props.navigation)},
-					{text:  transRef.t('yes')},
-				],
-				{ cancelable: false }
-			)
-		}else{
-			Alert.alert(
-				transRef.t('logout'),
-				transRef.t('logout_message'),
-				[
-					{text: transRef.t('cancel')},
-					// {text:  transRef.t('yes'), onPress: () => onPressYesLogout()},
-					{text:  transRef.t('yes')}
-				],
-				{ cancelable: false }
-			)
-		}
+		Alert.alert(
+			transRef.t('appName'),
+			transRef.t('logout_message'),
+			[
+				{text: transRef.t('cancel')},
+				{text:  transRef.t('yes'), onPress: () => onPressYesLogout()},
+			],
+			{ cancelable: false }
+		)
 	};
 
 	if(state.isLoading){
@@ -104,7 +79,7 @@ function DrawerContentComponent(props){
 						</TouchableOpacity>
 						<TouchableOpacity 
 							style={styles.screenStyle} 
-							// onPress={logoutPermission}
+							onPress={logoutPermission}
 						>
 								<View style={styles.commonIconContainer}>
 									<Ionicons name="md-log-out" style={{ color: '#175491',opacity:0.62,marginLeft:10}} size={24} />
