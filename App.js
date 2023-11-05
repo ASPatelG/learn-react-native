@@ -15,6 +15,7 @@ import {OTPVerifyScreen} from './screens/OTPVerifyScreen';
 import {ChooseWork} from './screens/ChooseWork';
 import HomeScreen from './screens/homeScreen';
 import AddUpdatePartyWorkDetails from './screens/addUpdatePartyWorkDetails';
+import DrawerContentComponent from './screens/DrawerContentComponent';
 
 import {dataStore} from './learnRedux/dataStore';
 
@@ -24,7 +25,7 @@ const Stack = createStackNavigator();		// App Starting navigation(app root navig
 function AppMainStack (){
 	// dataStore --> To use centralized state,  Provider --> To map all screen with store
 	return (
-		<Provider store={dataStore}>
+		
 			<Stack.Navigator
 				initialRouteName='LoginScreen'	// To programing practise set ChooseWork
 			>
@@ -35,7 +36,6 @@ function AppMainStack (){
 				<Stack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
 				<Stack.Screen name="AddUpdatePartyWorkDetails" component={AddUpdatePartyWorkDetails} options={{headerShown:false}}/>
 			</Stack.Navigator>
-		</Provider>
 	)
 }
 
@@ -65,9 +65,10 @@ const Drawer = createDrawerNavigator();
 function DrawerNavigator() {
 	return(
 		<NavigationContainer>
+			<Provider store={dataStore}>
 				<Drawer.Navigator
 					initialRouteName="AppMainStack"
-					// drawerContent={(props) => <DrawerContentComponents {...props} /> }
+					drawerContent={(props) => <DrawerContentComponent {...props} />}
 					screenOptions={{
 						headerShown: false,
 						drawerStyle:{
@@ -79,6 +80,7 @@ function DrawerNavigator() {
 					<Drawer.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
 					<Drawer.Screen name="AppMainStack" component={AppMainStack} options={{headerShown:false}}/>
 				</Drawer.Navigator>
+			</Provider>
 		</NavigationContainer>
 	)
 }

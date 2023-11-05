@@ -53,6 +53,9 @@ export const translationValues = {
 		apply:'Apply',
 		notFoundPartyData:'Not found applied filter data',
 		clearFilter:'Clear Filter',
+		logout:'Logout',
+		call_us:'Call us',
+		choose_language:'Choose Language',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
@@ -80,5 +83,8 @@ export const translationValues = {
 		wall:'वॉल',
 		floor:'फर्श',
 		addPartyWork:'Add Party Work',
+		logout:'बाहर जाये',
+		call_us:'संपर्क करें',
+		choose_language:'भाषा चुनें',
 	},
 }
