@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import {View, BackHandler, FlatList, Pressable, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
-import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5, FontAwesome, Ionicons } from '@expo/vector-icons';
 
 import {dataStore} from '../learnRedux/dataStore';
 import {addPartyDetails, setPartyTableDataInStore} from '../learnRedux/actions';
@@ -14,7 +14,7 @@ import PartyShortDetails from '../components/PartyShortDetails';
 import {UserShortDetails} from '../components/userShortDetails';
 import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
 import {showErrorAlert} from '../components/showErrorAlert';
-import LogoutUI from '../components/LogoutUI';
+// import LogoutUI from '../components/LogoutUI';
 import PartyWorkFilter from '../components/PartyWorkFilter';
 import CommonGuiToApplyFilter from '../components/CommonGuiToApplyFilter';
 import ScreenUILoading from '../components/ScreenUILoading';
@@ -137,6 +137,11 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		}));
 	}
 
+	onPressMenu = async ()=>{
+		const {navigation} = props;
+		navigation.openDrawer();
+	}
+
 	const onClearFilter = async()=>{
 		let tablePartyData = await getPartyData();
 		setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{ ...state.appliedFilter, isApplied:false, mobileNumber:'', workType:''}}));
@@ -154,6 +159,12 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			<View style={styles.mainContainer}>
 				<CommonHeaderComponent/>
 				<View style={{flexDirection:'row', alignItems:'center'}}>
+					<Pressable
+						onPressIn={onPressMenu}
+						style={styles.menuIconContainer}
+					>
+						<Ionicons name="menu-sharp" size={35} color="black" />
+					</Pressable>
 					<UserShortDetails navigation={props.navigation}/>
 					<Pressable
 						onPressIn={onPressPDF}
@@ -167,7 +178,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 					>
 						<FontAwesome name="filter" size={35} color="#38C6F4" />
 					</Pressable>
-					<LogoutUI navigation={props.navigation}/>
+					{/*<LogoutUI navigation={props.navigation}/>*/}
 				</View>
 					{state?.appliedFilter?.isApplied
 						? <CommonGuiToApplyFilter //Badge will be show if applied any filter

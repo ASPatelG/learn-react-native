@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
 		fontWeight:'bold',
 		color:'#175491',
 		marginBottom:11,
-		width:wp('39%'),
+		width:wp('44%'),
 	}
 });

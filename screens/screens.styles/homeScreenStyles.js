@@ -33,6 +33,10 @@ export const styles = StyleSheet.create({
 		padding:4,
 		marginRight:10,
 	},
+	menuIconContainer:{
+		padding:4,
+		marginLeft:5,
+	},
 	buttonContainer:{
 		marginVertical:5,
 	},
