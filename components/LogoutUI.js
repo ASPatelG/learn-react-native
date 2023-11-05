@@ -10,13 +10,13 @@ import {removeAnObjectFromAsyncStorage} from '../javaScriptFunction/asynStorageF
 const LogoutUI = (props)=>{
 	/* Used to show ui till the app is loading */
 
-	const onPressLogout = ()=>{
+	const onPressLogout = async ()=>{
 		/*
 			StackActions.reset--> can't use because, import { StackActions } from 'react-navigation'; react-navigation not support in expo
 		*/
 
 		const {navigation} = props;
-		removeAnObjectFromAsyncStorage("businessUserData");
+		await removeAnObjectFromAsyncStorage("businessUserData");
 		navigation.popToTop();
 	}
 

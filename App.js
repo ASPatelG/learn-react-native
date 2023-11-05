@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';		//According to reactnative stack navigation this statement should in top(firstline)
 import {Component} from 'react';
+import { StyleSheet, Text, View, StatusBar, useState, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator } from '@react-navigation/drawer';
 import {Provider} from 'react-redux';
-
-import { StyleSheet, Text, View, StatusBar, useState, Pressable } from 'react-native';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {CodingPractise} from './codingPractise';
 import {AppLoadingUI} from './components/AppLoadingUI';
@@ -19,46 +20,66 @@ import {dataStore} from './learnRedux/dataStore';
 
 import {ProgramingPractiseRoot} from './programingPractise/programingPractiseRoot';
 
-const ApploadingStack = createStackNavigator();		// App Starting navigation(app root navigation)
+const Stack = createStackNavigator();		// App Starting navigation(app root navigation)
 function AppMainStack (){
 	// dataStore --> To use centralized state,  Provider --> To map all screen with store
 	return (
-		<NavigationContainer>
-			<Provider store={dataStore}>
-				<ApploadingStack.Navigator
-					initialRouteName='LoginScreen'	// To programing practise set ChooseWork
-				>
-					<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
-					<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
-					<ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
-					<ApploadingStack.Screen name="OTPVerifyScreen" component={OTPVerifyScreen} options={{headerShown:false}}/>
-					<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
-					<ApploadingStack.Screen name="AddUpdatePartyWorkDetails" component={AddUpdatePartyWorkDetails} options={{headerShown:false}}/>
-				</ApploadingStack.Navigator>
-			</Provider>
-		</NavigationContainer>
+		<Provider store={dataStore}>
+			<Stack.Navigator
+				initialRouteName='LoginScreen'	// To programing practise set ChooseWork
+			>
+				<Stack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>
+				{/*<Stack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>*/}
+				<Stack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
+				<Stack.Screen name="OTPVerifyScreen" component={OTPVerifyScreen} options={{headerShown:false}}/>
+				<Stack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
+				<Stack.Screen name="AddUpdatePartyWorkDetails" component={AddUpdatePartyWorkDetails} options={{headerShown:false}}/>
+			</Stack.Navigator>
+		</Provider>
 	)
 }
 
-const PractiseProgramingStack = createStackNavigator();		// Programin practise stack navigation
+// const Stack = createStackNavigator();		// Programin practise stack navigation
 function ProgramingPracitseStack (){
 	return (
-		<PractiseProgramingStack.Navigator
+		<Stack.Navigator
 			initialRouteName='ProgramingPractiseRoot'
 		>
-			<PractiseProgramingStack.Screen name="ProgramingPractiseRoot" component={ProgramingPractiseRoot} options={{headerShown:false}}/>
-		</PractiseProgramingStack.Navigator>
+			<Stack.Screen name="ProgramingPractiseRoot" component={ProgramingPractiseRoot} options={{headerShown:false}}/>
+		</Stack.Navigator>
 	)
 }
 
-const CostEstimationStack = createStackNavigator();		// This is cost estimation stack
+// const CostEstimationStack = createStackNavigator();		// This is cost estimation stack
 function CostEstimationCalculator (){
 	return (
-		<CostEstimationStack.Navigator
+		<Stack.Navigator
 			initialRouteName='HomeScreen'
 		>
-			<CostEstimationStack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown:false, title: 'Back'}}/>
-		</CostEstimationStack.Navigator>
+			<Stack.Screen name="HomeScreen" component={HomeScreen} options={{headerShown:false, title: 'Back'}}/>
+		</Stack.Navigator>
+	)
+}
+
+const Drawer = createDrawerNavigator();
+function DrawerNavigator() {
+	return(
+		<NavigationContainer>
+				<Drawer.Navigator
+					initialRouteName="AppMainStack"
+					// drawerContent={(props) => <DrawerContentComponents {...props} /> }
+					screenOptions={{
+						headerShown: false,
+						drawerStyle:{
+							backgroundColor:'#ffffff',
+							width: wp('85%'),
+						}
+					}}
+				>
+					<Drawer.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
+					<Drawer.Screen name="AppMainStack" component={AppMainStack} options={{headerShown:false}}/>
+				</Drawer.Navigator>
+		</NavigationContainer>
 	)
 }
 
@@ -91,7 +112,7 @@ export default class App extends Component {
 		else{
 			return (
 				<>
-					<AppMainStack/>
+					<DrawerNavigator/>
 				</>
 			);
 		}
