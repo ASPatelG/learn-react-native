@@ -3,7 +3,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export const styles = StyleSheet.create({
 	mainContainer:{
 		flex:1,
-		alignitems:'center',
+		alignItems:'center',
 	},
 	pressableButtonStyle:{
 		backgroundColor:'#175491',

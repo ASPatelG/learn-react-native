@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
 	menuIconContainer:{
 		padding:4,
 		marginLeft:5,
+		alignItems:'center',
 	},
 	buttonContainer:{
 		marginVertical:5,
@@ -54,7 +55,7 @@ export const styles = StyleSheet.create({
 		backgroundColor:'#175491',
 		width:wp('60%'),
 		paddingVertical:12,
-		alignitems:'center',
+		alignItems:'center',
 		paddingVertical:5,
 		paddingHorizontal:5,
 		borderRadius:5,
@@ -65,7 +66,7 @@ export const styles = StyleSheet.create({
 		backgroundColor:'#D1D1D1',
 		width:wp('60%'),
 		paddingVertical:12,
-		alignitems:'center',
+		alignItems:'center',
 		paddingVertical:5,
 		paddingHorizontal:5,
 		borderRadius:5,
