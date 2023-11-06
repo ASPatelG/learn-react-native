@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 	screenContainerStyle:{
 		flex:1,
 		background:'#ffffff',
-		alignitems:'center',
+		alignItems:'center',
 		justifycontent:'center',
 	}
 });
