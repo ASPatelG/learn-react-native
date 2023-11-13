@@ -2,7 +2,7 @@ import { I18n } from 'i18n-js';
 import {translationValues} from '../staticDataFiles/translationValues';
 
 const transRef = new I18n(translationValues)
-transRef.locale = 'en';	// By default set english
+transRef.locale = 'hi';	// By default set english
 transRef.enableFallback = true;	// When a value is missing from a language it'll fall back to another language with the key present.
 
 const initialValue = {
@@ -19,7 +19,9 @@ export const reducers = (state = initialValue, action)=>{
 		}
 		case "changeLanguage":{
 			const {languageCod} = action.payload;
-			return { ...state, transRef:{...state.transRef, _locale:languageCod}}
+			// return { ...state, transRef:{...state.transRef, _locale:languageCod, loacale:languageCod, _defaultLocale:languageCod, locales:{_loacale:languageCod}}}
+			// return { ...state, transRef:{...state.transRef, locales:{_loacale:languageCod}}}
+			return {...state}
 		}
 		case "saveLoginUserData":{
 			const {loginUserData} = action.payload;

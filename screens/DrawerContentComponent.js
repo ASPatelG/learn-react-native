@@ -124,6 +124,10 @@ const styles = StyleSheet.create({
 		color:'#175491',
 		marginLeft:10,
 	},
+	screenTextStyle:{
+		fontWeight: 'bold',
+		marginLeft:10
+	},
 	selectedTextStyle: {
 		color:'#2196f3',
 		opacity:0.87,
