@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
 	mainContainer:{
 		flex:1,
 		backgroundColor:'#ffffff',
-		alignItems:'center',
+		// alignItems:'center',
 	},
 	screenHeading:{
 		fontSize:25,

@@ -57,7 +57,9 @@ const AddUpdatePartyWorkDetails = (props)=>{
 
 		const backAction = () => {
 			const {navigation} = props;
-			navigation.goBack()	// To close the app
+			if(navigation.canGoBack()){
+				navigation.goBack()	// To close the app
+			}
 			return true;
 		};
 

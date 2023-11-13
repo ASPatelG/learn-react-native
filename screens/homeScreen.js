@@ -14,7 +14,6 @@ import PartyShortDetails from '../components/PartyShortDetails';
 import {UserShortDetails} from '../components/userShortDetails';
 import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
 import {showErrorAlert} from '../components/showErrorAlert';
-// import LogoutUI from '../components/LogoutUI';
 import PartyWorkFilter from '../components/PartyWorkFilter';
 import CommonGuiToApplyFilter from '../components/CommonGuiToApplyFilter';
 import ScreenUILoading from '../components/ScreenUILoading';
@@ -56,26 +55,26 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			BackHandler.exitApp()	// To close the app
 			return true;
 		};
+		let backHandler = null;
 
 		const setPartyDataInStore = async() => {
 			let tablePartyData = await getPartyData();
 			setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
 		};
 
-		const backHandler = BackHandler.addEventListener(
-			'hardwareBackPress',
-			backAction,
-		);
-
 		const willFocusSubscription = navigation.addListener('focus', ()=> {
 			createOwnerTable();		// To store business owner details
 			createPartyTable();		// To store party's works details
 			setPartyDataInStore();	// To store table data in readux-store
+			backHandler = BackHandler.addEventListener(
+				'hardwareBackPress',
+				backAction,
+			);
 		});
 
 		// To remove event on onmount
 		return () => {
-			backHandler.remove();
+			backHandler?.remove();
 			willFocusSubscription();
 		}
 	}, []);
