@@ -19,7 +19,7 @@ export const reducers = (state = initialValue, action)=>{
 		}
 		case "changeLanguage":{
 			const {languageCod} = action.payload;
-			return { ...state, transRef:{...state.transRef, local:languageCod}}
+			return { ...state, transRef:{...state.transRef, _locale:languageCod}}
 		}
 		case "saveLoginUserData":{
 			const {loginUserData} = action.payload;

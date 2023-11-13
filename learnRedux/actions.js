@@ -4,7 +4,7 @@ import {
 	saveLoginUserData,
 	addParty,
 	updateParty,
-	addPartyTableData
+	addPartyTableData,
 } from './actionsType';
 
 import {getPartyData} from '../sqliteDatabaseFunctionality/getData';

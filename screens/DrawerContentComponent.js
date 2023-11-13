@@ -18,15 +18,17 @@ function DrawerContentComponent(props){
 
 	navigateToScreen = ( route ) =>(
 		() => {
-		props.navigation.dispatch(
-			CommonActions.navigate({
-				name:route,
-				params:{
-					'loginUserData':global.userTokenData
-				},
-				merge:true
-			})
-		)
+		// props.navigation.dispatch(
+		// 	CommonActions.navigate({
+		// 		name:route,
+		// 		params:{
+		// 			'loginUserData':global.userTokenData
+		// 		},
+		// 		merge:true
+		// 	})
+		// )
+		const {navigation} = props;
+		navigation.navigate('ChangeLanguageUI');
 		props.navigation.dispatch(DrawerActions.closeDrawer())
 	})
 	
@@ -64,7 +66,7 @@ function DrawerContentComponent(props){
 					<View>
 						<TouchableOpacity 
 							style={[styles.screenStyle, (focusedRoute==='ChooseLanguage') ? styles.activeBackgroundColor : null]}
-							// onPress={navigateToScreen('ChooseLanguage')}
+							onPress={navigateToScreen('ChooseLanguage')}
 						>
 							<View style={styles.commonIconContainer}>
 								<FontAwesome

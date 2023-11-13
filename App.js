@@ -9,6 +9,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {CodingPractise} from './codingPractise';
 import {AppLoadingUI} from './components/AppLoadingUI';
+import ChangeLanguageUI from './components/changeLanguageUI';
 
 import {LoginScreen} from './screens/loginScreen';
 import {OTPVerifyScreen} from './screens/OTPVerifyScreen';
@@ -79,6 +80,7 @@ function DrawerNavigator() {
 				>
 					<Drawer.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>
 					<Drawer.Screen name="AppMainStack" component={AppMainStack} options={{headerShown:false}}/>
+					<Drawer.Screen name="ChangeLanguageUI" component={ChangeLanguageUI} options={{headerShown:false}}/>
 				</Drawer.Navigator>
 			</Provider>
 		</NavigationContainer>
@@ -104,7 +106,7 @@ export default class App extends Component {
 	
 	render(){	// Life cycle methods
 		if(this.state.isAppLoading){
-			//  <> </> ---> fragment/react.frament
+			//  <> </> ---> fragment/react.fragment
 			return(
 				<>
 					<AppLoadingUI/>

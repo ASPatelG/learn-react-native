@@ -60,6 +60,7 @@ export const translationValues = {
 		cancel:"Cancel",
 		yes:'Yes',
 		logout_message:'Are you sure you want to logout?',
+		applyLanguage:'Apply Language',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
@@ -93,5 +94,6 @@ export const translationValues = {
 		cancel:'नहीं',
 		yes:'हाँ',
 		logout_message:'क्या आप इस अकाउंट से बाहर जाना चाहते है',
+		applyLanguage:'Apply Language',
 	},
 }
