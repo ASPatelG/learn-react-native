@@ -30,12 +30,17 @@ const ChangeLanguageUI = (props)=> {
 	};
 
 	useEffect(() => {
-		const backHandler = BackHandler.addEventListener(
-			'hardwareBackPress',
-			backAction,
-		);
-		return () => {
-			backHandler.remove();
+		let backHandler = null;
+		const willFocusSubscription = navigation.addListener('focus', ()=> {
+			backHandler = BackHandler.addEventListener(
+				'hardwareBackPress',
+				backAction,
+			);
+		});
+
+		return () => {	// to unsubscribe/remove event on unmount
+			backHandler?.remove();
+			willFocusSubscription();
 		}
 	}, []);
 
