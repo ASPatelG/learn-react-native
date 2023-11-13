@@ -10,17 +10,17 @@ import {changeSelectedLanguage} from '../learnRedux/actions';
 */
 const ChangeLanguageUI = (props)=> {
 	const transRef  = useSelector((state)=>state.transRef);
-	const [selectedLanguage, chnageLanguage] = useState(transRef._locale);
-	const dispatchRefrence = useDispatch()		// To send the data in store
+	const [selectedLanguage, chnageLanguage] = useState(transRef.locale);
+	const dispatchRefrence = useDispatch();		// To send the data in store
 
 	OnPressChangeLanguage = (selectedLanguageCode) => {
-		chnageLanguage({languageCode:languageCode, selectedLanguage:selectedLanguageCode});
+		chnageLanguage({selectedLanguage:selectedLanguageCode});
 	}
 
-	onApplyLanguage = (nativeEvent)=> {
+	onApplyLanguage = async (nativeEvent)=> {
 		const {navigation} = props;
-		navigation.navigate('AppMainStack')
-		dispatchRefrence(changeSelectedLanguage({languageCod:selectedLanguage}));
+		await dispatchRefrence(changeSelectedLanguage({languageCod:selectedLanguage}));
+		navigation.navigate('AppMainStack');
 	}
 
 	const backAction = () => {

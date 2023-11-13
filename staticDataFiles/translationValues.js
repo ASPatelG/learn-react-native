@@ -72,7 +72,7 @@ export const translationValues = {
 		checkContext:'संदर्भ एपीआई कार्यक्षमता की जाँच करें',
 		offlineSuccess:'ऑफ़लाइन डेटा सफलतापूर्वक बनाया गया',
 		notRegistered:'मोबाइल नंबर गलत है या पंजीकृत नहीं है',
-		login:'Login',
+		login:'लॉगिन करें',
 		phoneNumber:'फ़ोन नंबर',
 		getOTP:'OTP प्राप्त करें',
 		chooseWork:'कार्य चुनें',
@@ -122,6 +122,6 @@ export const translationValues = {
 		cancel:'नहीं',
 		yes:'हाँ',
 		logout_message:'क्या आप इस अकाउंट से बाहर जाना चाहते है',
-		applyLanguage:'Apply Language',
+		applyLanguage:'भाषा सेट करें',
 	},
 }
