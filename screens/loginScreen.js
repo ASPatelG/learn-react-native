@@ -110,7 +110,7 @@ export const LoginScreen = (props)=>{
 			<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
 				<CommonHeaderComponent/>
 				<Text style={styles.screenHeading}>{transRef.t('login')}</Text>
-				<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
+				<Image source={require('../assets/images/homeIcon.jpg')}  style={styles.loginIcon} />
 				<TextInputComponent
 					showFieldLabel={true}
 					fieldLabelText={transRef.t('enterMobilNumber')}

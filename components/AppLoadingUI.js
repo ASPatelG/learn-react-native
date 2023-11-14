@@ -12,7 +12,7 @@ export const AppLoadingUI = ()=>{
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
 			<Text style={styles.aploadingTextStyle}> {appLoading} </Text>
-			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
+			<Image source={require('../assets/images/homeIcon.jpg')}  style={styles.loginIcon} />
 		</View>
 	);
 }
