@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "work-cost-estimator",
-    "slug": "work-cost-estimator",
+    "slug": "react-native-app",   // This will configure with expo app name
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/appIcon.png",
