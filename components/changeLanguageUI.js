@@ -31,6 +31,7 @@ const ChangeLanguageUI = (props)=> {
 
 	useEffect(() => {
 		let backHandler = null;
+		const {navigation} = props;
 		const willFocusSubscription = navigation.addListener('focus', ()=> {
 			backHandler = BackHandler.addEventListener(
 				'hardwareBackPress',

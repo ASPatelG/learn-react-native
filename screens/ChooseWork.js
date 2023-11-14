@@ -21,7 +21,7 @@ export const ChooseWork = (props)=>{
 		<View style={styles.mainContainer}>
 			<CommonHeaderComponent/>
 			<Text style={styles.screenHeading}>{transRef.t('chooseWork')}</Text>
-			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
+			<Image source={require('../assets/images/homeIcon.jpg')}  style={styles.loginIcon} />
 			<Pressable
 				style={styles.pressableButtonStyle}
 				onPressIn={({nativeEvent})=> showLoginScreen()}

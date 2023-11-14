@@ -103,7 +103,7 @@ export const OTPVerifyScreen = (props)=>{
 		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
 			<CommonHeaderComponent/>
 			<Text style={styles.screenHeading}>{transRef.t('otpVerify')}</Text>
-			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
+			<Image source={require('../assets/images/homeIcon.jpg')}  style={styles.loginIcon} />
 			<Text style={styles.otpTitleStyle}>{transRef.t('otpSentTo')}</Text>
 			<Text style={styles.mobileNumberStyle}>{params.mobileNumber}</Text>
 			<BoxOTPInput

@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "react-native-app",
-    "slug": "react-native-app",
+    "name": "work-cost-estimator",
+    "slug": "work-cost-estimator",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./appImage/splashScreenIcon.png",
+    "icon": "./assets/images/appIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./appImage/splashScreenIcon.png",
+      "image": "./assets/images/splashScreenIcon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,7 +24,7 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [
-        "SEND_SMS"
+        "SEND_SMS",
       ],
       "package": "com.aspatel.reactnativeapp"
     },
