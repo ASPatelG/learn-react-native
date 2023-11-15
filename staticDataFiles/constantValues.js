@@ -35,4 +35,13 @@ export const constantValues = {
 	alertTitle:'Anil Developer',
 }
 
-export const regularExpressionOnlyDigit = /^[0-9]+$/;
+export const regularExpressionOnlyDigit = /^\d+$/;
+export const regularExpressionDecimal = /^\d*\.?\d+$/;
+/*
+	^: Asserts the start of the string.
+	-\?: Matches an optional minus sign for negative numbers.
+	\d*: Matches zero or more digits (before the decimal point for integers).
+	\.: Matches the decimal point.
+	\d+: Matches one or more digits after the decimal point (for floating-point numbers).
+	$: Asserts the end of the string.
+*/

@@ -194,6 +194,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 								index={index}
 								partySomeDetails={item}
 								navigation={props.navigation}
+								isSelectedWork={item.is_selected}
 							/>}
 							keyExtractor={(item, index) => index.toString()}
 							keyboardShouldPersistTaps='always'

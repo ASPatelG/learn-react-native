@@ -39,6 +39,12 @@ export const reducers = (state = initialValue, action)=>{
 			partyDetails[activeIndex] = partyData;
 			return {...state, partyDetails:[...partyDetails]}
 		}
+		case "selectPrintableWork":{
+			const {partyData, activeIndex} = action.payload;
+			const {partyDetails} = state;
+			partyDetails[activeIndex] = partyData;
+			return {...state, partyDetails:[...partyDetails]}
+		}
 		default:{
 			return state;
 		}
