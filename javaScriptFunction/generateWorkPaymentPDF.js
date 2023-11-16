@@ -12,6 +12,12 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 	}, 0);
 
 	const partyShortDetails = dataToAddInPDF[0];
+	if(partyShortDetails.last_name){
+		null;
+	}
+	else{
+		partyShortDetails.last_name = '';
+	}
 
 	let totalDiscount = dataToAddInPDF.reduce((accumulator, currentObject)=> accumulator + Number(currentObject.discount), 0);
 
@@ -42,8 +48,6 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 				<div class="container">
 					<h3>${en.partyName+"--> "} ${partyShortDetails.first_name+" "+partyShortDetails.last_name}</h3>
 					<h3>${en.connectorName+"--> "} ${"Anil Kumar Patel"}</h3>
-				</div>
-				<div class="container">
 					<h3>${en.mobile+'--> '} ${partyShortDetails.mobile_number}</h3>
 					<h3>${en.mobile+'--> '} ${'8349587093'}</h3>
 				</div>
