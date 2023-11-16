@@ -146,6 +146,14 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{ ...state.appliedFilter, isApplied:false, mobileNumber:'', workType:''}}));
 	}
 
+	const onDelete = async (partyWorkData)=> {
+		console.log('onDelete function called: ', partyWorkData);
+		let deletionResponse = await onDeleteWork(partyWorkData.id);
+		console.log('deletionResponse: ', deletionResponse);
+		let tablePartyData = await getPartyData();
+		setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData]}));
+	}
+
 	if(state.isLoading){
 		return(
 			<ScreenUILoading
@@ -194,6 +202,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 								index={index}
 								partySomeDetails={item}
 								navigation={props.navigation}
+								onDeleteWork={onDelete}
 							/>}
 							keyExtractor={(item, index) => index.toString()}
 							keyboardShouldPersistTaps='always'
