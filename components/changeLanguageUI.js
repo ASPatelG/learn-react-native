@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { FontAwesome, AntDesign} from '@expo/vector-icons';
 import ButtonComponent from './buttonComponent';
 import {changeSelectedLanguage} from '../learnRedux/actions';
+import translationRef from '../learnRedux/reducers';
 /*
 	this component is used to change selectedLanguage
 */
@@ -19,7 +20,8 @@ const ChangeLanguageUI = (props)=> {
 
 	onApplyLanguage = async (nativeEvent)=> {
 		const {navigation} = props;
-		await dispatchRefrence(changeSelectedLanguage({languageCod:selectedLanguage}));
+		translationRef.locale = selectedLanguage;	// to file instead of component centrally state is available for only component
+		await dispatchRefrence(changeSelectedLanguage({languageCod:selectedLanguage}));		// to component instead of file
 		navigation.navigate('AppMainStack');
 	}
 
