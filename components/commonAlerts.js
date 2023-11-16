@@ -3,15 +3,14 @@ import { Alert } from 'react-native';
 import {constantValues} from '../staticDataFiles/constantValues';
 const {alertTitle} = constantValues;
 
-import {translationValues} from '../staticDataFiles/translationValues';
-const {en} = translationValues;
+import transRef from '../learnRedux/reducers';
 
 export const showErrorAlert = (errorText='errorText..?', alertTitleText=alertTitle) => {
 	Alert.alert(
 		alertTitleText,
 		errorText,
 		[
-			{ text: en.ok, onPress: () => {} },
+			{ text: transRef.t('ok'), onPress: () => {} },
 			// Add more buttons as needed
 		],
 		{ cancelable: false }
@@ -31,12 +30,12 @@ export function confirmationAlert(confirmationHint='confirmationHint..?', onConf
 		alertTitleText,
 		confirmationHint,
 		[
-			{ text: en.ok, onPress: () => {
+			{ text: transRef.t('ok'), onPress: () => {
 				if(onConfirm){
 					onConfirm(extraData);
 				}
 			} },
-			{ text: en.cancel, onPress: () => {
+			{ text: transRef.t('cancel'), onPress: () => {
 				if(onCancel){
 					onCancel(extraData);
 				}

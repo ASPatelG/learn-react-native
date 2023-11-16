@@ -1,8 +1,7 @@
 import {View} from 'react-native';
 import * as Print from 'expo-print';
 
-import {translationValues} from '../staticDataFiles/translationValues';
-const {en} = translationValues		// Destructure the translation value
+import transRef from '../learnRedux/reducers';
 
 export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 	// Define the HTML content with the table data
@@ -46,20 +45,20 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 			<body>
 				<h1>Work Details With Payment</h1>
 				<div class="container">
-					<h3>${en.partyName+"--> "} ${partyShortDetails.first_name+" "+partyShortDetails.last_name}</h3>
-					<h3>${en.connectorName+"--> "} ${"Anil Kumar Patel"}</h3>
-					<h3>${en.mobile+'--> '} ${partyShortDetails.mobile_number}</h3>
-					<h3>${en.mobile+'--> '} ${'8349587093'}</h3>
+					<h3>${transRef.t('partyName')+"--> "} ${partyShortDetails.first_name+" "+partyShortDetails.last_name}</h3>
+					<h3>${transRef.t('connectorName')+"--> "} ${"Anil Kumar Patel"}</h3>
+					<h3>${transRef.t('mobile')+'--> '} ${partyShortDetails.mobile_number}</h3>
+					<h3>${transRef.t('mobile')+'--> '} ${'8349587093'}</h3>
 				</div>
 				<table>
 					<tr>
-						<th>${en.workType}</th>
-						<th>${en.length}</th>
-						<th>${en.width}</th>
-						<th>${en.height}</th>
-						<th>${en.totalArea}</th>
-						<th>${en.workRate}</th>
-						<th>${en.amount}</th>
+						<th>${transRef.t('workType')}</th>
+						<th>${transRef.t('length')}</th>
+						<th>${transRef.t('width')}</th>
+						<th>${transRef.t('height')}</th>
+						<th>${transRef.t('totalArea')}</th>
+						<th>${transRef.t('workRate')}</th>
+						<th>${transRef.t('amount')}</th>
 					</tr>
 					${dataToAddInPDF.map(
 						(item) =>`<tr>
@@ -74,14 +73,14 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 						.join('')
 					}
 					<tr>
-						<td colspan=${2}>${en.totalAmount}</td>
-						<td colspan=${2}>${totalAmount}</td>
-						<td colspan=${2}>${en.discount}</td>
+						<td colspan=${2}>${transRef.t('totalAmount')}</td>
+						<td colspan=${2}>${totalAmount+' ₹'}</td>
+						<td colspan=${2}>${transRef.t('discount')}</td>
 						<td>${totalDiscount}</td>
 					</tr>
 					<tr>
-						<td colspan=${4}>${en.payableAmount}</td>
-						<td colspan=${3}>${totalPayableAmount}</td>
+						<td colspan=${4}>${transRef.t('payableAmount')}</td>
+						<td colspan=${3}>${totalPayableAmount+' ₹'}</td>
 					</tr>
 				</table>
 			</body>

@@ -35,8 +35,8 @@ function DrawerContentComponent(props){
 			transRef.t('appName'),
 			transRef.t('logout_message'),
 			[
-				{text: transRef.t('cancel')},
 				{text:  transRef.t('yes'), onPress: () => onPressYesLogout()},
+				{text: transRef.t('cancel')}
 			],
 			{ cancelable: false }
 		)
