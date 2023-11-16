@@ -1,15 +1,17 @@
 import {memo, useState} from 'react';
 import {View, Text, StyleSheet, Pressable, TouchableOpacity} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { AntDesign } from '@expo/vector-icons';
-import {useDispatch} from 'react-redux';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import {useDispatch, useSelector} from 'react-redux';
 import {selectWorkToPrint} from '../learnRedux/actions';
 import { updateSelectWork} from '../sqliteDatabaseFunctionality/updateData';
 
+import {confirmationAlert} from '../components/commonAlerts';
+
 const PartyShortDetails = (props)=>{
 	const dispatchRefrence = useDispatch()		// To send the data in store
-	const {partySomeDetails, index}  = props;
-
+	const {partySomeDetails, index, onDeleteWork}  = props;
+	const transRef  = useSelector((state)=>state.transRef);
 	const [state, setState] = useState({reRenderFlag:null});
 
 	const onPress = (partySomeDetails, index)=>{
@@ -39,13 +41,21 @@ const PartyShortDetails = (props)=>{
 			<View style={styles.columnStyle}>
 				<Text style={styles.columnValueStyle}>{partySomeDetails.amount}</Text>
 			</View>
-			<Pressable
-				onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
-				style={styles.columnStyle}
-			>
-				<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
-				<AntDesign name="edit" size={22} color="#808080" />
-			</Pressable>
+			<View style={styles.rightColumnStyle}>
+				<Pressable
+					onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
+					style={styles.rightContentStyle}
+				>
+					<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
+					<AntDesign name="edit" size={22} color="#808080" />
+				</Pressable>
+				<Pressable
+					style={styles.deleteIconStyle}
+					onPressIn={(nativeEvent)=>confirmationAlert(transRef.t('workDeletionHint'), onDeleteWork, null, partySomeDetails)}
+				>
+					<MaterialIcons name="delete-outline" size={30} color="#ff0000" />
+				</Pressable>
+			</View>
 		</TouchableOpacity>
 	);
 }
@@ -106,5 +116,21 @@ const styles = StyleSheet.create({
 		color:'#00CF35',
 		width:wp('13%'),
 		textAlign:'center',
-	}
+	},
+	rightColumnStyle:{
+		flexWrap:'wrap',
+		paddingVertical:15,
+		paddingHorizontal:3,
+		width:wp('25.07%'),
+		borderLeftWidth:1,
+		borderLeftColor:'#B3B3B3',
+		flexDirection:'row',
+		alignItems:'center',
+	},
+	deleteIconStyle:{
+		marginLeft:8,
+	},
+	rightContentStyle:{
+		flexDirection:'row',
+	},
 });
