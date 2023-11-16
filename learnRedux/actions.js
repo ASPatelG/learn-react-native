@@ -5,6 +5,7 @@ import {
 	addParty,
 	updateParty,
 	addPartyTableData,
+	selectPrintableWork,
 } from './actionsType';
 
 import {getPartyData} from '../sqliteDatabaseFunctionality/getData';
@@ -43,5 +44,10 @@ export const setPartyTableDataInStore = (data)=>({
 
 export const updatePartyDetails = (data)=>({
 	type:updateParty,
+	payload:data
+});
+
+export const selectWorkToPrint = (data)=>({
+	type:selectPrintableWork,
 	payload:data
 });

@@ -1,23 +1,34 @@
-import {memo} from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {memo, useState} from 'react';
+import {View, Text, StyleSheet, Pressable, TouchableOpacity} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { AntDesign } from '@expo/vector-icons';
 import {useDispatch} from 'react-redux';
-// import { markEmployeeAsStar} from '../redux/actions';
+import {selectWorkToPrint} from '../learnRedux/actions';
+import { updateSelectWork} from '../sqliteDatabaseFunctionality/updateData';
 
 const PartyShortDetails = (props)=>{
 	const dispatchRefrence = useDispatch()		// To send the data in store
 	const {partySomeDetails, index}  = props;
+
+	const [state, setState] = useState({reRenderFlag:null});
 
 	const onPress = (partySomeDetails, index)=>{
 		const {navigation} = props;
 		navigation.navigate('AddUpdatePartyWorkDetails', {partySomeDetails, activeIndex:index});
 	}
 
+	onSelectWork = async ()=>{
+		partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
+		dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
+		// const updateDataResult = await updateSelectWork(partySomeDetails);
+		setState(previous=>({...previous, reRenderFlag:''}));//to rerender
+	}
+
 	return(
-		<View
+		<TouchableOpacity
 			key={index}
-			style={styles.partySomeDetailsContainer}
+			style={partySomeDetails.is_selectedWork || partySomeDetails.is_selected == 1 ?styles.partySomeDetailsBackground :styles.partySomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
+			onPress={onSelectWork}
 		>
 			<View style={styles.columnStyle}>
 				<Text style={styles.partyNameStyle}>{partySomeDetails.first_name} {partySomeDetails.lastName}</Text>
@@ -35,7 +46,7 @@ const PartyShortDetails = (props)=>{
 				<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
 				<AntDesign name="edit" size={22} color="#808080" />
 			</Pressable>
-		</View>
+		</TouchableOpacity>
 	);
 }
 
@@ -58,6 +69,15 @@ const styles = StyleSheet.create({
 		alignSelf:'center',
 		borderBottomWidth:1,
 		borderBottomColor:'#D3D3D3',
+	},
+	partySomeDetailsBackground:{
+		width:wp('100%'),
+		flexDirection:'row',
+		justifyContent:'space-between',
+		alignSelf:'center',
+		borderBottomWidth:1,
+		borderBottomColor:'#D3D3D3',
+		backgroundColor:'#D3D3D3',
 	},
 	columnValueStyle:{
 		fontSize:15,

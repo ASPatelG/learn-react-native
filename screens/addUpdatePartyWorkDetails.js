@@ -9,7 +9,7 @@ import ScreenUILoading from '../components/ScreenUILoading';
 import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
 import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
 import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
-import {regularExpressionOnlyDigit} from '../staticDataFiles/constantValues';
+import {regularExpressionOnlyDigit, regularExpressionDecimal} from '../staticDataFiles/constantValues';
 
 import {styles} from './screens.styles/addUpdatePartyDetailsStyle';
 
@@ -138,7 +138,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	}
 
 	const onChangeRate = (enteredText)=>{
-		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+		if(regularExpressionDecimal.test(enteredText) || enteredText === ''){
 			const calculatedAmount = calculateAmount(partyDetails.totalArea, enteredText);
 			setPartyDetails((previous)=>({
 				...previous,
@@ -152,7 +152,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	}
 
 	const onChangeLength = (enteredText)=>{
-		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+		if(regularExpressionDecimal.test(enteredText) || enteredText === ''){
 			const calculatedTotalArea = calculateTotalArea(enteredText, partyDetails.width, partyDetails.height);
 			const calculatedAmount = calculateAmount(calculatedTotalArea, partyDetails.rate);
 			setPartyDetails((previous)=>({
@@ -168,7 +168,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	}
 
 	const onChangeWidth = (enteredText)=>{
-		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+		if(regularExpressionDecimal.test(enteredText) || enteredText === ''){
 			const calculatedTotalArea = calculateTotalArea(partyDetails.length, enteredText, partyDetails.height);
 			const calculatedAmount = calculateAmount(calculatedTotalArea, partyDetails.rate);
 			setPartyDetails((previous)=>({
@@ -184,7 +184,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	}
 
 	const onChangeHeight = (enteredText)=>{
-		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+		if(regularExpressionDecimal.test(enteredText) || enteredText === ''){
 			const calculatedTotalArea = calculateTotalArea(partyDetails.length, partyDetails.width, enteredText);
 			const calculatedAmount = calculateAmount(calculatedTotalArea, partyDetails.rate);
 			setPartyDetails((previous)=>({
@@ -200,7 +200,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	}
 
 	const onChangeDiscount = (enteredText)=>{
-		if(regularExpressionOnlyDigit.test(enteredText) || enteredText === ''){
+		if(regularExpressionDecimal.test(enteredText) || enteredText === ''){
 			setPartyDetails((previous)=>({
 				...previous,
 				discount:enteredText

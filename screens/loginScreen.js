@@ -24,7 +24,7 @@ export const LoginScreen = (props)=>{
 	const [state, setState] = useState({
 		mobileNumber:'',
 		countryCode:'+91',
-		showOTPUI:true,		// to otp send ui(by default used mobileNumber)
+		showOTPUI:false,		// to otp send ui(by default used mobileNumber)
 		isLoading:true,
 	});
 	const transRef  = useSelector((state)=>state.transRef);

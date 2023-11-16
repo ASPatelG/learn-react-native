@@ -26,7 +26,7 @@ export const createPartyTable = () => {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(tx => {
 			tx.executeSql(
-				'CREATE TABLE IF NOT EXISTS party_table (id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, mobile_number INTEGER, email TEXT, work_type TEXT, length INTEGER, width INTEGER, height INTEGER, rate INTEGER, total_area INTEGER, amount INTEGER, discount INTEGER)',
+				'CREATE TABLE IF NOT EXISTS party_table (id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, mobile_number INTEGER, email TEXT, work_type TEXT, length INTEGER, width INTEGER, height INTEGER, rate INTEGER, total_area INTEGER, amount INTEGER, discount INTEGER, is_selected BOOLEAN DEFAULT 0)',
 				[],
 				(tx, results) => {
 					resolve('Table created successfully');

@@ -39,3 +39,21 @@ export function updatePartyDetail(partyData) {
 		});
 	});
 };
+export function updateSelectWork(partyData) {
+	const databaseObject = openDatabase();
+	return new Promise((resolve, reject) => {
+		databaseObject.transaction(transactionObject => {
+			transactionObject.executeSql(
+				`UPDATE party_table SET is_selected=? WHERE id = ?;`,
+				[partyData.is_selected, partyData.id],
+				(transactionObject, results) => {
+					const {rowsAffected} = results;
+					resolve(`data has been updated rowsAffected: ${rowsAffected}`);
+				},
+				(transactionObject, error) => {
+					reject(error);
+				}
+			);
+		});
+	});
+};
