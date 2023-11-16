@@ -10,6 +10,9 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 	let totalAmount = dataToAddInPDF.reduce((accumulator, currentObject)=> {
 		return accumulator + Number(currentObject.amount)
 	}, 0);
+
+	const partyShortDetails = dataToAddInPDF[0];
+
 	let totalDiscount = dataToAddInPDF.reduce((accumulator, currentObject)=> accumulator + Number(currentObject.discount), 0);
 
 	let totalPayableAmount = totalAmount - totalDiscount;
@@ -37,15 +40,16 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 			<body>
 				<h1>Work Details With Payment</h1>
 				<div class="container">
-					<h3>${en.partyName+"--> "} ${"Anil Kumar Patel"}</h3>
+					<h3>${en.partyName+"--> "} ${partyShortDetails.first_name+" "+partyShortDetails.last_name}</h3>
 					<h3>${en.connectorName+"--> "} ${"Anil Kumar Patel"}</h3>
 				</div>
 				<div class="container">
-					<h3>${en.mobile+'--> '} ${'8349587093'}</h3>
+					<h3>${en.mobile+'--> '} ${partyShortDetails.mobile_number}</h3>
 					<h3>${en.mobile+'--> '} ${'8349587093'}</h3>
 				</div>
 				<table>
 					<tr>
+						<th>${en.workType}</th>
 						<th>${en.length}</th>
 						<th>${en.width}</th>
 						<th>${en.height}</th>
@@ -55,6 +59,7 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 					</tr>
 					${dataToAddInPDF.map(
 						(item) =>`<tr>
+							<th>${item.work_type}</th>
 							<td>${item.length}</td>
 							<td>${item.width}</td>
 							<td>${item.height}</td>
@@ -66,12 +71,12 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 					}
 					<tr>
 						<td colspan=${2}>${en.totalAmount}</td>
-						<td>${totalAmount}</td>
+						<td colspan=${2}>${totalAmount}</td>
 						<td colspan=${2}>${en.discount}</td>
 						<td>${totalDiscount}</td>
 					</tr>
 					<tr>
-						<td colspan=${3}>${en.payableAmount}</td>
+						<td colspan=${4}>${en.payableAmount}</td>
 						<td colspan=${3}>${totalPayableAmount}</td>
 					</tr>
 				</table>

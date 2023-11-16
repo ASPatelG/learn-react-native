@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useState} from 'react';
 import {View, Text, StyleSheet, Pressable, TouchableOpacity} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { AntDesign } from '@expo/vector-icons';
@@ -8,7 +8,10 @@ import { updateSelectWork} from '../sqliteDatabaseFunctionality/updateData';
 
 const PartyShortDetails = (props)=>{
 	const dispatchRefrence = useDispatch()		// To send the data in store
-	const {partySomeDetails, index, isSelectedWork}  = props;
+	const {partySomeDetails, index}  = props;
+
+	const [state, setState] = useState({reRenderFlag:null});
+
 	const onPress = (partySomeDetails, index)=>{
 		const {navigation} = props;
 		navigation.navigate('AddUpdatePartyWorkDetails', {partySomeDetails, activeIndex:index});
@@ -17,13 +20,14 @@ const PartyShortDetails = (props)=>{
 	onSelectWork = async ()=>{
 		partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
 		dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
-		const updateDataResult = await updateSelectWork(partySomeDetails);
+		// const updateDataResult = await updateSelectWork(partySomeDetails);
+		setState(previous=>({...previous, reRenderFlag:''}));//to rerender
 	}
 
 	return(
 		<TouchableOpacity
 			key={index}
-			style={isSelectedWork || isSelectedWork == 1 ?styles.partySomeDetailsBackground :styles.partySomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
+			style={partySomeDetails.is_selectedWork || partySomeDetails.is_selected == 1 ?styles.partySomeDetailsBackground :styles.partySomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
 			onPress={onSelectWork}
 		>
 			<View style={styles.columnStyle}>
