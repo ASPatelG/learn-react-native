@@ -11,7 +11,6 @@ import {confirmationAlert} from '../components/commonAlerts';
 const PartyShortDetails = (props)=>{
 	const dispatchRefrence = useDispatch()		// To send the data in store
 	const {partySomeDetails, index, onDeleteWork}  = props;
-	console.log('onDeleteWork props value: ', onDeleteWork);
 	const transRef  = useSelector((state)=>state.transRef);
 	const [state, setState] = useState({reRenderFlag:null});
 
@@ -52,7 +51,7 @@ const PartyShortDetails = (props)=>{
 				</Pressable>
 				<Pressable
 					style={styles.deleteIconStyle}
-					onPressIn={(nativeEvent)=>confirmationAlert(transRef.t('workDeletionHint'), onDeleteWork, null, {partySomeDetails})}
+					onPressIn={(nativeEvent)=>confirmationAlert(transRef.t('workDeletionHint'), onDeleteWork, null, partySomeDetails)}
 				>
 					<MaterialIcons name="delete-outline" size={30} color="#ff0000" />
 				</Pressable>

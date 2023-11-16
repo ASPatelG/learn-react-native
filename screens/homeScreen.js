@@ -20,6 +20,8 @@ import ScreenUILoading from '../components/ScreenUILoading';
 
 import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
 import { getPartyData, filterPartyData } from '../sqliteDatabaseFunctionality/getData';
+import { onDeleteWork } from '../sqliteDatabaseFunctionality/deleteData';
+
 import {constantValues} from '../staticDataFiles/constantValues';
 
 import {styles} from './screens.styles/homeScreenStyles';
@@ -147,9 +149,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onDelete = async (partyWorkData)=> {
-		console.log('onDelete function called: ', partyWorkData);
 		let deletionResponse = await onDeleteWork(partyWorkData.id);
-		console.log('deletionResponse: ', deletionResponse);
 		let tablePartyData = await getPartyData();
 		setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData]}));
 	}

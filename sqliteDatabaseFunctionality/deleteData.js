@@ -1,3 +1,5 @@
+import { openDatabase } from './openDatabase';
+
 export function onDeleteWork(partyWorkId) {
 	const databaseObject = openDatabase();
 	return new Promise((resolve, reject) => {
