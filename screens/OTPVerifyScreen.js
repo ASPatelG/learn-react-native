@@ -5,6 +5,8 @@ import {useSelector} from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons'; 
 
 import {constantValues} from '../staticDataFiles/constantValues';
+const {registeredUserData} = constantValues;
+
 import BoxOTPInput from '../components/boxOTPInput';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import ButtonComponent from '../components/buttonComponent';
@@ -77,14 +79,18 @@ export const OTPVerifyScreen = (props)=>{
 		const {navigation} = props;
 		const enteredOTP = otpValueArray.join('');
 		if(otp === enteredOTP){
-			crossPlatformToast(transRef.t('loginSuccess'));
-			saveAnObjectInAsyncStorage(
-				'businessUserData',
-				{
-					mobileNumber:constantValues.registeredMobileNumber,
-					userName:constantValues.registeredUserName
-				}
-			);
+			let finedData = registeredUserData.find(element => element.mobileNumber === params?.mobileNumber?.slice(3, params?.mobileNumber?.length));		// slice used to remove countrycode
+			if(finedData){
+			}
+			else{
+				saveAnObjectInAsyncStorage(
+					'businessUserData',
+					{
+						mobileNumber:params?.mobileNumber,
+						userName:params?.mobileNumber
+					}
+				);
+			}
 			/* userData has set from constant because i will register user before creating build */
 
 			navigation.navigate('CostEstimationCalculator');

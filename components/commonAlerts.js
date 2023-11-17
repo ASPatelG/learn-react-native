@@ -30,14 +30,14 @@ export function confirmationAlert(confirmationHint='confirmationHint..?', onConf
 		alertTitleText,
 		confirmationHint,
 		[
-			{ text: transRef.t('ok'), onPress: () => {
-				if(onConfirm){
-					onConfirm(extraData);
-				}
-			} },
 			{ text: transRef.t('cancel'), onPress: () => {
 				if(onCancel){
 					onCancel(extraData);
+				}
+			} },
+			{ text: transRef.t('ok'), onPress: () => {
+				if(onConfirm){
+					onConfirm(extraData);
 				}
 			} },
 			// Add more button according to need

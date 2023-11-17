@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';		//According to reactnative stack navigation this statement should in top(firstline)
 import {Component} from 'react';
-import { StyleSheet, Text, View, StatusBar, useState, Pressable } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator } from '@react-navigation/drawer';
