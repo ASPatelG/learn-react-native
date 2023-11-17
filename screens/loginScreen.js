@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons'; 
 
 import {constantValues} from '../staticDataFiles/constantValues';
+const {registeredUserData} = constantValues;
 
 import TextInputComponent from '../components/textInputComponent';
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
@@ -24,7 +25,7 @@ export const LoginScreen = (props)=>{
 	const [state, setState] = useState({
 		mobileNumber:'',
 		countryCode:'+91',
-		showOTPUI:false,		// to otp send ui(by default used mobileNumber)
+		showOTPUI:true,		// to otp send ui(by default used mobileNumber)
 		isLoading:true,
 	});
 	const transRef  = useSelector((state)=>state.transRef);
@@ -65,19 +66,19 @@ export const LoginScreen = (props)=>{
 	const onPressSubmit = async(nativeEvent)=>{
 		const {mobileNumber, showOTPUI} = state;
 		const {navigation} = props;
-		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
+		let finedData = registeredUserData.find(element => element.mobileNumber === mobileNumber);
+		if(finedData){
 			dispatchrefrence(changeLoginUserData({
 				loginUserData:{
-					mobileNumber:constantValues.registeredMobileNumber,
-					userName:constantValues.registeredUserName
+					mobileNumber:finedData.userName,
+					userName:finedData.mobileNumber
 				}
 			}));
 			if(showOTPUI){
 				const {countryCode} = state;
 				let generatedOTP = generateOTP();
-				const mobileNumbersArray = [constantValues.registeredMobileNumber];
 				navigation.navigate('OTPVerifyScreen', {
-					mobileNumber:countryCode+' '+mobileNumber,
+					mobileNumber:countryCode+''+mobileNumber,
 					otp:generatedOTP,
 				});
 				setState(previous=>({...previous, mobileNumber:""}));
@@ -86,8 +87,8 @@ export const LoginScreen = (props)=>{
 				saveAnObjectInAsyncStorage(
 					'businessUserData',
 					{
-						mobileNumber:constantValues.registeredMobileNumber,
-						userName:constantValues.registeredUserName
+						mobileNumber:finedData.mobileNumber,
+						userName:finedData.userName
 					}
 				);
 				setState(previous=>({...previous, mobileNumber:''}));
@@ -95,7 +96,13 @@ export const LoginScreen = (props)=>{
 			}
 		}
 		else{
-			crossPlatformToast(transRef.t('notRegistered'));
+			let generatedOTP = generateOTP();
+			navigation.navigate('OTPVerifyScreen', {
+				mobileNumber:mobileNumber,
+				otp:generatedOTP,
+			});
+			setState(previous=>({...previous, mobileNumber:""}));
+			// crossPlatformToast(transRef.t('notRegistered'));
 		}
 	}
 	if(state.isLoading){
