@@ -88,11 +88,15 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onPressPDF = (nativeEvent)=>{
-		if(state.allPartiesWorkArray.length > 0){
+		setState(previous=>({...previous, isLoading:true}));
+		const printableDataArray = state.allPartiesWorkArray?.filter((element)=>element.is_selected);
+		if(printableDataArray.length > 0){
 			generateWorkPaymentPDF(state.allPartiesWorkArray);
+			setState(previous=>({...previous, isLoading:false}));
 		}
 		else{
 			showErrorAlert(transRef.t('noWorkError'));
+			setState(previous=>({...previous, isLoading:false}));
 		}
 	}
 
