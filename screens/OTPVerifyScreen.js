@@ -81,6 +81,13 @@ export const OTPVerifyScreen = (props)=>{
 		if(otp === enteredOTP){
 			let finedData = registeredUserData.find(element => element.mobileNumber === params?.mobileNumber?.slice(3, params?.mobileNumber?.length));		// slice used to remove countrycode
 			if(finedData){
+				saveAnObjectInAsyncStorage(
+					'businessUserData',
+					{
+						mobileNumber:finedData?.userName,
+						userName:finedData?.mobileNumber
+					}
+				);
 			}
 			else{
 				saveAnObjectInAsyncStorage(

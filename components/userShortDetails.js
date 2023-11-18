@@ -29,8 +29,8 @@ export const UserShortDetails = (props)=>{
 		<View style={styles.userDetailsContainer}>
 			<FontAwesome name="user-circle" size={50} color="#B3B3B3" />
 			<View style={styles.userDetails}>
-				<Text style={styles.userNameStyle}>{loginUserData.userName}</Text>
-				<Text>{loginUserData.mobileNumber}</Text>
+				<Text style={styles.userNameStyle}>{loginUserData?.userName}</Text>
+				<Text>{loginUserData?.mobileNumber}</Text>
 			</View>
 			{/*<LogoutUI navigation={props.navigation}/>*/}
 		</View>
