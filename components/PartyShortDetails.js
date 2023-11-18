@@ -4,7 +4,6 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectWorkToPrint} from '../learnRedux/actions';
-import { updateSelectWork} from '../sqliteDatabaseFunctionality/updateData';
 
 import {confirmationAlert} from '../components/commonAlerts';
 
@@ -22,7 +21,6 @@ const PartyShortDetails = (props)=>{
 	onSelectWork = async ()=>{
 		partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
 		dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
-		// const updateDataResult = await updateSelectWork(partySomeDetails);
 		setState(previous=>({...previous, reRenderFlag:''}));//to rerender
 	}
 
