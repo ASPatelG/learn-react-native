@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import {View, BackHandler, FlatList, Pressable, Text} from 'react-native';
+import {View, BackHandler, FlatList, Pressable, Text, Image} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import { FontAwesome5, FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -11,7 +11,6 @@ import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import DropdownPickerComponent from '../components/dropdownPickerComponent';
 import ButtonComponent from '../components/buttonComponent';
 import PartyShortDetails from '../components/PartyShortDetails';
-import {UserShortDetails} from '../components/userShortDetails';
 import PartiesWorkTableHeader from '../components/partiesWorkTableHeader';
 import {showErrorAlert} from '../components/showErrorAlert';
 import PartyWorkFilter from '../components/PartyWorkFilter';
@@ -169,14 +168,16 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		return(
 			<View style={styles.mainContainer}>
 				<CommonHeaderComponent/>
-				<View style={{flexDirection:'row', alignItems:'center'}}>
+				<View style={{flexDirection:'row', alignItems:'center', paddingTop:8}}>
 					<Pressable
 						onPressIn={onPressMenu}
 						style={styles.menuIconContainer}
 					>
 						<Ionicons name="menu-sharp" size={35} color="black" />
 					</Pressable>
-					<UserShortDetails navigation={props.navigation}/>
+					<View style={styles.centerContent}>
+						<Image source={require('../assets/images/homeIcon.jpg')}  style={styles.loginIcon} />
+					</View>
 					<Pressable
 						onPressIn={onPressPDF}
 						style={styles.downloadIconContainer}

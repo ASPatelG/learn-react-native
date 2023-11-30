@@ -5,6 +5,19 @@ export const styles = StyleSheet.create({
 		flex:1,
 		backgroundColor:'#ffffff',
 	},
+	loginIcon:{
+		height:40,
+		width:40,
+		borderRadius:23,
+		borderWidth:2,
+		borderColor:'#D1D1D1',
+		alignSelf:'center',
+	},
+	centerContent:{
+		width:'64%',
+		alignItems:'center',
+		justifyContent:'center',
+	},
 	screenChangeContent:{
 		flexDirection:'row',
 		alignItems:'center',

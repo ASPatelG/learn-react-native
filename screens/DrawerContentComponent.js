@@ -7,6 +7,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
 import ScreenUILoading from '../components/ScreenUILoading';
+import {UserShortDetails} from '../components/userShortDetails';
 
 import {removeAnObjectFromAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
 
@@ -55,6 +56,7 @@ function DrawerContentComponent(props){
 		return (
 			<View style={{flex:1}}>
 				<ScrollView showsVerticalScrollIndicator={false}>
+					<UserShortDetails navigation={props.navigation}/>
 					<View>
 						<TouchableOpacity 
 							style={[styles.screenStyle, (focusedRoute==='ChooseLanguage') ? styles.activeBackgroundColor : null]}
