@@ -7,8 +7,6 @@ import {constantValues} from '../staticDataFiles/constantValues';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-import LogoutUI from './LogoutUI';
-
 import { FontAwesome } from '@expo/vector-icons';
 
 export const UserShortDetails = (props)=>{
@@ -32,7 +30,6 @@ export const UserShortDetails = (props)=>{
 				<Text style={styles.userNameStyle}>{loginUserData?.userName}</Text>
 				<Text>{loginUserData?.mobileNumber}</Text>
 			</View>
-			{/*<LogoutUI navigation={props.navigation}/>*/}
 		</View>
 	);
 }
@@ -42,6 +39,8 @@ const styles = StyleSheet.create({
 		flexDirection:'row',
 		paddingHorizontal:10,
 		alignItems:'center',
+		borderBottomWidth:1,
+		borderBottomColor:'#D3D3D3',
 	},
 	userDetails:{
 		marginLeft:10,

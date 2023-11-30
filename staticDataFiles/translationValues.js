@@ -62,6 +62,8 @@ export const translationValues = {
 		logout_message:'Are you sure you want to logout?',
 		applyLanguage:'Apply Language',
 		workDeletionHint:'Do you want to delete this work..?',
+		actions:'Action',
+		remainingAmount:'Remaining ₹'
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
@@ -125,5 +127,7 @@ export const translationValues = {
 		logout_message:'क्या आप इस अकाउंट से बाहर जाना चाहते है',
 		applyLanguage:'भाषा सेट करें',
 		workDeletionHint:'क्या आप यह कार्य हटाना चाहते हैं..?',
+		actions:'गतिविधि',
+		remainingAmount:'शेष ₹'
 	},
 }

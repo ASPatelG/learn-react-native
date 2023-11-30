@@ -44,7 +44,7 @@ const PartyShortDetails = (props)=>{
 					onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
 					style={styles.rightContentStyle}
 				>
-					<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
+					{/*<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>*/}
 					<AntDesign name="edit" size={22} color="#808080" />
 				</Pressable>
 				<Pressable
