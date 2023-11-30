@@ -244,43 +244,46 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				<CommonHeaderComponent/>
 				<Text style={styles.eployeeDetailsStyle}>{transRef.t('addPartyWork')}</Text>
 				<ScrollView>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('enterFirstName')}
-						value={partyDetails.firstName}
-						onChangeText={onChangeFirstName}
-						maxLength={30}
-						isItRequired={true}
-						inputBoxStyle={styles.inputBoxStyle}
-					/>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('enterLastName')}
-						value={partyDetails.lastName}
-						onChangeText={onChangeLastName}
-						maxLength={30}
-						inputBoxStyle={styles.inputBoxStyle}
-					/>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('enterMobilNumber')}
-						value={partyDetails.mobileNumber?.toString()}
-						onChangeText={onChangeMobileNumber}
-						maxLength={10}
-						isItRequired={true}
-						inputBoxStyle={styles.inputBoxStyle}
-						keyboardType='number-pad'
-					/>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('enterEmail')}
-						value={partyDetails.email}
-						onChangeText={onChangeEmail}
-						keyboardType='email-address'
-						inputBoxStyle={styles.inputBoxStyle}
-						maxLength={80}
-					/>
-					<View style={styles.workAreaDetails}>
+					<View style={styles.personalDetailContainer}>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('enterFirstName')}
+							value={partyDetails.firstName}
+							onChangeText={onChangeFirstName}
+							maxLength={30}
+							isItRequired={true}
+							inputBoxStyle={styles.inputBoxStyle}
+						/>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('enterLastName')}
+							value={partyDetails.lastName}
+							onChangeText={onChangeLastName}
+							maxLength={30}
+							inputBoxStyle={styles.inputBoxStyle}
+						/>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('enterMobilNumber')}
+							value={partyDetails.mobileNumber?.toString()}
+							onChangeText={onChangeMobileNumber}
+							maxLength={10}
+							isItRequired={true}
+							inputBoxStyle={styles.inputBoxStyle}
+							keyboardType='number-pad'
+						/>
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('enterEmail')}
+							value={partyDetails.email}
+							onChangeText={onChangeEmail}
+							keyboardType='email-address'
+							inputBoxStyle={styles.inputBoxStyle}
+							maxLength={80}
+						/>
+					</View>
+					<Text style={styles.workAreaHeading}>{transRef.t('workArea')}</Text>
+					<View style={styles.personalDetailContainer}>
 						<TextInputComponent
 							showFieldLabel={true}
 							fieldLabelText={transRef.t('workType')}
@@ -290,67 +293,68 @@ const AddUpdatePartyWorkDetails = (props)=>{
 							inputBoxStyle={styles.workRateBoxStyle}
 							textInputStyle={styles.workRateInput}
 						/>
-						<TextInputComponent
-							showFieldLabel={true}
-							fieldLabelText={transRef.t('workRate')}
-							value={partyDetails.rate?.toString()}
-							onChangeText={onChangeRate}
-							keyboardType='number-pad'
-							isItRequired={true}
-							inputBoxStyle={styles.workRateBoxStyle}
-							textInputStyle={styles.workRateInput}
-							maxLength={10}
-	                   />
+						<View style={styles.workAreaDetails}>
+							<TextInputComponent
+								showFieldLabel={true}
+								fieldLabelText={transRef.t('length')}
+								value={partyDetails.length?.toString()}
+								onChangeText={onChangeLength}
+								keyboardType='number-pad'
+								maxLength={10}
+								isItRequired={true}
+								textInputStyle={styles.workAreaInput}
+								inputBoxStyle={styles.workAreaInputBox}
+							/>
+							<TextInputComponent
+								showFieldLabel={true}
+								fieldLabelText={transRef.t('width')}
+								value={partyDetails.width?.toString()}
+								onChangeText={onChangeWidth}
+								keyboardType='number-pad'
+								maxLength={10}
+								isItRequired={true}
+								textInputStyle={styles.workAreaInput}
+								inputBoxStyle={styles.workAreaInputBox}
+							/>
+							<TextInputComponent
+								showFieldLabel={true}
+								fieldLabelText={transRef.t('height')}
+								value={partyDetails.height?.toString()}
+								onChangeText={onChangeHeight}
+								keyboardType='number-pad'
+								maxLength={10}
+								textInputStyle={styles.workAreaInput}
+								inputBoxStyle={styles.workAreaInputBox}
+							/>
+						</View>
+						<View style={styles.workAreaDetails}>
+							<TextInputComponent
+								showFieldLabel={true}
+								fieldLabelText={transRef.t('workRate')}
+								value={partyDetails.rate?.toString()}
+								onChangeText={onChangeRate}
+								keyboardType='number-pad'
+								isItRequired={true}
+								inputBoxStyle={styles.workRateBoxStyle}
+								textInputStyle={styles.workRateInput}
+								maxLength={10}
+		                   />
+		                   <TextInputComponent
+								showFieldLabel={true}
+								fieldLabelText={transRef.t('totalArea')}
+								value={partyDetails.totalArea ?partyDetails.totalArea?.toString() :''}
+								// onChangeText={onChangeHeight}
+								keyboardType='number-pad'
+								maxLength={10}
+								isItRequired={true}
+								textInputStyle={styles.totalValueInput}
+								inputBoxStyle={styles.totalValueBox}
+								editable={false}
+		                   />
+						</View>
 					</View>
-					<Text style={styles.workAreaHeading}>{transRef.t('workArea')}</Text>
-					<View style={styles.workAreaDetails}>
+					<View style={styles.personalDetailContainer}>
 						<TextInputComponent
-							showFieldLabel={true}
-							fieldLabelText={transRef.t('length')}
-							value={partyDetails.length?.toString()}
-							onChangeText={onChangeLength}
-							keyboardType='number-pad'
-							maxLength={10}
-							isItRequired={true}
-							textInputStyle={styles.workAreaInput}
-							inputBoxStyle={styles.workAreaInputBox}
-						/>
-						<TextInputComponent
-							showFieldLabel={true}
-							fieldLabelText={transRef.t('width')}
-							value={partyDetails.width?.toString()}
-							onChangeText={onChangeWidth}
-							keyboardType='number-pad'
-							maxLength={10}
-							isItRequired={true}
-							textInputStyle={styles.workAreaInput}
-							inputBoxStyle={styles.workAreaInputBox}
-						/>
-						<TextInputComponent
-							showFieldLabel={true}
-							fieldLabelText={transRef.t('height')}
-							value={partyDetails.height?.toString()}
-							onChangeText={onChangeHeight}
-							keyboardType='number-pad'
-							maxLength={10}
-							textInputStyle={styles.workAreaInput}
-							inputBoxStyle={styles.workAreaInputBox}
-						/>
-					</View>
-					<View style={styles.workAreaDetails}>
-						<TextInputComponent
-							showFieldLabel={true}
-							fieldLabelText={transRef.t('totalArea')}
-							value={partyDetails.totalArea ?partyDetails.totalArea?.toString() :''}
-							// onChangeText={onChangeHeight}
-							keyboardType='number-pad'
-							maxLength={10}
-							isItRequired={true}
-							textInputStyle={styles.totalValueInput}
-							inputBoxStyle={styles.totalValueBox}
-							editable={false}
-	                   />
-	                   <TextInputComponent
 							showFieldLabel={true}
 							fieldLabelText={transRef.t('totalAmount')}
 							value={partyDetails.amount ?partyDetails.amount?.toString() :''}
@@ -362,16 +366,16 @@ const AddUpdatePartyWorkDetails = (props)=>{
 							inputBoxStyle={styles.totalValueBox}
 							editable={false}  
 	                    />
+						<TextInputComponent
+							showFieldLabel={true}
+							fieldLabelText={transRef.t('discount')}
+							value={partyDetails.discount?.toString()}
+							onChangeText={onChangeDiscount}
+							keyboardType='number-pad'
+							maxLength={10}
+							inputBoxStyle={styles.inputBoxStyle}
+						/>
 					</View>
-					<TextInputComponent
-						showFieldLabel={true}
-						fieldLabelText={transRef.t('discount')}
-						value={partyDetails.discount?.toString()}
-						onChangeText={onChangeDiscount}
-						keyboardType='number-pad'
-						maxLength={10}
-						inputBoxStyle={styles.inputBoxStyle}
-					/>
 				</ScrollView>
 				<ButtonComponent
 					title={transRef.t(params ?'update' :'save')}

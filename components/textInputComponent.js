@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 		paddingTop:15,
 		paddingBottom:16,
 		marginTop:-10,
-		width:wp('87%'),
+		width:wp('78.9%'),
 		fontWeight:'bold',
 		fontSize:18,
 		color:'#808080',

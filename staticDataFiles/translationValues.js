@@ -24,7 +24,7 @@ export const translationValues = {
 		beem:'Beem',
 		wall:'Wall',
 		floor:'Floor',
-		addPartyWork:'Add Party Work',
+		addPartyWork:'Add Party Work Payment',
 		enterFirstName:'First Name',
 		enterLastName:'Last Name',
 		selectWorkType:'Select Work Type',
