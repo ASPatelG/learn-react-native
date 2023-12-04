@@ -63,7 +63,9 @@ export const translationValues = {
 		applyLanguage:'Apply Language',
 		workDeletionHint:'Do you want to delete this work..?',
 		actions:'Action',
-		remainingAmount:'Remaining ₹'
+		remainingAmount:'Remaining ₹',
+		personalDetails:'Personal Details',
+		paymentDetails:'Payment Details',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',

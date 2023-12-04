@@ -12,12 +12,23 @@ export const styles = StyleSheet.create({
 		color:'#808080',
 		fontWeight:'bold',
 	},
-	personalDetailContainer:{
-		padding:15,
+	uiContainer:{
+		paddingBottom:15,
 		borderRadius:5,
 		marginHorizontal:7,
 		borderWidth:0.8,
 		borderColor:'#808080',
+		marginTop:15
+	},
+	uiHeadingContainer:{
+		paddingHorizontal:10,
+		paddingTop:10,
+		borderTopLeftRadius:5,
+		borderTopRightRadius:5,
+	},
+	uiSubHeadingContainer:{
+		flexDirection:'row',
+		justifyContent:'space-between',
 	},
 	inputBoxStyle:{
 		borderRadius:5,
