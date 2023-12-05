@@ -262,16 +262,16 @@ const AddUpdatePartyWorkDetails = (props) => {
 							style={styles.uiHeadingContainer}
 						>
 							<View style={styles.uiSubHeadingContainer}>
-								<Text>{transRef.t('personalDetails')}</Text>
+								<Text style={styles.uiHeading}>{transRef.t('personalDetails')}</Text>
 								<Entypo
 									name={partyDetails.showPersenalDetails === true ?"chevron-up" :"chevron-down"}
-									size={24}
-									color="black"
+									size={26}
+									color="#002db3"
 								/>
 							</View>
 						</TouchableHighlight>
 						{partyDetails.showPersenalDetails === true
-							?<View>
+							?<View style={styles.uiElementContainer}>
 								<TextInputComponent
 									showFieldLabel={true}
 									fieldLabelText={transRef.t('enterFirstName')}
@@ -325,16 +325,16 @@ const AddUpdatePartyWorkDetails = (props) => {
 							// underlayColor={'#cce6ff'}
 						>
 							<View style={styles.uiSubHeadingContainer}>
-								<Text style={styles.workAreaHeading}>{transRef.t('workArea')}</Text>
+								<Text style={styles.uiHeading}>{transRef.t('workArea')}</Text>
 								<Entypo
 									name={partyDetails.showWorkDetails === true ?"chevron-up" :"chevron-down"}
-									size={24}
-									color="black"
+									size={26}
+									color="#002db3"
 								/>
 							</View>
 						</TouchableHighlight>
 						{partyDetails.showWorkDetails === true
-							? <View>
+							? <View style={styles.uiElementContainer}>
 								<TextInputComponent
 									showFieldLabel={true}
 									fieldLabelText={transRef.t('workType')}
@@ -419,15 +419,15 @@ const AddUpdatePartyWorkDetails = (props) => {
 							style={styles.uiHeadingContainer}
 						>
 							<View style={styles.uiSubHeadingContainer}>
-								<Text>{transRef.t('paymentDetails')}</Text>
+								<Text style={styles.uiHeading}>{transRef.t('paymentDetails')}</Text>
 								<Entypo
 									name={partyDetails.showPaymentDetails === true ?"chevron-up" :"chevron-down"}
-									size={24} color="black"
+									size={26} color="#002db3"
 								/>
 							</View>
 						</TouchableHighlight>
 						{partyDetails.showPaymentDetails === true
-							? <View>
+							? <View style={styles.uiElementContainer}>
 								<TextInputComponent
 									showFieldLabel={true}
 									fieldLabelText={transRef.t('totalAmount')}

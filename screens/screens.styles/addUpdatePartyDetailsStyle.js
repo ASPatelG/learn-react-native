@@ -13,7 +13,6 @@ export const styles = StyleSheet.create({
 		fontWeight:'bold',
 	},
 	uiContainer:{
-		paddingBottom:15,
 		borderRadius:5,
 		marginHorizontal:7,
 		borderWidth:0.8,
@@ -22,13 +21,23 @@ export const styles = StyleSheet.create({
 	},
 	uiHeadingContainer:{
 		paddingHorizontal:10,
-		paddingTop:10,
+		paddingVertical:14,
 		borderTopLeftRadius:5,
 		borderTopRightRadius:5,
+	},
+	uiHeading:{
+		fontSize:16,
+		fontWeight:'bold',
+		color:'#002db3',
 	},
 	uiSubHeadingContainer:{
 		flexDirection:'row',
 		justifyContent:'space-between',
+	},
+	uiElementContainer:{
+		paddingVertical:14,
+		borderTopWidth:0.8,
+		borderTopColor:'#808080',
 	},
 	inputBoxStyle:{
 		borderRadius:5,
