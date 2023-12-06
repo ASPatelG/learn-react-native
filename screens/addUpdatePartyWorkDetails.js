@@ -1,5 +1,6 @@
-import { View, Text, SafeAreaView, ScrollView, BackHandler, TouchableHighlight } from 'react-native';
 import { useState, useEffect } from 'react';
+import { View, Text, SafeAreaView, ScrollView, BackHandler, TouchableHighlight } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Entypo } from '@expo/vector-icons';
@@ -8,6 +9,8 @@ import { CommonHeaderComponent } from '../components/commonHeaderComponent';
 import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
 import ScreenUILoading from '../components/ScreenUILoading';
+import  CommonDateTimePicker from '../components/CommonDateTimePicker';
+
 import { addPartyDetails, updatePartyDetails } from '../learnRedux/actions';
 import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
 import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
@@ -19,7 +22,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 	const { route: { params } } = props;
 	const transRef = useSelector((state) => state.transRef);
 	const dispatchRefrence = useDispatch()		// To send the data in store
-	const [partyDetails, setPartyDetails] = useState({
+	const [state, setState] = useState({
 		firstName: '',
 		lastName: '',
 		mobileNumber: '',
@@ -36,9 +39,10 @@ const AddUpdatePartyWorkDetails = (props) => {
 		showPersenalDetails:true,
 		showWorkDetails:false,
 		showPaymentDetails:false,
+		selectedDate:new Date(),
 	});
 	const disableSave = () => {
-		if (!partyDetails.firstName?.length || !partyDetails.mobileNumber || partyDetails.mobileNumber.length < 10 || !partyDetails.rate || !partyDetails.length || !partyDetails.width || !partyDetails.rate || !partyDetails.workType) {
+		if (!state.firstName?.length || !state.mobileNumber || state.mobileNumber.length < 10 || !state.rate || !state.length || !state.width || !state.rate || !state.workType) {
 			return true;
 		}
 		else {
@@ -53,10 +57,10 @@ const AddUpdatePartyWorkDetails = (props) => {
 				const { partySomeDetails } = params;
 				const { discount, email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type, id } = partySomeDetails;
 
-				setPartyDetails(previous => ({ ...previous, discount, email, firstName: first_name, height, lastName: last_name, length, mobileNumber: mobile_number, rate, amount, totalArea: total_area, width, workType: work_type, id, isLoading: false }));
+				setState(previous => ({ ...previous, discount, email, firstName: first_name, height, lastName: last_name, length, mobileNumber: mobile_number, rate, amount, totalArea: total_area, width, workType: work_type, id, isLoading: false }));
 			}
 			else {
-				setPartyDetails((previous) => ({ ...previous, isLoading: false }));
+				setState((previous) => ({ ...previous, isLoading: false }));
 			}
 		});
 
@@ -81,14 +85,14 @@ const AddUpdatePartyWorkDetails = (props) => {
 	}, []);
 
 	const onChangeFirstName = (enteredText) => {
-		setPartyDetails((previous) => ({
+		setState((previous) => ({
 			...previous,
 			firstName: enteredText,
 		}));
 	}
 
 	const onChangeLastName = (enteredText) => {
-		setPartyDetails((previous) => ({
+		setState((previous) => ({
 			...previous,
 			lastName: enteredText,
 		}));
@@ -96,7 +100,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 
 	const onChangeMobileNumber = (enteredText) => {
 		if (regularExpressionOnlyDigit.test(enteredText) || enteredText === '') {
-			setPartyDetails((previous) => ({
+			setState((previous) => ({
 				...previous,
 				mobileNumber: enteredText,
 			}));
@@ -107,14 +111,14 @@ const AddUpdatePartyWorkDetails = (props) => {
 	}
 
 	const onChangeEmail = (enteredText) => {
-		setPartyDetails((previous) => ({
+		setState((previous) => ({
 			...previous,
 			email: enteredText,
 		}));
 	}
 
 	const onChangeWorkType = (enteredText) => {
-		setPartyDetails((previous) => ({
+		setState((previous) => ({
 			...previous,
 			workType: enteredText,
 		}));
@@ -144,8 +148,8 @@ const AddUpdatePartyWorkDetails = (props) => {
 
 	const onChangeRate = (enteredText) => {
 		if (regularExpressionDecimal.test(enteredText) || enteredText === '') {
-			const calculatedAmount = calculateAmount(partyDetails.totalArea, enteredText);
-			setPartyDetails((previous) => ({
+			const calculatedAmount = calculateAmount(state.totalArea, enteredText);
+			setState((previous) => ({
 				...previous,
 				rate: enteredText,
 				amount: calculatedAmount,
@@ -158,9 +162,9 @@ const AddUpdatePartyWorkDetails = (props) => {
 
 	const onChangeLength = (enteredText) => {
 		if (regularExpressionDecimal.test(enteredText) || enteredText === '') {
-			const calculatedTotalArea = calculateTotalArea(enteredText, partyDetails.width, partyDetails.height);
-			const calculatedAmount = calculateAmount(calculatedTotalArea, partyDetails.rate);
-			setPartyDetails((previous) => ({
+			const calculatedTotalArea = calculateTotalArea(enteredText, state.width, state.height);
+			const calculatedAmount = calculateAmount(calculatedTotalArea, state.rate);
+			setState((previous) => ({
 				...previous,
 				totalArea: calculatedTotalArea,
 				amount: calculatedAmount,
@@ -174,9 +178,9 @@ const AddUpdatePartyWorkDetails = (props) => {
 
 	const onChangeWidth = (enteredText) => {
 		if (regularExpressionDecimal.test(enteredText) || enteredText === '') {
-			const calculatedTotalArea = calculateTotalArea(partyDetails.length, enteredText, partyDetails.height);
-			const calculatedAmount = calculateAmount(calculatedTotalArea, partyDetails.rate);
-			setPartyDetails((previous) => ({
+			const calculatedTotalArea = calculateTotalArea(state.length, enteredText, state.height);
+			const calculatedAmount = calculateAmount(calculatedTotalArea, state.rate);
+			setState((previous) => ({
 				...previous,
 				totalArea: calculatedTotalArea,
 				amount: calculatedAmount,
@@ -190,9 +194,9 @@ const AddUpdatePartyWorkDetails = (props) => {
 
 	const onChangeHeight = (enteredText) => {
 		if (regularExpressionDecimal.test(enteredText) || enteredText === '') {
-			const calculatedTotalArea = calculateTotalArea(partyDetails.length, partyDetails.width, enteredText);
-			const calculatedAmount = calculateAmount(calculatedTotalArea, partyDetails.rate);
-			setPartyDetails((previous) => ({
+			const calculatedTotalArea = calculateTotalArea(state.length, state.width, enteredText);
+			const calculatedAmount = calculateAmount(calculatedTotalArea, state.rate);
+			setState((previous) => ({
 				...previous,
 				totalArea: calculatedTotalArea,
 				amount: calculatedAmount,
@@ -206,7 +210,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 
 	const onChangeDiscount = (enteredText) => {
 		if (regularExpressionDecimal.test(enteredText) || enteredText === '') {
-			setPartyDetails((previous) => ({
+			setState((previous) => ({
 				...previous,
 				discount: enteredText
 			}));
@@ -216,37 +220,45 @@ const AddUpdatePartyWorkDetails = (props) => {
 		}
 	}
 
+	const handleDateChange = (date) => {
+		// Handle the date change event here
+		setState((previous) => ({
+			...previous,
+			selectedDate: date
+		}));
+	};
+
 	const onPressSave = async () => {
 		const { navigation } = props;
-		const insertDataOutput = await insertPartyDetail(partyDetails);
-		const bodyData = { first_name: partyDetails.firstName, last_name: partyDetails.lastName, mobile_number: partyDetails.mobileNumber, email: partyDetails.email, work_type: partyDetails.workType, length: partyDetails.length, width: partyDetails.width, height: partyDetails.height, rate: partyDetails.rate, total_area: partyDetails.totalArea, amount: partyDetails.amount, discount: partyDetails.discount };
-		// dispatchRefrence(addPartyDetails({partyData:bodyData}));	// Since useEffect Not Calling again
+		const insertDataOutput = await insertPartyDetail(state);
+		const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
+		// dispatchRefrence(addstate({partyData:bodyData}));	// Since useEffect Not Calling again
 		navigation.goBack();
 	}
 
 	const onPressUpdate = async () => {
 		const { navigation } = props;
-		const updateDataResult = await updatePartyDetail(partyDetails);
-		const bodyData = { first_name: partyDetails.firstName, last_name: partyDetails.lastName, mobile_number: partyDetails.mobileNumber, email: partyDetails.email, work_type: partyDetails.workType, length: partyDetails.length, width: partyDetails.width, height: partyDetails.height, rate: partyDetails.rate, total_area: partyDetails.totalArea, amount: partyDetails.amount, discount: partyDetails.discount };
-		// dispatchRefrence(updatePartyDetails({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
+		const updateDataResult = await updatePartyDetail(state);
+		const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
+		// dispatchRefrence(updatestate({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
 		navigation.goBack();
 	}
 
 	const setLoading = () => {
-		setPartyDetails({ ...partyDetails, isLoading: !partyDetails.isLoading });
+		setState({ ...state, isLoading: !state.isLoading });
 	}
 
 	function onOpenCloseUI(key){
-		setPartyDetails((previous) => ({
+		setState((previous) => ({
 			...previous,
-			[key]: !partyDetails[key],
+			[key]: !state[key],
 		}));
 	}
 
-	if (partyDetails.isLoading) {
+	if (state.isLoading) {
 		return (
 			<ScreenUILoading
-				showLoadingIndicator={partyDetails.isLoading}
+				showLoadingIndicator={state.isLoading}
 			/>
 		);
 	}
@@ -264,18 +276,18 @@ const AddUpdatePartyWorkDetails = (props) => {
 							<View style={styles.uiSubHeadingContainer}>
 								<Text style={styles.uiHeading}>{transRef.t('personalDetails')}</Text>
 								<Entypo
-									name={partyDetails.showPersenalDetails === true ?"chevron-up" :"chevron-down"}
+									name={state.showPersenalDetails === true ?"chevron-up" :"chevron-down"}
 									size={26}
 									color="#002db3"
 								/>
 							</View>
 						</TouchableHighlight>
-						{partyDetails.showPersenalDetails === true
+						{state.showPersenalDetails === true
 							?<View style={styles.uiElementContainer}>
 								<TextInputComponent
 									showFieldLabel={true}
 									fieldLabelText={transRef.t('enterFirstName')}
-									value={partyDetails.firstName}
+									value={state.firstName}
 									onChangeText={onChangeFirstName}
 									maxLength={30}
 									isItRequired={true}
@@ -284,7 +296,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 								<TextInputComponent
 									showFieldLabel={true}
 									fieldLabelText={transRef.t('enterLastName')}
-									value={partyDetails.lastName}
+									value={state.lastName}
 									onChangeText={onChangeLastName}
 									maxLength={30}
 									inputBoxStyle={styles.inputBoxStyle}
@@ -292,7 +304,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 								<TextInputComponent
 									showFieldLabel={true}
 									fieldLabelText={transRef.t('enterMobilNumber')}
-									value={partyDetails.mobileNumber?.toString()}
+									value={state.mobileNumber?.toString()}
 									onChangeText={onChangeMobileNumber}
 									maxLength={10}
 									isItRequired={true}
@@ -302,7 +314,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 								<TextInputComponent
 									showFieldLabel={true}
 									fieldLabelText={transRef.t('enterEmail')}
-									value={partyDetails.email}
+									value={state.email}
 									onChangeText={onChangeEmail}
 									keyboardType='email-address'
 									inputBoxStyle={styles.inputBoxStyle}
@@ -327,28 +339,41 @@ const AddUpdatePartyWorkDetails = (props) => {
 							<View style={styles.uiSubHeadingContainer}>
 								<Text style={styles.uiHeading}>{transRef.t('workArea')}</Text>
 								<Entypo
-									name={partyDetails.showWorkDetails === true ?"chevron-up" :"chevron-down"}
+									name={state.showWorkDetails === true ?"chevron-up" :"chevron-down"}
 									size={26}
 									color="#002db3"
 								/>
 							</View>
 						</TouchableHighlight>
-						{partyDetails.showWorkDetails === true
+						{state.showWorkDetails === true
 							? <View style={styles.uiElementContainer}>
-								<TextInputComponent
-									showFieldLabel={true}
-									fieldLabelText={transRef.t('workType')}
-									value={partyDetails.workType}
-									onChangeText={onChangeWorkType}
-									isItRequired={true}
-									inputBoxStyle={styles.workRateBoxStyle}
-									textInputStyle={styles.workRateInput}
-								/>
+								<View style ={{flexDirection:'row'}}>
+									<TextInputComponent
+										showFieldLabel={true}
+										fieldLabelText={transRef.t('workType')}
+										value={state.workType}
+										onChangeText={onChangeWorkType}
+										isItRequired={true}
+										inputBoxStyle={styles.workRateBoxStyle}
+										textInputStyle={styles.workRateInput}
+									/>
+									<TextInputComponent
+										showFieldLabel={true}
+										fieldLabelText={transRef.t('workRate')}
+										value={state.rate?.toString()}
+										onChangeText={onChangeRate}
+										keyboardType='number-pad'
+										isItRequired={true}
+										inputBoxStyle={styles.workRateBoxStyle}
+										textInputStyle={styles.workRateInput}
+										maxLength={10}
+									/>
+								</View>
 								<View style={styles.workAreaDetails}>
 									<TextInputComponent
 										showFieldLabel={true}
 										fieldLabelText={transRef.t('length')}
-										value={partyDetails.length?.toString()}
+										value={state.length?.toString()}
 										onChangeText={onChangeLength}
 										keyboardType='number-pad'
 										maxLength={10}
@@ -359,7 +384,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 									<TextInputComponent
 										showFieldLabel={true}
 										fieldLabelText={transRef.t('width')}
-										value={partyDetails.width?.toString()}
+										value={state.width?.toString()}
 										onChangeText={onChangeWidth}
 										keyboardType='number-pad'
 										maxLength={10}
@@ -370,7 +395,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 									<TextInputComponent
 										showFieldLabel={true}
 										fieldLabelText={transRef.t('height')}
-										value={partyDetails.height?.toString()}
+										value={state.height?.toString()}
 										onChangeText={onChangeHeight}
 										keyboardType='number-pad'
 										maxLength={10}
@@ -381,19 +406,20 @@ const AddUpdatePartyWorkDetails = (props) => {
 								<View style={styles.workAreaDetails}>
 									<TextInputComponent
 										showFieldLabel={true}
-										fieldLabelText={transRef.t('workRate')}
-										value={partyDetails.rate?.toString()}
-										onChangeText={onChangeRate}
+										fieldLabelText={transRef.t('totalArea')}
+										value={state.totalArea ? state.totalArea?.toString() : ''}
+										// onChangeText={onChangeHeight}
 										keyboardType='number-pad'
-										isItRequired={true}
-										inputBoxStyle={styles.workRateBoxStyle}
-										textInputStyle={styles.workRateInput}
 										maxLength={10}
+										isItRequired={true}
+										textInputStyle={styles.totalValueInput}
+										inputBoxStyle={styles.totalValueBox}
+										editable={false}
 									/>
 									<TextInputComponent
 										showFieldLabel={true}
-										fieldLabelText={transRef.t('totalArea')}
-										value={partyDetails.totalArea ? partyDetails.totalArea?.toString() : ''}
+										fieldLabelText={transRef.t('totalAmount')}
+										value={state.amount ? state.amount?.toString() : ''}
 										// onChangeText={onChangeHeight}
 										keyboardType='number-pad'
 										maxLength={10}
@@ -421,34 +447,38 @@ const AddUpdatePartyWorkDetails = (props) => {
 							<View style={styles.uiSubHeadingContainer}>
 								<Text style={styles.uiHeading}>{transRef.t('paymentDetails')}</Text>
 								<Entypo
-									name={partyDetails.showPaymentDetails === true ?"chevron-up" :"chevron-down"}
+									name={state.showPaymentDetails === true ?"chevron-up" :"chevron-down"}
 									size={26} color="#002db3"
 								/>
 							</View>
 						</TouchableHighlight>
-						{partyDetails.showPaymentDetails === true
+						{state.showPaymentDetails === true
 							? <View style={styles.uiElementContainer}>
-								<TextInputComponent
-									showFieldLabel={true}
-									fieldLabelText={transRef.t('totalAmount')}
-									value={partyDetails.amount ? partyDetails.amount?.toString() : ''}
-									// onChangeText={onChangeHeight}
-									keyboardType='number-pad'
-									maxLength={10}
-									isItRequired={true}
-									textInputStyle={styles.totalValueInput}
-									inputBoxStyle={styles.totalValueBox}
-									editable={false}
-								/>
-								<TextInputComponent
+								<View  style ={{flexDirection:'row', alignItems:'center'}}>
+									<TextInputComponent
+										showFieldLabel={true}
+										fieldLabelText={transRef.t('workRate')}
+										value={state.rate?.toString()}
+										onChangeText={onChangeRate}
+										keyboardType='number-pad'
+										isItRequired={true}
+										inputBoxStyle={styles.workRateBoxStyle}
+										textInputStyle={styles.workRateInput}
+										maxLength={10}
+									/>
+									<CommonDateTimePicker
+										onDateChange={handleDateChange}
+									/>
+								</View>
+								{/* <TextInputComponent
 									showFieldLabel={true}
 									fieldLabelText={transRef.t('discount')}
-									value={partyDetails.discount?.toString()}
+									value={state.discount?.toString()}
 									onChangeText={onChangeDiscount}
 									keyboardType='number-pad'
 									maxLength={10}
 									inputBoxStyle={styles.inputBoxStyle}
-								/>
+								/> */}
 								<ButtonComponent
 									title={transRef.t('save')}
 									onPressIn={params ? onPressUpdate : onPressSave}
