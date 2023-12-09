@@ -125,4 +125,11 @@ export const styles = StyleSheet.create({
 	buttonContainer:{
 		marginVertical:5,
 	},
+	dateTimeContainer:{
+		borderWidth:0.8,
+		borderColor:'#808080',
+		padding:20,
+		borderRadius:5,
+		marginTop:15,
+	}
 });

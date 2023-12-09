@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
 	rightColumnStyle:{
 		flexWrap:'wrap',
 		paddingVertical:15,
-		paddingHorizontal:3,
+		paddingHorizontal:15,
+		justifyContent:'space-between',
 		width:wp('25.07%'),
 		borderLeftWidth:1,
 		borderLeftColor:'#B3B3B3',
