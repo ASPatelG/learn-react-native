@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, ScrollView, BackHandler, TouchableHighlight } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { format } from 'date-fns';
+
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Entypo } from '@expo/vector-icons';
@@ -222,7 +222,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 		}
 	}
 
-	const handleDateChange = (event, date) => {
+	const onDateChange = (date) => {
 		// Handle the date change event here
 		setState((previous) => ({
 			...previous,
@@ -355,7 +355,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 						</TouchableHighlight>
 						{state.showWorkDetails === true
 							? <View style={styles.uiElementContainer}>
-								<View style ={{flexDirection:'row'}}>
+								<View style={styles.workAreaDetails}>
 									<TextInputComponent
 										showFieldLabel={true}
 										fieldLabelText={transRef.t('workType')}
@@ -462,10 +462,10 @@ const AddUpdatePartyWorkDetails = (props) => {
 						</TouchableHighlight>
 						{state.showPaymentDetails === true
 							? <View style={styles.uiElementContainer}>
-								<View  style ={{flexDirection:'row', alignItems:'center'}}>
+								<View  style ={styles.paymentElementContainer}>
 									<TextInputComponent
 										showFieldLabel={true}
-										fieldLabelText={transRef.t('workRate')}
+										fieldLabelText={transRef.t('amount')}
 										value={state.rate?.toString()}
 										onChangeText={onChangeRate}
 										keyboardType='number-pad'
@@ -474,25 +474,12 @@ const AddUpdatePartyWorkDetails = (props) => {
 										textInputStyle={styles.workRateInput}
 										maxLength={10}
 									/>
-									<View>
-										<TouchableHighlight
-											onPress={onPressDatepicker}
-											activeOpacity={0.2}
-											style={styles.dateTimeContainer}
-										>
-											{/* <Text>{state?.selectedDate ?state?.selectedDate?.toISOString()?.split('T')[0] :'Select a date'}</Text> */}
-											<Text>{state?.selectedDate ?format(state?.selectedDate, 'dd MMM yyyy') :'Select a date'}</Text>
-										</TouchableHighlight>
-										{/* <Button title="Show Date Picker" onPress={showDatepicker} /> */}
-										{state?.showDatePicker && (
-											<DateTimePicker
-												value={state?.selectedDate ?state.selectedDate : new Date()}
-												mode="date"
-												display="default"
-												onChange={handleDateChange}
-											/>
-										)}
-									</View>
+									<CommonDateTimePicker
+										onDateChange={onDateChange}
+										selectedDate={state.selectedDate}
+										placeHoldar={'Select Date'}
+										label={'Select Date'}
+									/>
 								</View>
 								<ButtonComponent
 									title={transRef.t('save')}

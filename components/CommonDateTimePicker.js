@@ -1,15 +1,15 @@
 import React, { useState, memo } from 'react';
 import { View, Text, Button, Platform, TouchableHighlight, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { format } from 'date-fns';
 
 const CommonDateTimePicker = (props) => {
-	const [state, setState] = useState({selectedDate:new Date(), showDatePicker:false});
+	const [state, setState] = useState({showDatePicker:false});
 
 	const handleDateChange = (event, date) => {
-		console.log('event::::::::::::::::::::: ', event, 'date:::::::::::::::::: ', date);
 		if (date !== undefined) {
-			// setState((previous)=>({...previous, showDatePicker:Platform.OS === 'ios', selectedDate:date}, props.onDateChange(date)));
-			// setState((previous)=>({...previous, showDatePicker:Platform.OS === 'ios', selectedDate:date}));
+			setState((previous)=>({...previous, showDatePicker:Platform.OS === 'ios'}));
+			props.onDateChange(date);
 		}
 	};
 
@@ -24,12 +24,14 @@ const CommonDateTimePicker = (props) => {
 				activeOpacity={0.2}
 				style={styles.dateTimeContainer}
 			>
-				<Text>{state?.selectedDate ?state?.selectedDate?.toISOString()?.split('T')[0] :'Select a date'}</Text>
+				<View style={styles.dateContainer}>
+					{props.selectedDate ?<Text style={styles.labelStyle}>{props.label}</Text> :null}
+					<Text style={styles.dateStyle}>{props?.selectedDate ?format(props?.selectedDate, 'dd MMM yyyy') :props.placeHoldar}</Text>
+				</View>
 			</TouchableHighlight>
-			{/* <Button title="Show Date Picker" onPress={showDatepicker} /> */}
 			{state?.showDatePicker && (
 				<DateTimePicker
-					value={props?.selectedDate}
+					value={props?.selectedDate ?props.selectedDate :new Date()}
 					mode="date"
 					display="default"
 					onChange={handleDateChange}
@@ -45,8 +47,24 @@ const styles = StyleSheet.create({
 	dateTimeContainer:{
 		borderWidth:0.8,
 		borderColor:'#808080',
-		padding:20,
+		padding:18,
 		borderRadius:5,
 		marginTop:15,
+		alignItems:'flex-start',
+	},
+	labelStyle:{
+		fontSize:16,
+		fontWeight:'bold',
+		backgroundColor:'#ffffff',
+		paddingHorizontal:5,
+	},
+	dateContainer:{
+		marginTop:-30,
+	},
+	dateStyle:{
+		fontSize:18,
+		marginTop:8,
+		fontWeight:'bold',
+		color:'#808080',
 	}
 });
