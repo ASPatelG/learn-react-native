@@ -24,9 +24,9 @@ const CommonDateTimePicker = (props) => {
 				activeOpacity={0.2}
 				style={styles.dateTimeContainer}
 			>
-				<View style={styles.dateContainer}>
+				<View style={props?.selectedDate ?styles.dateContainer :styles.placeHoldarContainer}>
 					{props.selectedDate ?<Text style={styles.labelStyle}>{props.label}</Text> :null}
-					<Text style={styles.dateStyle}>{props?.selectedDate ?format(props?.selectedDate, 'dd MMM yyyy') :props.placeHoldar}</Text>
+					<Text style={props?.selectedDate ?styles.dateStyle :styles.placeHoldarStyle}>{props?.selectedDate ?format(props?.selectedDate, 'dd MMM yyyy') :props.placeHoldar}</Text>
 				</View>
 			</TouchableHighlight>
 			{state?.showDatePicker && (
@@ -46,20 +46,29 @@ export default memo(CommonDateTimePicker);
 const styles = StyleSheet.create({
 	dateTimeContainer:{
 		borderWidth:0.8,
-		borderColor:'#808080',
-		padding:18,
+		borderColor:'#d3d3d3',
+		padding:16,
 		borderRadius:5,
 		marginTop:15,
 		alignItems:'flex-start',
 	},
 	labelStyle:{
-		fontSize:16,
+		fontSize:14,
 		fontWeight:'bold',
 		backgroundColor:'#ffffff',
 		paddingHorizontal:5,
 	},
 	dateContainer:{
-		marginTop:-30,
+		marginTop:-28,
+	},
+	placeHoldarContainer:{
+		paddingVertical:2,
+	},
+	placeHoldarStyle:{
+		fontSize:16,
+		fontWeight:'bold',
+		backgroundColor:'#ffffff',
+		paddingHorizontal:5,
 	},
 	dateStyle:{
 		fontSize:18,

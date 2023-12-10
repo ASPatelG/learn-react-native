@@ -8,7 +8,11 @@ const {hi:{ enterMobilNumber}} = translationValues;
 
 const TextInputComponent = (props)=> {
 	/* Used to show ui till the app is loading */
-	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText, inputIcon, inputBoxStyle, textInputStyle, isItRequired, ...restProps} = props;
+	const {maxLength, showFieldLabel, fieldLabelText, value, onChangeText,
+		InputIcon,		// Component
+		inputBoxStyle, textInputStyle, isItRequired,
+		...restProps
+	} = props;
 
 	return(
 		<View style={inputBoxStyle}>
@@ -18,8 +22,8 @@ const TextInputComponent = (props)=> {
 				: null
 			}
 			<View style={{flexdirection:'row'}}>
-				{/*{inputIcon
-					? <inputIcon/>
+				{/*{InputIcon
+					? <InputIcon/>
 					: null
 				}*/}
 				<TextInput

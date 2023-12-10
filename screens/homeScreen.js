@@ -17,9 +17,9 @@ import PartyWorkFilter from '../components/PartyWorkFilter';
 import CommonGuiToApplyFilter from '../components/CommonGuiToApplyFilter';
 import ScreenUILoading from '../components/ScreenUILoading';
 
-import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
+import { createOwnerTable, createPartyTable, createPersonalDetailTable, createPartyWorkTable, createPaymentTable } from '../sqliteDatabaseFunctionality/createTable';
 import { getPartyData, filterPartyData } from '../sqliteDatabaseFunctionality/getData';
-import { onDeleteWork } from '../sqliteDatabaseFunctionality/deleteData';
+import { deleteParty } from '../sqliteDatabaseFunctionality/deleteData';
 
 import {constantValues} from '../staticDataFiles/constantValues';
 
@@ -64,9 +64,12 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		};
 
 		const willFocusSubscription = navigation.addListener('focus', ()=> {
-			createOwnerTable();		// To store business owner details
-			createPartyTable();		// To store party's works details
+			// createOwnerTable();		// To store business owner details
+			// createPartyTable();		// To store party's works details
 			setPartyDataInStore();	// To store table data in readux-store
+			createPersonalDetailTable();
+			createPartyWorkTable();
+			createPaymentTable();
 			backHandler = BackHandler.addEventListener(
 				'hardwareBackPress',
 				backAction,
@@ -152,7 +155,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onDelete = async (partyWorkData)=> {
-		let deletionResponse = await onDeleteWork(partyWorkData.id);
+		let deletionResponse = await deleteParty(partyWorkData.party_id);
 		let tablePartyData = await getPartyData();
 		setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData]}));
 	}
@@ -185,12 +188,12 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 						<FontAwesome5 name="file-download" size={33} color="#F5EC42"/>
 					</Pressable>
 					<Pressable
+						disabled={true}
 						onPressIn={onOpenFilterUI}
 						style={styles.downloadIconContainer}
 					>
 						<FontAwesome name="filter" size={35} color="#38C6F4" />
 					</Pressable>
-					{/*<LogoutUI navigation={props.navigation}/>*/}
 				</View>
 					{state?.appliedFilter?.isApplied
 						? <CommonGuiToApplyFilter //Badge will be show if applied any filter

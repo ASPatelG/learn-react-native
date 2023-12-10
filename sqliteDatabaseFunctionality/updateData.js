@@ -26,8 +26,8 @@ export function updatePartyDetail(partyData) {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transactionObject => {
 			transactionObject.executeSql(
-				`UPDATE party_table SET first_name=?, last_name=?, mobile_number=?, email=?, work_type=?, length=?, width=?, height=?, rate=?, total_area=?, amount=?, discount=? WHERE id = ?;`,
-				[partyData.firstName, partyData.lastName, partyData.mobileNumber, partyData.email, partyData.workType, partyData.length, partyData.width, partyData.height, partyData.rate, partyData.totalArea, partyData.amount, partyData.discount, partyData.id],
+				`UPDATE personal_details_table SET first_name=?, last_name=?, mobile_number=?, email=? WHERE party_id = ?;`,
+				[partyData.firstName, partyData.lastName, partyData.mobileNumber, partyData.email, partyData.party_id],
 				(transactionObject, results) => {
 					const {rowsAffected} = results;
 					resolve(`data has been updated rowsAffected: ${rowsAffected}`);
@@ -44,7 +44,7 @@ export function updateSelectWork(partyData) {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transactionObject => {
 			transactionObject.executeSql(
-				`UPDATE party_table SET is_selected=? WHERE id = ?;`,
+				`UPDATE personal_details_table SET is_selected=? WHERE id = ?;`,
 				[partyData.is_selected, partyData.id],
 				(transactionObject, results) => {
 					const {rowsAffected} = results;

@@ -30,7 +30,7 @@ export function getPartyData() {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transaction => {
 			transaction.executeSql(
-				'SELECT * FROM party_table',
+				'SELECT * FROM personal_details_table',
 				[],
 				(_tx, results) => {
 					const data = [];
@@ -40,7 +40,8 @@ export function getPartyData() {
 					resolve(data);
 				},
 				(_tx, error) => {
-					reject(error);
+					resolve([]);
+					// reject(error);
 				}
 			);
 		});

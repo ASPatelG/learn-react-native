@@ -37,14 +37,13 @@ const PartyShortDetails = (props)=>{
 				<Text style={styles.mobileNumberStyle}>{partySomeDetails.mobile_number}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{partySomeDetails.amount}</Text>
+				<Text style={styles.columnValueStyle}>{partySomeDetails.pending_amount ?partySomeDetails.pending_amount :'---'}</Text>
 			</View>
 			<View style={styles.rightColumnStyle}>
 				<Pressable
 					onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
 					style={styles.rightContentStyle}
 				>
-					{/*<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>*/}
 					<AntDesign name="edit" size={22} color="#808080" />
 				</Pressable>
 				<Pressable
@@ -106,13 +105,6 @@ const styles = StyleSheet.create({
 		fontWeight:'bold',
 		color:'#FFC107',
 		width:wp('21.5%'),
-		textAlign:'center',
-	},
-	rightColumnValueStyle:{
-		fontSize:15,
-		fontWeight:'bold',
-		color:'#00CF35',
-		width:wp('13%'),
 		textAlign:'center',
 	},
 	rightColumnStyle:{

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, ScrollView, BackHandler, TouchableHighlight } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { format } from 'date-fns';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -13,7 +13,7 @@ import ScreenUILoading from '../components/ScreenUILoading';
 import  CommonDateTimePicker from '../components/CommonDateTimePicker';
 
 import { addPartyDetails, updatePartyDetails } from '../learnRedux/actions';
-import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
+import { insertPartyDetail, insertPersonalDetail, insertWorkDetails, insertPaymentDetails } from '../sqliteDatabaseFunctionality/insertData';
 import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
 import { regularExpressionOnlyDigit, regularExpressionDecimal } from '../staticDataFiles/constantValues';
 
@@ -40,11 +40,30 @@ const AddUpdatePartyWorkDetails = (props) => {
 		showPersenalDetails:true,
 		showWorkDetails:false,
 		showPaymentDetails:false,
-		selectedDate:'',
-		showDatePicker:false,
+		paymentDate:'',
+		payableAmount:'',
 	});
-	const disableSave = () => {
-		if (!state.firstName?.length || !state.mobileNumber || state.mobileNumber.length < 10 || !state.rate || !state.length || !state.width || !state.rate || !state.workType) {
+
+	const disablePersonalDetailButton = () => {
+		if (!state.firstName?.length || !state.mobileNumber || state.mobileNumber.length < 10 ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	const disablePapmentDetailButton = () => {
+		if (!state.payableAmount || !state.paymentDate) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	const disableWorkDetailButton = () => {
+		if (!state.rate || !state.length || !state.width || !state.rate || !state.workType) {
 			return true;
 		}
 		else {
@@ -57,9 +76,9 @@ const AddUpdatePartyWorkDetails = (props) => {
 		const willFocusSubscription = navigation.addListener('focus', () => {
 			if (params) {		// To set data according to party details
 				const { partySomeDetails } = params;
-				const { discount, email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type, id } = partySomeDetails;
+				const { email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type, id } = partySomeDetails;
 
-				setState(previous => ({ ...previous, discount, email, firstName: first_name, height, lastName: last_name, length, mobileNumber: mobile_number, rate, amount, totalArea: total_area, width, workType: work_type, id, isLoading: false }));
+				setState(previous => ({ ...previous, email, firstName: first_name, height, lastName: last_name, length, mobileNumber: mobile_number, rate, amount, totalArea: total_area, width, workType: work_type, id, isLoading: false }));
 			}
 			else {
 				setState((previous) => ({ ...previous, isLoading: false }));
@@ -210,11 +229,11 @@ const AddUpdatePartyWorkDetails = (props) => {
 		}
 	}
 
-	const onChangeDiscount = (enteredText) => {
+	const onChangePayableAmount = (enteredText) => {
 		if (regularExpressionDecimal.test(enteredText) || enteredText === '') {
 			setState((previous) => ({
 				...previous,
-				discount: enteredText
+				payableAmount: enteredText
 			}));
 		}
 		else {
@@ -226,25 +245,38 @@ const AddUpdatePartyWorkDetails = (props) => {
 		// Handle the date change event here
 		setState((previous) => ({
 			...previous,
-			selectedDate: date,
-			showDatePicker:false,
+			paymentDate: date,
 		}));
 	};
 
 	const onPressSave = async () => {
-		const { navigation } = props;
-		const insertDataOutput = await insertPartyDetail(state);
-		const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
+		const insertDataOutput = await insertPersonalDetail(state);
+		// const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
 		// dispatchRefrence(addstate({partyData:bodyData}));	// Since useEffect Not Calling again
-		navigation.goBack();
+	}
+
+	const onPressSaveWork = async () => {
+		const {partySomeDetails} = params;
+		const workDetails = state;
+		workDetails.party_id = partySomeDetails.party_id;
+		const insertDataOutput = await insertWorkDetails(workDetails);
+	}
+
+	const onPressSavePayment = async () => {
+		const {partySomeDetails} = params;
+		const paymentDetails = state;
+		paymentDetails.paymentDate = format(state?.paymentDate, 'dd MMM yyyy');
+		paymentDetails.party_id = partySomeDetails.party_id;
+		const insertDataOutput = await insertPaymentDetails(paymentDetails);
 	}
 
 	const onPressUpdate = async () => {
-		const { navigation } = props;
-		const updateDataResult = await updatePartyDetail(state);
-		const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
+		const {partySomeDetails} = params;
+		const partyDetails = state;
+		partyDetails.party_id = partySomeDetails.party_id;
+		const updateDataResult = await updatePartyDetail(partyDetails);
+		// const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
 		// dispatchRefrence(updatestate({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
-		navigation.goBack();
 	}
 
 	const setLoading = () => {
@@ -258,11 +290,6 @@ const AddUpdatePartyWorkDetails = (props) => {
 		}));
 	}
 
-	const onPressDatepicker = () => {
-		setState((previous)=>({...previous, showDatePicker:true}));
-	};
-
-
 	if (state.isLoading) {
 		return (
 			<ScreenUILoading
@@ -275,7 +302,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 			<SafeAreaView style={styles.mainContainer}>
 				<CommonHeaderComponent />
 				<Text style={styles.eployeeDetailsStyle}>{transRef.t('addPartyWork')}</Text>
-				<ScrollView>
+				<ScrollView keyboardShouldPersistTaps='always'>
 					<View style={styles.uiContainer}>
 						<TouchableHighlight
 							onPress={()=>onOpenCloseUI('showPersenalDetails')}
@@ -331,7 +358,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 								<ButtonComponent
 									title={transRef.t(params ? 'update' : 'save')}
 									onPressIn={params ? onPressUpdate : onPressSave}
-									disabled={disableSave()}
+									disabled={disablePersonalDetailButton()}
 									mainContainer={styles.buttonContainer}
 								/>
 							</View>
@@ -439,8 +466,8 @@ const AddUpdatePartyWorkDetails = (props) => {
 								</View>
 								<ButtonComponent
 									title={transRef.t('save')}
-									onPressIn={params ? onPressUpdate : onPressSave}
-									disabled={disableSave()}
+									onPressIn={onPressSaveWork}
+									disabled={disableWorkDetailButton()}
 									mainContainer={styles.buttonContainer}
 								/>
 							</View>
@@ -466,8 +493,8 @@ const AddUpdatePartyWorkDetails = (props) => {
 									<TextInputComponent
 										showFieldLabel={true}
 										fieldLabelText={transRef.t('amount')}
-										value={state.rate?.toString()}
-										onChangeText={onChangeRate}
+										value={state.payableAmount?.toString()}
+										onChangeText={onChangePayableAmount}
 										keyboardType='number-pad'
 										isItRequired={true}
 										inputBoxStyle={styles.workRateBoxStyle}
@@ -476,15 +503,15 @@ const AddUpdatePartyWorkDetails = (props) => {
 									/>
 									<CommonDateTimePicker
 										onDateChange={onDateChange}
-										selectedDate={state.selectedDate}
+										selectedDate={state.paymentDate}
 										placeHoldar={'Select Date'}
 										label={'Select Date'}
 									/>
 								</View>
 								<ButtonComponent
 									title={transRef.t('save')}
-									onPressIn={params ? onPressUpdate : onPressSave}
-									disabled={disableSave()}
+									onPressIn={onPressSavePayment}
+									disabled={disablePapmentDetailButton()}
 									mainContainer={styles.buttonContainer}
 								/>
 							</View>

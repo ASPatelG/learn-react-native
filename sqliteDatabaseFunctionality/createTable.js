@@ -44,7 +44,7 @@ export const createPersonalDetailTable = () => {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(tx => {
 			tx.executeSql(
-				'CREATE TABLE IF NOT EXISTS personal_details_table (id INTEGER PRIMARY KEY AUTOINCREMENT, mobile_number INTEGER PRIMARY KEY, first_name TEXT, last_name TEXT, email TEXT, is_selected BOOLEAN DEFAULT 0)',
+				'CREATE TABLE IF NOT EXISTS personal_details_table (party_id INTEGER PRIMARY KEY AUTOINCREMENT, mobile_number INTEGER, first_name TEXT, last_name TEXT, email TEXT, is_selected BOOLEAN DEFAULT 0, pending_amount INTEGER DEFAULT 0)',
 				[],
 				(tx, results) => {
 					resolve('Table created successfully');
@@ -62,7 +62,7 @@ export const createPartyWorkTable = () => {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(tx => {
 			tx.executeSql(
-				'CREATE TABLE IF NOT EXISTS work_details_table (mobile_number INTEGER PRIMARY KEY, work_type TEXT, length INTEGER, width INTEGER, height INTEGER, rate INTEGER, total_area INTEGER, amount INTEGER)',
+				'CREATE TABLE IF NOT EXISTS work_details_table (id INTEGER PRIMARY KEY AUTOINCREMENT, party_id INTEGER, work_type TEXT, length INTEGER, width INTEGER, height INTEGER, rate INTEGER, total_area INTEGER, amount INTEGER, FOREIGN KEY (party_id) REFERENCES personal_details_table (party_id))',
 				[],
 				(tx, results) => {
 					resolve('Table created successfully');
@@ -80,7 +80,7 @@ export const createPaymentTable = () => {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(tx => {
 			tx.executeSql(
-				'CREATE TABLE IF NOT EXISTS payment_details_table (mobile_number INTEGER PRIMARY KEY, amount INTEGER, date text, discount INTEGER)',
+				`CREATE TABLE IF NOT EXISTS payment_details_table (id INTEGER PRIMARY KEY AUTOINCREMENT, party_id INTEGER, amount INTEGER, payment_date text, FOREIGN KEY (party_id) REFERENCES personal_details_table (party_id))`,
 				[],
 				(tx, results) => {
 					resolve('Table created successfully');
