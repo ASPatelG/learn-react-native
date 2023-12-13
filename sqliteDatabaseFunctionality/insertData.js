@@ -62,7 +62,6 @@ export const insertPersonalDetail = (personalDetail) => {
 }
 
 export const insertWorkDetails = (workDetails) => {
-	console.log('insertWorkDetails function called: ', workDetails);
 	const databaseObject = openDatabase();
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(tx => {
@@ -74,7 +73,6 @@ export const insertWorkDetails = (workDetails) => {
 					resolve(`data has been created with id: ${insertedId}`);
 				},
 				error => {
-					console.log('error:      {{{{{: ', error);
 					reject(`Error creating table:  ${error}`);
 				}
 			);
@@ -83,7 +81,6 @@ export const insertWorkDetails = (workDetails) => {
 }
 
 export const insertPaymentDetails = (paymentDetails) => {
-	console.log('insertPaymentDetails function called: ', paymentDetails);
 	const databaseObject = openDatabase();
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(tx => {
