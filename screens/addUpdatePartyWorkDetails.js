@@ -272,7 +272,14 @@ const AddUpdatePartyWorkDetails = (props) => {
 		const {partySomeDetails} = params;
 		const workDetails = state;
 		workDetails.party_id = partySomeDetails.party_id;
-		const insertDataOutput = await insertWorkDetails(workDetails);
+		const {message, success} = await insertWorkDetails(workDetails);
+		if(success){
+			crossPlatformToast(message);
+			// setState(previous=>({...previous, createdPartyId:success}));
+		}
+		else{
+			crossPlatformToast(message);
+		}
 		setState(previos=>({...previos, length:'', width:'', height:'', totalArea:'', amount:''}));
 	}
 
@@ -281,8 +288,14 @@ const AddUpdatePartyWorkDetails = (props) => {
 		const paymentDetails = state;
 		paymentDetails.paymentDate = format(state?.paymentDate, 'dd MMM yyyy');
 		paymentDetails.party_id = partySomeDetails.party_id;
-		const insertDataOutput = await insertPaymentDetails(paymentDetails);
-		setState(previos=>({...previos, paymentDate:'', payableAmount:''}));
+		const {message, success} = await insertPaymentDetails(paymentDetails);
+		if(success){
+			crossPlatformToast(message);
+		}
+		else{
+			crossPlatformToast(message);
+		}
+		setState(previos=>({...previos, paymentDate:new Date(), payableAmount:''}));
 	}
 
 	const onPressUpdate = async () => {

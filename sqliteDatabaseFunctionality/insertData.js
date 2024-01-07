@@ -70,10 +70,10 @@ export const insertWorkDetails = (workDetails) => {
 				[workDetails.party_id, workDetails.work_type, workDetails.length, workDetails.width, workDetails.height, workDetails.rate, workDetails.totalArea, workDetails.amount],
 				(tx, results) => {
 					const insertedId = results.insertId;
-					resolve(`data has been created with id: ${insertedId}`);
+					resolve({message:`data has been created with id: ${insertedId}`, success:true});
 				},
 				error => {
-					reject(`Error creating table:  ${error}`);
+					reject({message:`Error creating table:  ${error}`, success:false});
 				}
 			);
 		});
@@ -89,10 +89,10 @@ export const insertPaymentDetails = (paymentDetails) => {
 				[paymentDetails.party_id, paymentDetails.payableAmount, paymentDetails.paymentDate],
 				(tx, results) => {
 					const insertedId = results.insertId;
-					resolve(`data has been created with id: ${insertedId}`);
+					resolve({message:`data has been created with id: ${insertedId}`, success:true});
 				},
 				error => {
-					reject(`Error creating table:  ${error}`);
+					reject({message:`Error creating table:  ${error}`, success:false});
 				}
 			);
 		});

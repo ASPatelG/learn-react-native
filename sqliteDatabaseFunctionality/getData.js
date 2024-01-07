@@ -97,7 +97,7 @@ export function getPartyWorkDetails(partyId) {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transaction => {
 			transaction.executeSql(
-				'SELECT * FROM payment_details_table where party_id=?',
+				'SELECT * FROM work_details_table where party_id=?',
 				[partyId],
 				(_tx, results) => {
 					const data = [];
@@ -120,7 +120,7 @@ export function getPartyPaymenDetails(partyId) {
 	return new Promise((resolve, reject) => {
 		databaseObject.transaction(transaction => {
 			transaction.executeSql(
-				'SELECT * FROM work_details_table where party_id=?',
+				'SELECT * FROM payment_details_table where party_id=?',
 				[partyId],
 				(_tx, results) => {
 					const data = [];

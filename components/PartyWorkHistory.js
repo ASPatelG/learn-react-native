@@ -4,7 +4,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import {useDispatch, useSelector} from 'react-redux';
 
-import { getPartyPaymenDetails } from '../sqliteDatabaseFunctionality/getData';
+import { getPartyWorkDetails } from '../sqliteDatabaseFunctionality/getData';
 // import {selectWorkToPrint} from '../learnRedux/actions';
 
 // import {confirmationAlert} from '../components/commonAlerts';
@@ -12,12 +12,12 @@ import { getPartyPaymenDetails } from '../sqliteDatabaseFunctionality/getData';
 function PartyWorkHistory (props){
 	const {partyId} = props;
     const [state, setState] = useState({workDetailsArray:[]});
-	const getPartyWorkDetails = async () => {
-		let tablePartyWorks = await getPartyPaymenDetails(partyId);
+	const getPartyWorks = async () => {
+		let tablePartyWorks = await getPartyWorkDetails(partyId);
 		setState(previous=>({...previous, workDetailsArray:tablePartyWorks}));
 	}
 	useEffect(() => {
-		getPartyWorkDetails();
+		getPartyWorks();
 		// To remove event on onmount
 		return () => { }
 	}, []);
@@ -27,6 +27,7 @@ function PartyWorkHistory (props){
             { state?.workDetailsArray?.length > 0
                 ? state.workDetailsArray.map((item, index)=>(
                     <WorkShortDetails
+						key={index}
                         workSomeDetails={item}
                         index={index}
                     />
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
 		fontSize:15,
 	},
 
-    
+
 	columnStyle:{
 		paddingVertical:15,
 		paddingHorizontal:3,

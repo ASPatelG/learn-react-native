@@ -11,23 +11,24 @@ import { getPartyPaymenDetails } from '../sqliteDatabaseFunctionality/getData';
 
 function PartyPamentHistory (props){
 	const {partyId} = props;
-    const [state, setState] = useState({PaymentDetailsArray:[]});
-	const getPartyPaymenDetails = async () => {
+    const [state, setState] = useState({paymentDetailsArray:[]});
+	const getPartyPaymens = async () => {
 		let tablePartyWorks = await getPartyPaymenDetails(partyId);
-		setState(previous=>({...previous, PaymentDetailsArray:tablePartyWorks}));
+		setState(previous=>({...previous, paymentDetailsArray:tablePartyWorks}));
 	}
 	useEffect(() => {
-		// getPartyPaymenDetails(partyId);
+		getPartyPaymens(partyId);
 		// To remove event on onmount
 		return () => { }
 	}, []);
     return(
         <View>
            <WorkDetailsTableHead/> 
-            { state?.PaymentDetailsArray?.length > 0
-                ? state.PaymentDetailsArray.map((item, index)=>(
-                    <WorkShortDetails
-                        PaymentSomeDetails={item}
+            { state?.paymentDetailsArray?.length > 0
+                ? state.paymentDetailsArray.map((item, index)=>(
+                    <PaymentShortDetails
+                        key={index}
+                        paymentSomeDetails={item}
                         index={index}
                     />
                 ))
@@ -51,31 +52,32 @@ const WorkDetailsTableHead = (props)=>{
 	);
 }
 
-function WorkShortDetails(props){
+function PaymentShortDetails(props){
+    const {paymentSomeDetails} = props;
 	const dispatchRefrence = useDispatch()		// To send the data in store
 	const {partyId, index}  = props;
 	const transRef  = useSelector((state)=>state.transRef);
 	const [state, setState] = useState({reRenderFlag:null});
 
 	onSelectWork = async ()=>{
-		PaymentSomeDetails["is_selected"] = !PaymentSomeDetails?.is_selected;
-		dispatchRefrence(selectWorkToPrint({partyData:PaymentSomeDetails, activeIndex:index}));
+		paymentSomeDetails["is_selected"] = !paymentSomeDetails?.is_selected;
+		dispatchRefrence(selectWorkToPrint({partyData:paymentSomeDetails, activeIndex:index}));
 		setState(previous=>({...previous, reRenderFlag:''}));//to rerender
 	}
 
 	return(
 		<TouchableOpacity
 			key={index}
-			style={PaymentSomeDetails.is_selectedWork || PaymentSomeDetails.is_selected == 1 ?styles.workSomeDetailsBackground :styles.workSomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
+			style={paymentSomeDetails.is_selectedWork || paymentSomeDetails.is_selected == 1 ?styles.workSomeDetailsBackground :styles.workSomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
 		>
 			<View style={styles.columnStyle}>
-				<Text style={styles.partyNameStyle}>{PaymentSomeDetails.first_name} {PaymentSomeDetails.lastName}</Text>
+				<Text style={styles.partyNameStyle}>{paymentSomeDetails.first_name} {paymentSomeDetails.lastName}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.mobileNumberStyle}>{PaymentSomeDetails.mobile_number}</Text>
+				<Text style={styles.mobileNumberStyle}>{paymentSomeDetails.mobile_number}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{PaymentSomeDetails.pending_amount ?PaymentSomeDetails.pending_amount :'---'}</Text>
+				<Text style={styles.columnValueStyle}>{paymentSomeDetails.pending_amount ?paymentSomeDetails.pending_amount :'---'}</Text>
 			</View>
 		</TouchableOpacity>
 	);
