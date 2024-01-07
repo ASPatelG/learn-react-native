@@ -51,10 +51,10 @@ export const insertPersonalDetail = (personalDetail) => {
 				[personalDetail.firstName, personalDetail.lastName, personalDetail.mobileNumber, personalDetail.email],
 				(tx, results) => {
 					const insertedId = results.insertId;
-					resolve(`data has been created with id: ${insertedId}`);
+					resolve({message:`data has been created with id: ${insertedId}`, success:true});
 				},
 				error => {
-					reject(`Error creating table:  ${error}`);
+					reject({message:`Error creating table:  ${error}`, success:false});
 				}
 			);
 		});

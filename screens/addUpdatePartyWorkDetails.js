@@ -11,6 +11,9 @@ import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
 import ScreenUILoading from '../components/ScreenUILoading';
 import  CommonDateTimePicker from '../components/CommonDateTimePicker';
+import PartyWorkHistory from '../components/PartyWorkHistory';
+import PartyPamentHistory from '../components/PartyPamentHistory';
+import {crossPlatformToast} from '../components/crossPlatformToast';
 
 import { addPartyDetails, updatePartyDetails } from '../learnRedux/actions';
 import { insertPartyDetail, insertPersonalDetail, insertWorkDetails, insertPaymentDetails } from '../sqliteDatabaseFunctionality/insertData';
@@ -28,6 +31,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 		lastName: '',
 		mobileNumber: '',
 		email: '',
+		createdPartyId:0,
 		workType: 'wall',
 		rate: '',
 		length: '',
@@ -42,6 +46,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 		showPaymentDetails:false,
 		paymentDate:'',
 		payableAmount:'',
+		workDetailsArray:[],
 	});
 
 	const disablePersonalDetailButton = () => {
@@ -76,9 +81,9 @@ const AddUpdatePartyWorkDetails = (props) => {
 		const willFocusSubscription = navigation.addListener('focus', () => {
 			if (params) {		// To set data according to party details
 				const { partySomeDetails } = params;
-				const { email, first_name, height, last_name, length, mobile_number, rate, amount, total_area, width, work_type, id } = partySomeDetails;
+				const { email, first_name, last_name, mobile_number, rate, amount, party_id } = partySomeDetails;
 
-				setState(previous => ({ ...previous, email, firstName: first_name, height, lastName: last_name, length, mobileNumber: mobile_number, rate, amount, totalArea: total_area, width, workType: work_type, id, isLoading: false }));
+				setState(previous => ({ ...previous, firstName: first_name, lastName: last_name, mobileNumber: mobile_number, isLoading: false, party_id }));
 			}
 			else {
 				setState((previous) => ({ ...previous, isLoading: false }));
@@ -250,7 +255,15 @@ const AddUpdatePartyWorkDetails = (props) => {
 	};
 
 	const onPressSave = async () => {
-		const insertDataOutput = await insertPersonalDetail(state);
+		const {message, success} = await insertPersonalDetail(state);
+		if(success){
+			crossPlatformToast(message);
+			setState(previous=>({...previous, createdPartyId:success}));
+		}
+		else{
+			crossPlatformToast(message);
+		}
+		// crossPlatformToast();
 		// const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
 		// dispatchRefrence(addstate({partyData:bodyData}));	// Since useEffect Not Calling again
 	}
@@ -276,8 +289,8 @@ const AddUpdatePartyWorkDetails = (props) => {
 		const {partySomeDetails} = params;
 		const partyDetails = state;
 		partyDetails.party_id = partySomeDetails.party_id;
-		const updateDataResult = await updatePartyDetail(partyDetails);
-		// const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
+		const {message, success} = await updatePartyDetail(partyDetails);
+		crossPlatformToast(message);
 		// dispatchRefrence(updatestate({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
 	}
 
@@ -358,7 +371,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 									maxLength={80}
 								/>
 								<ButtonComponent
-									title={transRef.t(params ? 'update' : 'save')}
+									title={transRef.t(params || state.createdPartyId ? 'update' : 'save')}
 									onPressIn={params ? onPressUpdate : onPressSave}
 									disabled={disablePersonalDetailButton()}
 									mainContainer={styles.buttonContainer}
@@ -472,6 +485,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 									disabled={disableWorkDetailButton()}
 									mainContainer={styles.buttonContainer}
 								/>
+								<PartyWorkHistory partyId={state?.party_id}/>
 							</View>
 							: null
 						}
@@ -516,24 +530,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 									disabled={disablePapmentDetailButton()}
 									mainContainer={styles.buttonContainer}
 								/>
-							</View>
-							: null
-						}
-						{state.allPartiesWorkArray.length
-							? <View style={styles.flatlistContainer}>
-								<FlatList 
-									data={state.allPartiesWorkArray} 
-									renderItem={({item, index})=> <PartyShortDetails
-										key={index}
-										index={index}
-										partySomeDetails={item}
-										navigation={props.navigation}
-										onDeleteWork={onDelete}
-									/>}
-									keyExtractor={(item, index) => index.toString()}
-									keyboardShouldPersistTaps='always'
-									ListHeaderComponent={<PartiesWorkTableHeader/>}
-								/>
+								<PartyPamentHistory partyId={state?.party_id}/>
 							</View>
 							: null
 						}
@@ -545,169 +542,3 @@ const AddUpdatePartyWorkDetails = (props) => {
 }
 
 export default AddUpdatePartyWorkDetails;
-
-
-import { StyleSheet, Pressable} from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-// import {useSelector} from 'react-redux';
-
-const WorkDetailsTableHead = (props)=>{
-	const transRef  = useSelector((state)=>state.transRef);
-	return(
-		<View style={styles.tableHeadingContainer}>
-			<Text style={styles.headingTextStyle}>{transRef.t('partyName')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('mobile')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('remainingAmount')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('actions')}</Text>
-		</View>
-	);
-}
-
-const styles = StyleSheet.create({
-	tableHeadingContainer:{
-		width:wp('100%'),
-		flexDirection:'row',
-		alignItems:'center',
-		borderWidth:0.9,
-		borderColor:'#D1D1D1',
-		justifyContent:'space-between',
-		alignSelf:'center',
-		marginTop:8,
-	},
-	headingTextStyle:{
-		width:wp('25%'),
-		paddingVertical:15,
-		paddingHorizontal:3,
-		borderLeftColor:'#B3B3B3',
-		borderLeftWidth:1,
-		textAlign:'center',
-		fontWeight:'bold',
-		fontSize:15,
-	},
-});
-
-import {TouchableOpacity} from 'react-native';
-import { AntDesign, MaterialIcons } from '@expo/vector-icons';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectWorkToPrint} from '../learnRedux/actions';
-
-import {confirmationAlert} from '../components/commonAlerts';
-
-const WorkShortDetails = (props)=>{
-	const dispatchRefrence = useDispatch()		// To send the data in store
-	const {partySomeDetails, index, onDeleteWork}  = props;
-	const transRef  = useSelector((state)=>state.transRef);
-	const [state, setState] = useState({reRenderFlag:null});
-
-	const onPress = (partySomeDetails, index)=>{
-		const {navigation} = props;
-		navigation.navigate('AddUpdatePartyWorkDetails', {partySomeDetails, activeIndex:index});
-	}
-
-	onSelectWork = async ()=>{
-		partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
-		dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
-		setState(previous=>({...previous, reRenderFlag:''}));//to rerender
-	}
-
-	return(
-		<TouchableOpacity
-			key={index}
-			style={partySomeDetails.is_selectedWork || partySomeDetails.is_selected == 1 ?styles.partySomeDetailsBackground :styles.partySomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
-			onPress={onSelectWork}
-		>
-			<View style={styles.columnStyle}>
-				<Text style={styles.partyNameStyle}>{partySomeDetails.first_name} {partySomeDetails.lastName}</Text>
-			</View>
-			<View style={styles.columnStyle}>
-				<Text style={styles.mobileNumberStyle}>{partySomeDetails.mobile_number}</Text>
-			</View>
-			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{partySomeDetails.pending_amount ?partySomeDetails.pending_amount :'---'}</Text>
-			</View>
-			<View style={styles.rightColumnStyle}>
-				<Pressable
-					onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
-					style={styles.rightContentStyle}
-				>
-					<AntDesign name="edit" size={22} color="#808080" />
-				</Pressable>
-				<Pressable
-					style={styles.deleteIconStyle}
-					onPressIn={(nativeEvent)=>confirmationAlert(transRef.t('workDeletionHint'), onDeleteWork, null, partySomeDetails)}
-				>
-					<MaterialIcons name="delete-outline" size={30} color="#ff0000" />
-				</Pressable>
-			</View>
-		</TouchableOpacity>
-	);
-}
-
-memo(PartyShortDetails);
-
-const styles = StyleSheet.create({
-	columnStyle:{
-		paddingVertical:15,
-		paddingHorizontal:3,
-		width:wp('25.07%'),
-		borderLeftWidth:1,
-		borderLeftColor:'#B3B3B3',
-		flexDirection:'row',
-		alignItems:'center',
-	},
-	partySomeDetailsContainer:{
-		width:wp('100%'),
-		flexDirection:'row',
-		justifyContent:'space-between',
-		alignSelf:'center',
-		borderBottomWidth:1,
-		borderBottomColor:'#D3D3D3',
-	},
-	partySomeDetailsBackground:{
-		width:wp('100%'),
-		flexDirection:'row',
-		justifyContent:'space-between',
-		alignSelf:'center',
-		borderBottomWidth:1,
-		borderBottomColor:'#D3D3D3',
-		backgroundColor:'#D3D3D3',
-	},
-	columnValueStyle:{
-		fontSize:15,
-		fontWeight:'bold',
-		color:'#808080',
-		width:wp('21.5%'),
-		textAlign:'center',
-	},
-	partyNameStyle:{
-		fontSize:15,
-		fontWeight:'bold',
-		color:'#38C6F4',
-		width:wp('21.5%'),
-		textAlign:'center',
-	},
-	mobileNumberStyle:{
-		fontSize:14,
-		fontWeight:'bold',
-		color:'#FFC107',
-		width:wp('21.5%'),
-		textAlign:'center',
-	},
-	rightColumnStyle:{
-		flexWrap:'wrap',
-		paddingVertical:15,
-		paddingHorizontal:15,
-		justifyContent:'space-between',
-		width:wp('25.07%'),
-		borderLeftWidth:1,
-		borderLeftColor:'#B3B3B3',
-		flexDirection:'row',
-		alignItems:'center',
-	},
-	deleteIconStyle:{
-		marginLeft:8,
-	},
-	rightContentStyle:{
-		flexDirection:'row',
-	},
-});

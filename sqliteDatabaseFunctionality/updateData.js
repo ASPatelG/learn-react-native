@@ -30,10 +30,10 @@ export function updatePartyDetail(partyData) {
 				[partyData.firstName, partyData.lastName, partyData.mobileNumber, partyData.email, partyData.party_id],
 				(transactionObject, results) => {
 					const {rowsAffected} = results;
-					resolve(`data has been updated rowsAffected: ${rowsAffected}`);
+					resolve({message:`data has been updated rowsAffected: ${rowsAffected}`, success:false});
 				},
 				(transactionObject, error) => {
-					reject(error);
+					reject({message:error, success:false});
 				}
 			);
 		});
