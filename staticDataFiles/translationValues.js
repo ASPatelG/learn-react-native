@@ -66,6 +66,7 @@ export const translationValues = {
 		remainingAmount:'Remaining ₹',
 		personalDetails:'Personal Details',
 		paymentDetails:'Payment Details',
+		paymentDate:'Payment Date',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',
@@ -130,6 +131,6 @@ export const translationValues = {
 		applyLanguage:'भाषा सेट करें',
 		workDeletionHint:'क्या आप यह कार्य हटाना चाहते हैं..?',
 		actions:'गतिविधि',
-		remainingAmount:'शेष ₹'
+		remainingAmount:'शेष ₹',
 	},
 }

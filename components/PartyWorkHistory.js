@@ -44,9 +44,9 @@ const WorkDetailsTableHead = (props)=>{
 	const transRef  = useSelector((state)=>state.transRef);
 	return(
 		<View style={styles.tableHeadingContainer}>
-			<Text style={styles.headingTextStyle}>{transRef.t('partyName')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('mobile')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('remainingAmount')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('workType')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('totalArea')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('totalAmount')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('actions')}</Text>
 		</View>
 	);
@@ -66,20 +66,28 @@ function WorkShortDetails(props){
 	}
 
 	return(
-		<TouchableOpacity
+		<View
 			key={index}
 			style={workSomeDetails.is_selectedWork || workSomeDetails.is_selected == 1 ?styles.workSomeDetailsBackground :styles.workSomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
 		>
-			<View style={styles.columnStyle}>
-				<Text style={styles.partyNameStyle}>{workSomeDetails.first_name} {workSomeDetails.lastName}</Text>
+			<View style={styles.leftColumnStyle}>
+				<Text style={styles.partyNameStyle}>{workSomeDetails.work_type}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.mobileNumberStyle}>{workSomeDetails.mobile_number}</Text>
+				<Text style={styles.mobileNumberStyle}>{workSomeDetails.total_area}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{workSomeDetails.pending_amount ?workSomeDetails.pending_amount :'---'}</Text>
+				<Text style={styles.mobileNumberStyle}>{workSomeDetails.amount}</Text>
 			</View>
-		</TouchableOpacity>
+			<View style={styles.columnStyle}>
+				<Pressable
+					// onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
+					style={styles.rightContentStyle}
+				>
+					<AntDesign name="edit" size={22} color="#808080" />
+				</Pressable>
+			</View>
+		</View>
 	);
 }
 
@@ -115,8 +123,15 @@ const styles = StyleSheet.create({
 		flexDirection:'row',
 		alignItems:'center',
 	},
+	leftColumnStyle:{
+		paddingVertical:15,
+		paddingHorizontal:3,
+		width:wp('25.07%'),
+		flexDirection:'row',
+		alignItems:'center',
+	},
 	workSomeDetailsContainer:{
-		width:wp('100%'),
+		width:wp('96%'),
 		flexDirection:'row',
 		justifyContent:'space-between',
 		alignSelf:'center',
@@ -124,7 +139,7 @@ const styles = StyleSheet.create({
 		borderBottomColor:'#D3D3D3',
 	},
 	workSomeDetailsBackground:{
-		width:wp('100%'),
+		width:wp('96%'),
 		flexDirection:'row',
 		justifyContent:'space-between',
 		alignSelf:'center',

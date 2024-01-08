@@ -67,7 +67,7 @@ export const insertWorkDetails = (workDetails) => {
 		databaseObject.transaction(tx => {
 			tx.executeSql(
 				'INSERT INTO work_details_table (party_id, work_type, length, width, height, rate, total_area, amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-				[workDetails.party_id, workDetails.work_type, workDetails.length, workDetails.width, workDetails.height, workDetails.rate, workDetails.totalArea, workDetails.amount],
+				[workDetails.party_id, workDetails.workType, workDetails.length, workDetails.width, workDetails.height, workDetails.rate, workDetails.totalArea, workDetails.amount],
 				(tx, results) => {
 					const insertedId = results.insertId;
 					resolve({message:`data has been created with id: ${insertedId}`, success:true});

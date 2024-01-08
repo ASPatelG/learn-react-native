@@ -12,10 +12,13 @@ import { getPartyPaymenDetails } from '../sqliteDatabaseFunctionality/getData';
 function PartyPamentHistory (props){
 	const {partyId} = props;
     const [state, setState] = useState({paymentDetailsArray:[]});
+    
 	const getPartyPaymens = async () => {
-		let tablePartyWorks = await getPartyPaymenDetails(partyId);
-		setState(previous=>({...previous, paymentDetailsArray:tablePartyWorks}));
+		let tablePartyPaments = await getPartyPaymenDetails(partyId);
+		setState(previous=>({...previous, paymentDetailsArray:tablePartyPaments}));
+        console.log('tablePartyWorks: ', tablePartyPaments);
 	}
+
 	useEffect(() => {
 		getPartyPaymens(partyId);
 		// To remove event on onmount
@@ -44,9 +47,8 @@ const WorkDetailsTableHead = (props)=>{
 	const transRef  = useSelector((state)=>state.transRef);
 	return(
 		<View style={styles.tableHeadingContainer}>
-			<Text style={styles.headingTextStyle}>{transRef.t('partyName')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('mobile')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('remainingAmount')}</Text>
+			<Text style={styles.headingTextLeftColumnStyle}>{transRef.t('paymentDate')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('amount')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('actions')}</Text>
 		</View>
 	);
@@ -66,20 +68,25 @@ function PaymentShortDetails(props){
 	}
 
 	return(
-		<TouchableOpacity
+		<View
 			key={index}
 			style={paymentSomeDetails.is_selectedWork || paymentSomeDetails.is_selected == 1 ?styles.workSomeDetailsBackground :styles.workSomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
 		>
-			<View style={styles.columnStyle}>
-				<Text style={styles.partyNameStyle}>{paymentSomeDetails.first_name} {paymentSomeDetails.lastName}</Text>
+			<View style={styles.leftColumnStyle}>
+				<Text style={styles.partyNameStyle}>{paymentSomeDetails.payment_date} {paymentSomeDetails.lastName}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.mobileNumberStyle}>{paymentSomeDetails.mobile_number}</Text>
+				<Text style={styles.mobileNumberStyle}>{paymentSomeDetails.amount}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{paymentSomeDetails.pending_amount ?paymentSomeDetails.pending_amount :'---'}</Text>
+                <Pressable
+					// onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
+					style={styles.rightContentStyle}
+				>
+					<AntDesign name="edit" size={22} color="#808080" />
+				</Pressable>
 			</View>
-		</TouchableOpacity>
+		</View>
 	);
 }
 
@@ -104,6 +111,15 @@ const styles = StyleSheet.create({
 		fontWeight:'bold',
 		fontSize:15,
 	},
+    headingTextLeftColumnStyle:{
+		width:wp('25%'),
+		paddingVertical:15,
+		paddingHorizontal:3,
+		textAlign:'center',
+		fontWeight:'bold',
+		fontSize:15,
+        paddingLeft:8,
+	},
 
     
 	columnStyle:{
@@ -115,8 +131,16 @@ const styles = StyleSheet.create({
 		flexDirection:'row',
 		alignItems:'center',
 	},
+    leftColumnStyle:{
+		paddingVertical:15,
+		paddingHorizontal:3,
+		width:wp('25.07%'),
+		flexDirection:'row',
+		alignItems:'center',
+        paddingLeft:8,
+	},
 	workSomeDetailsContainer:{
-		width:wp('100%'),
+		width:wp('96%'),
 		flexDirection:'row',
 		justifyContent:'space-between',
 		alignSelf:'center',
@@ -124,7 +148,7 @@ const styles = StyleSheet.create({
 		borderBottomColor:'#D3D3D3',
 	},
 	workSomeDetailsBackground:{
-		width:wp('100%'),
+		width:wp('96%'),
 		flexDirection:'row',
 		justifyContent:'space-between',
 		alignSelf:'center',

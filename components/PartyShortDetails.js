@@ -25,7 +25,7 @@ const PartyShortDetails = (props)=>{
 	}
 
 	return(
-		<TouchableOpacity
+		<View
 			key={index}
 			style={partySomeDetails.is_selectedWork || partySomeDetails.is_selected == 1 ?styles.partySomeDetailsBackground :styles.partySomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
 			onPress={onSelectWork}
@@ -53,7 +53,7 @@ const PartyShortDetails = (props)=>{
 					<MaterialIcons name="delete-outline" size={30} color="#ff0000" />
 				</Pressable>
 			</View>
-		</TouchableOpacity>
+		</View>
 	);
 }
 
