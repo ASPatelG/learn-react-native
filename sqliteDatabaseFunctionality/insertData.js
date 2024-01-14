@@ -51,10 +51,10 @@ export const insertPersonalDetail = (personalDetail) => {
 				[personalDetail.firstName, personalDetail.lastName, personalDetail.mobileNumber, personalDetail.email],
 				(tx, results) => {
 					const insertedId = results.insertId;
-					resolve({message:`data has been created with id: ${insertedId}`, success:true});
+					resolve({message:`data has been created with id: ${insertedId}`, success:true, partyId:insertedId});
 				},
 				error => {
-					reject({message:`Error creating table:  ${error}`, success:false});
+					reject({message:`Error creating table:  ${error}`, success:false, partyId:insertedId});
 				}
 			);
 		});
@@ -86,7 +86,7 @@ export const insertPaymentDetails = (paymentDetails) => {
 		databaseObject.transaction(tx => {
 			tx.executeSql(
 				'INSERT INTO payment_details_table (party_id, amount, payment_date) VALUES (?, ?, ?)',
-				[paymentDetails.party_id, paymentDetails.payableAmount, paymentDetails.paymentDate],
+				[paymentDetails.party_id, paymentDetails.paidAmount, paymentDetails.paymentDate],
 				(tx, results) => {
 					const insertedId = results.insertId;
 					resolve({message:`data has been created with id: ${insertedId}`, success:true});

@@ -46,7 +46,8 @@ const WorkDetailsTableHead = (props)=>{
 		<View style={styles.tableHeadingContainer}>
 			<Text style={styles.headingTextStyle}>{transRef.t('workType')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('totalArea')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('totalAmount')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('workRate')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('area') + ' X ' + transRef.t('workRate')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('actions')}</Text>
 		</View>
 	);
@@ -77,6 +78,9 @@ function WorkShortDetails(props){
 				<Text style={styles.mobileNumberStyle}>{workSomeDetails.total_area}</Text>
 			</View>
 			<View style={styles.columnStyle}>
+				<Text style={styles.mobileNumberStyle}>{workSomeDetails.rate}</Text>
+			</View>
+			<View style={styles.columnStyle}>
 				<Text style={styles.mobileNumberStyle}>{workSomeDetails.amount}</Text>
 			</View>
 			<View style={styles.columnStyle}>
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
 		marginTop:8,
 	},
 	headingTextStyle:{
-		width:wp('25%'),
+		width:wp('20.3%'),
 		paddingVertical:15,
 		paddingHorizontal:3,
 		borderLeftColor:'#B3B3B3',
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
 	columnStyle:{
 		paddingVertical:15,
 		paddingHorizontal:3,
-		width:wp('25.07%'),
+		width:wp('20.2%'),
 		borderLeftWidth:1,
 		borderLeftColor:'#B3B3B3',
 		flexDirection:'row',
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
 	leftColumnStyle:{
 		paddingVertical:15,
 		paddingHorizontal:3,
-		width:wp('25.07%'),
+		width:wp('20.2%'),
 		flexDirection:'row',
 		alignItems:'center',
 	},

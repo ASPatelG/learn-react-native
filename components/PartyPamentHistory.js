@@ -16,7 +16,6 @@ function PartyPamentHistory (props){
 	const getPartyPaymens = async () => {
 		let tablePartyPaments = await getPartyPaymenDetails(partyId);
 		setState(previous=>({...previous, paymentDetailsArray:tablePartyPaments}));
-        console.log('tablePartyWorks: ', tablePartyPaments);
 	}
 
 	useEffect(() => {

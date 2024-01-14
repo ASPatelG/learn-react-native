@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectWorkToPrint} from '../learnRedux/actions';
 
 import {confirmationAlert} from '../components/commonAlerts';
+import {crossPlatformToast} from './crossPlatformToast';
 
 const PartyShortDetails = (props)=>{
 	const dispatchRefrence = useDispatch()		// To send the data in store
@@ -19,13 +20,24 @@ const PartyShortDetails = (props)=>{
 	}
 
 	onSelectWork = async ()=>{
-		partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
-		dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
-		setState(previous=>({...previous, reRenderFlag:''}));//to rerender
+		if(!partySomeDetails?.is_selected && !state.reRenderFlag){
+			partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
+			setState(previous=>({...previous, reRenderFlag:true}));//to rerender
+			dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
+		}
+		else if(partySomeDetails?.is_selected === true){
+			partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
+			setState(previous=>({...previous, reRenderFlag:false}));//to rerender
+			dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
+		}
+		else{
+			crossPlatformToast(transRef.t('selectOnePartyHint'));
+			// setState(previous=>({...previous, reRenderFlag:false}));//to rerender
+		}
 	}
 
 	return(
-		<View
+		<TouchableOpacity
 			key={index}
 			style={partySomeDetails.is_selectedWork || partySomeDetails.is_selected == 1 ?styles.partySomeDetailsBackground :styles.partySomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
 			onPress={onSelectWork}
@@ -53,7 +65,7 @@ const PartyShortDetails = (props)=>{
 					<MaterialIcons name="delete-outline" size={30} color="#ff0000" />
 				</Pressable>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 }
 

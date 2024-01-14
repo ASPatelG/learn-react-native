@@ -17,13 +17,13 @@ import {crossPlatformToast} from '../components/crossPlatformToast';
 
 import { addPartyDetails, updatePartyDetails } from '../learnRedux/actions';
 import { insertPartyDetail, insertPersonalDetail, insertWorkDetails, insertPaymentDetails } from '../sqliteDatabaseFunctionality/insertData';
-import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
+import { updatePartyDetail, updatePartyReaminingAmount } from '../sqliteDatabaseFunctionality/updateData';
 import { regularExpressionOnlyDigit, regularExpressionDecimal } from '../staticDataFiles/constantValues';
 
 import { styles } from './screens.styles/addUpdatePartyDetailsStyle';
 
 const AddUpdatePartyWorkDetails = (props) => {
-	const { route: { params } } = props;
+	const { route: { params }, navigation } = props;
 	const transRef = useSelector((state) => state.transRef);
 	const dispatchRefrence = useDispatch()		// To send the data in store
 	const [state, setState] = useState({
@@ -31,7 +31,6 @@ const AddUpdatePartyWorkDetails = (props) => {
 		lastName: '',
 		mobileNumber: '',
 		email: '',
-		createdPartyId:0,
 		workType: 'wall',
 		rate: '',
 		length: '',
@@ -45,7 +44,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 		showWorkDetails:false,
 		showPaymentDetails:false,
 		paymentDate:'',
-		payableAmount:'',
+		paidAmount:'',
 		workDetailsArray:[],
 	});
 
@@ -59,7 +58,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 	}
 
 	const disablePapmentDetailButton = () => {
-		if (!state.payableAmount || !state.paymentDate) {
+		if (!state.paidAmount || !state.paymentDate) {
 			return true;
 		}
 		else {
@@ -238,7 +237,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 		if (regularExpressionDecimal.test(enteredText) || enteredText === '') {
 			setState((previous) => ({
 				...previous,
-				payableAmount: enteredText
+				paidAmount: enteredText
 			}));
 		}
 		else {
@@ -255,17 +254,16 @@ const AddUpdatePartyWorkDetails = (props) => {
 	};
 
 	const onPressSave = async () => {
-		const {message, success} = await insertPersonalDetail(state);
+		const {message, success, partyId} = await insertPersonalDetail(state);
 		if(success){
 			crossPlatformToast(message);
-			setState(previous=>({...previous, createdPartyId:success}));
+			if(navigation.canGoBack()){
+				navigation.goBack();
+			}
 		}
 		else{
 			crossPlatformToast(message);
 		}
-		// crossPlatformToast();
-		// const bodyData = { first_name: state.firstName, last_name: state.lastName, mobile_number: state.mobileNumber, email: state.email, work_type: state.workType, length: state.length, width: state.width, height: state.height, rate: state.rate, total_area: state.totalArea, amount: state.amount, discount: state.discount };
-		// dispatchRefrence(addstate({partyData:bodyData}));	// Since useEffect Not Calling again
 	}
 
 	const onPressSaveWork = async () => {
@@ -274,13 +272,16 @@ const AddUpdatePartyWorkDetails = (props) => {
 		workDetails.party_id = partySomeDetails.party_id;
 		const {message, success} = await insertWorkDetails(workDetails);
 		if(success){
+			const remainingAmount = partySomeDetails.pending_amount + state.amount;
 			crossPlatformToast(message);
-			// setState(previous=>({...previous, createdPartyId:success}));
+			updatePartyReaminingAmount(remainingAmount, partySomeDetails?.party_id);
+			if(navigation.canGoBack()){
+				navigation.goBack();
+			}
 		}
 		else{
 			crossPlatformToast(message);
 		}
-		setState(previos=>({...previos, length:'', width:'', height:'', totalArea:'', amount:''}));
 	}
 
 	const onPressSavePayment = async () => {
@@ -291,11 +292,15 @@ const AddUpdatePartyWorkDetails = (props) => {
 		const {message, success} = await insertPaymentDetails(paymentDetails);
 		if(success){
 			crossPlatformToast(message);
+			const remainingAmount = partySomeDetails.pending_amount - state.paidAmount;
+			updatePartyReaminingAmount(remainingAmount, partySomeDetails?.party_id);
+			if(navigation.canGoBack()){
+				navigation.goBack();
+			}
 		}
 		else{
 			crossPlatformToast(message);
 		}
-		setState(previos=>({...previos, paymentDate:new Date(), payableAmount:''}));
 	}
 
 	const onPressUpdate = async () => {
@@ -304,7 +309,6 @@ const AddUpdatePartyWorkDetails = (props) => {
 		partyDetails.party_id = partySomeDetails.party_id;
 		const {message, success} = await updatePartyDetail(partyDetails);
 		crossPlatformToast(message);
-		// dispatchRefrence(updatestate({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
 	}
 
 	const setLoading = () => {
@@ -384,7 +388,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 									maxLength={80}
 								/>
 								<ButtonComponent
-									title={transRef.t(params || state.createdPartyId ? 'update' : 'save')}
+									title={transRef.t(params ? 'update' : 'save')}
 									onPressIn={params ? onPressUpdate : onPressSave}
 									disabled={disablePersonalDetailButton()}
 									mainContainer={styles.buttonContainer}
@@ -397,7 +401,6 @@ const AddUpdatePartyWorkDetails = (props) => {
 						<TouchableHighlight
 							onPress={()=>onOpenCloseUI('showWorkDetails')}
 							style={styles.uiHeadingContainer}
-							// underlayColor={'#cce6ff'}
 						>
 							<View style={styles.uiSubHeadingContainer}>
 								<Text style={styles.uiHeading}>{transRef.t('workArea')}</Text>
@@ -471,7 +474,6 @@ const AddUpdatePartyWorkDetails = (props) => {
 										showFieldLabel={true}
 										fieldLabelText={transRef.t('totalArea')}
 										value={state.totalArea ? state.totalArea?.toString() : ''}
-										// onChangeText={onChangeHeight}
 										keyboardType='number-pad'
 										maxLength={10}
 										isItRequired={true}
@@ -483,7 +485,6 @@ const AddUpdatePartyWorkDetails = (props) => {
 										showFieldLabel={true}
 										fieldLabelText={transRef.t('totalAmount')}
 										value={state.amount ? state.amount?.toString() : ''}
-										// onChangeText={onChangeHeight}
 										keyboardType='number-pad'
 										maxLength={10}
 										isItRequired={true}
@@ -522,7 +523,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 									<TextInputComponent
 										showFieldLabel={true}
 										fieldLabelText={transRef.t('amount')}
-										value={state.payableAmount?.toString()}
+										value={state.paidAmount?.toString()}
 										onChangeText={onChangePayableAmount}
 										keyboardType='number-pad'
 										isItRequired={true}

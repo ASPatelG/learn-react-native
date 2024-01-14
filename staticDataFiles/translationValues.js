@@ -67,6 +67,9 @@ export const translationValues = {
 		personalDetails:'Personal Details',
 		paymentDetails:'Payment Details',
 		paymentDate:'Payment Date',
+		area:'Area',
+		selectOnePartyHint:'!! Sorry !! you can select one at a time',
+		workDetails:'Work Details',
 	},
 	hi:{	// Hindi
 		appLoading:'ऐप लोड हो रहा है कृपया इंतजार करें',

@@ -2,25 +2,29 @@ import {View} from 'react-native';
 import * as Print from 'expo-print';
 
 import transRef from '../learnRedux/reducers';
+import { getPartyWorkDetails, getPartyPaymenDetails } from '../sqliteDatabaseFunctionality/getData';
 
 export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 	// Define the HTML content with the table data
 
-	let totalAmount = dataToAddInPDF.reduce((accumulator, currentObject)=> {
-		return accumulator + Number(currentObject.amount)
-	}, 0);
-
-	const partyShortDetails = dataToAddInPDF[0];
+	// let totalAmount = dataToAddInPDF.reduce((accumulator, currentObject)=> {
+	// 	return accumulator + Number(currentObject.amount)
+	// }, 0);
+	let totalAmount = 0;
+	const partyShortDetails = dataToAddInPDF;
 	if(partyShortDetails.last_name){
 		null;
 	}
 	else{
 		partyShortDetails.last_name = '';
 	}
+	const partyWorkDetais = await getPartyWorkDetails(dataToAddInPDF.party_id);
+	const partyPaymentDetails = await getPartyPaymenDetails(dataToAddInPDF.party_id);
 
-	let totalDiscount = dataToAddInPDF.reduce((accumulator, currentObject)=> accumulator + Number(currentObject.discount), 0);
-
-	let totalPayableAmount = totalAmount - totalDiscount;
+	// let totalDiscount = dataToAddInPDF.reduce((accumulator, currentObject)=> accumulator + Number(currentObject.discount), 0);
+	let totalDiscount = 0;
+	// let totalPayableAmount = totalAmount - totalDiscount;
+	let totalPayableAmount = 0;
 
 	const htmlContent = `
 		<html>
@@ -52,6 +56,9 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 				</div>
 				<table>
 					<tr>
+						<td colspan=${7}>${transRef.t('workDetails')}</td>
+					</tr>
+					<tr>
 						<th>${transRef.t('workType')}</th>
 						<th>${transRef.t('length')}</th>
 						<th>${transRef.t('width')}</th>
@@ -60,7 +67,7 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 						<th>${transRef.t('workRate')}</th>
 						<th>${transRef.t('amount')}</th>
 					</tr>
-					${dataToAddInPDF.map(
+					${partyWorkDetais.map(
 						(item) =>`<tr>
 							<th>${item.work_type}</th>
 							<td>${item.length}</td>
@@ -69,6 +76,20 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 							<td>${item.total_area}</td>
 							<td>${item.rate}</td>
 							<td>${item.amount}</td>
+						</tr>`)
+						.join('')
+					}
+					<tr>
+						<td colspan=${7}>${transRef.t('paymentDetails')}</td>
+					</tr>
+					<tr>
+						<th colspan=${3}>${transRef.t('paymentDate')}</th>
+						<th colspan=${4}>${transRef.t('amount')}</th>
+					</tr>
+					${partyPaymentDetails.map(
+						(paymentDetails) =>`<tr>
+							<td colspan=${3}>${paymentDetails.payment_date}</td>
+							<td colspan=${4}>${paymentDetails.amount}</td>
 						</tr>`)
 						.join('')
 					}

@@ -57,3 +57,22 @@ export function updateSelectWork(partyData) {
 		});
 	});
 };
+
+export function updatePartyReaminingAmount(pendingAmount, partyId) {
+	const databaseObject = openDatabase();
+	return new Promise((resolve, reject) => {
+		databaseObject.transaction(transactionObject => {
+			transactionObject.executeSql(
+				`UPDATE personal_details_table SET pending_amount=? WHERE party_id = ?;`,
+				[pendingAmount, partyId],
+				(transactionObject, results) => {
+					const {rowsAffected} = results;
+					resolve(`data has been updated rowsAffected: ${rowsAffected}`);
+				},
+				(transactionObject, error) => {
+					reject(error);
+				}
+			);
+		});
+	});
+};
