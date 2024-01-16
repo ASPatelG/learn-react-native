@@ -9,7 +9,7 @@ const PartiesWorkTableHeader = (props)=>{
 		<View style={styles.tableHeadingContainer}>
 			<Text style={styles.headingTextStyle}>{transRef.t('partyName')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('mobile')}</Text>
-			<Text style={styles.headingTextStyle}>{transRef.t('remainingAmount')}</Text>
+			<Text style={styles.headingTextStyle}>{transRef.t('amount')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('actions')}</Text>
 		</View>
 	);

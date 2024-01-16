@@ -6,10 +6,6 @@ import { getPartyWorkDetails, getPartyPaymenDetails } from '../sqliteDatabaseFun
 
 export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 	// Define the HTML content with the table data
-
-	// let totalAmount = dataToAddInPDF.reduce((accumulator, currentObject)=> {
-	// 	return accumulator + Number(currentObject.amount)
-	// }, 0);
 	let totalAmount = 0;
 	const partyShortDetails = dataToAddInPDF;
 	if(partyShortDetails.last_name){
@@ -18,8 +14,22 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 	else{
 		partyShortDetails.last_name = '';
 	}
+	let pendingAmount = 0;
+	if(dataToAddInPDF?.pending_amount <= 0){
+		pendingAmount = (dataToAddInPDF.pending_amount * -1) + ' ₹ Advance';
+	}
+	else{
+		pendingAmount = dataToAddInPDF.pending_amount + ' ₹ Pending';
+	}
 	const partyWorkDetais = await getPartyWorkDetails(dataToAddInPDF.party_id);
+	const totalWrokAmount = partyWorkDetais.reduce((accumulator, currentObject)=> {
+		return accumulator + Number(currentObject.amount)
+	}, 0);
+	
 	const partyPaymentDetails = await getPartyPaymenDetails(dataToAddInPDF.party_id);
+	const totalPaidAmount = partyPaymentDetails.reduce((accumulator, currentObject)=> {
+		return accumulator + Number(currentObject.amount)
+	}, 0);
 
 	// let totalDiscount = dataToAddInPDF.reduce((accumulator, currentObject)=> accumulator + Number(currentObject.discount), 0);
 	let totalDiscount = 0;
@@ -94,14 +104,14 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 						.join('')
 					}
 					<tr>
-						<td colspan=${2}>${transRef.t('totalAmount')}</td>
-						<td colspan=${2}>${totalAmount+' ₹'}</td>
-						<td colspan=${2}>${transRef.t('discount')}</td>
-						<td>${totalDiscount}</td>
+						<td colspan=${2}>${transRef.t('totalWorkAmount')}</td>
+						<td colspan=${2}>${totalWrokAmount+' ₹'}</td>
+						<td colspan=${2}>${transRef.t('totalPaidAmount')}</td>
+						<td>${totalPaidAmount+' ₹'}</td>
 					</tr>
 					<tr>
-						<td colspan=${4}>${transRef.t('payableAmount')}</td>
-						<td colspan=${3}>${totalPayableAmount+' ₹'}</td>
+						<td colspan=${4}>${transRef.t('remainingAmount')}</td>
+						<td colspan=${3}>${pendingAmount}</td>
 					</tr>
 				</table>
 			</body>

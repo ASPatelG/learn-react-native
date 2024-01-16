@@ -92,8 +92,6 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	const onPressPDF = (nativeEvent)=>{
 		setState(previous=>({...previous, isLoading:true}));
 		const printableDataArray = state.allPartiesWorkArray?.filter((element)=>element.is_selected);
-		console.log('printableDataArray: ', printableDataArray);
-		console.log('allPartiesWorkArray: ', state.allPartiesWorkArray);
 		if(printableDataArray.length > 0){
 			generateWorkPaymentPDF(printableDataArray[0]);
 			setState(previous=>({...previous, isLoading:false}));

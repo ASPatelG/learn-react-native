@@ -49,7 +49,17 @@ const PartyShortDetails = (props)=>{
 				<Text style={styles.mobileNumberStyle}>{partySomeDetails.mobile_number}</Text>
 			</View>
 			<View style={styles.columnStyle}>
-				<Text style={styles.columnValueStyle}>{partySomeDetails.pending_amount ?partySomeDetails.pending_amount :'---'}</Text>
+				<Text style={
+					partySomeDetails.pending_amount > 0 || !partySomeDetails.pending_amount
+					? styles.pendingPaymentStyle
+					: styles.advanceAmountStyle
+				}>{
+					partySomeDetails?.pending_amount > 0
+					? partySomeDetails?.pending_amount + ' Pen'
+					: partySomeDetails?.pending_amount < 0
+					? (partySomeDetails?.pending_amount * -1) + ' Adv'
+					:'---'
+				}</Text>
 			</View>
 			<View style={styles.rightColumnStyle}>
 				<Pressable
@@ -98,10 +108,17 @@ const styles = StyleSheet.create({
 		borderBottomColor:'#D3D3D3',
 		backgroundColor:'#D3D3D3',
 	},
-	columnValueStyle:{
+	pendingPaymentStyle:{
 		fontSize:15,
 		fontWeight:'bold',
-		color:'#808080',
+		color:'#ff1a1a',
+		width:wp('21.5%'),
+		textAlign:'center',
+	},
+	advanceAmountStyle:{
+		fontSize:15,
+		fontWeight:'bold',
+		color:'#00ff00',
 		width:wp('21.5%'),
 		textAlign:'center',
 	},
