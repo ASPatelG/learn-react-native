@@ -397,158 +397,164 @@ const AddUpdatePartyWorkDetails = (props) => {
 							: null
 						}
 					</View>
-					<View style={styles.uiContainer}>
-						<TouchableHighlight
-							onPress={()=>onOpenCloseUI('showWorkDetails')}
-							style={styles.uiHeadingContainer}
-						>
-							<View style={styles.uiSubHeadingContainer}>
-								<Text style={styles.uiHeading}>{transRef.t('workArea')}</Text>
-								<Entypo
-									name={state.showWorkDetails === true ?"chevron-up" :"chevron-down"}
-									size={26}
-									color="#002db3"
-								/>
-							</View>
-						</TouchableHighlight>
-						{state.showWorkDetails === true
-							? <View style={styles.uiElementContainer}>
-								<View style={styles.workAreaDetails}>
-									<TextInputComponent
-										showFieldLabel={true}
-										fieldLabelText={transRef.t('workType')}
-										value={state.workType}
-										onChangeText={onChangeWorkType}
-										isItRequired={true}
-										inputBoxStyle={styles.workRateBoxStyle}
-										textInputStyle={styles.workRateInput}
-									/>
-									<TextInputComponent
-										showFieldLabel={true}
-										fieldLabelText={transRef.t('workRate')}
-										value={state.rate?.toString()}
-										onChangeText={onChangeRate}
-										keyboardType='number-pad'
-										isItRequired={true}
-										inputBoxStyle={styles.workRateBoxStyle}
-										textInputStyle={styles.workRateInput}
-										maxLength={10}
+					{ params?.partySomeDetails
+						? <View style={styles.uiContainer}>
+							<TouchableHighlight
+								onPress={()=>onOpenCloseUI('showWorkDetails')}
+								style={styles.uiHeadingContainer}
+							>
+								<View style={styles.uiSubHeadingContainer}>
+									<Text style={styles.uiHeading}>{transRef.t('workArea')}</Text>
+									<Entypo
+										name={state.showWorkDetails === true ?"chevron-up" :"chevron-down"}
+										size={26}
+										color="#002db3"
 									/>
 								</View>
-								<View style={styles.workAreaDetails}>
-									<TextInputComponent
-										showFieldLabel={true}
-										fieldLabelText={transRef.t('length')}
-										value={state.length?.toString()}
-										onChangeText={onChangeLength}
-										keyboardType='number-pad'
-										maxLength={10}
-										isItRequired={true}
-										textInputStyle={styles.workAreaInput}
-										inputBoxStyle={styles.workAreaInputBox}
+							</TouchableHighlight>
+							{state.showWorkDetails === true
+								? <View style={styles.uiElementContainer}>
+									<View style={styles.workAreaDetails}>
+										<TextInputComponent
+											showFieldLabel={true}
+											fieldLabelText={transRef.t('workType')}
+											value={state.workType}
+											onChangeText={onChangeWorkType}
+											isItRequired={true}
+											inputBoxStyle={styles.workRateBoxStyle}
+											textInputStyle={styles.workRateInput}
+										/>
+										<TextInputComponent
+											showFieldLabel={true}
+											fieldLabelText={transRef.t('workRate')}
+											value={state.rate?.toString()}
+											onChangeText={onChangeRate}
+											keyboardType='number-pad'
+											isItRequired={true}
+											inputBoxStyle={styles.workRateBoxStyle}
+											textInputStyle={styles.workRateInput}
+											maxLength={10}
+										/>
+									</View>
+									<View style={styles.workAreaDetails}>
+										<TextInputComponent
+											showFieldLabel={true}
+											fieldLabelText={transRef.t('length')}
+											value={state.length?.toString()}
+											onChangeText={onChangeLength}
+											keyboardType='number-pad'
+											maxLength={10}
+											isItRequired={true}
+											textInputStyle={styles.workAreaInput}
+											inputBoxStyle={styles.workAreaInputBox}
+										/>
+										<TextInputComponent
+											showFieldLabel={true}
+											fieldLabelText={transRef.t('width')}
+											value={state.width?.toString()}
+											onChangeText={onChangeWidth}
+											keyboardType='number-pad'
+											maxLength={10}
+											isItRequired={true}
+											textInputStyle={styles.workAreaInput}
+											inputBoxStyle={styles.workAreaInputBox}
+										/>
+										<TextInputComponent
+											showFieldLabel={true}
+											fieldLabelText={transRef.t('height')}
+											value={state.height?.toString()}
+											onChangeText={onChangeHeight}
+											keyboardType='number-pad'
+											maxLength={10}
+											textInputStyle={styles.workAreaInput}
+											inputBoxStyle={styles.workAreaInputBox}
+										/>
+									</View>
+									<View style={styles.workAreaDetails}>
+										<TextInputComponent
+											showFieldLabel={true}
+											fieldLabelText={transRef.t('totalArea')}
+											value={state.totalArea ? state.totalArea?.toString() : ''}
+											keyboardType='number-pad'
+											maxLength={10}
+											isItRequired={true}
+											textInputStyle={styles.totalValueInput}
+											inputBoxStyle={styles.totalValueBox}
+											editable={false}
+										/>
+										<TextInputComponent
+											showFieldLabel={true}
+											fieldLabelText={transRef.t('totalAmount')}
+											value={state.amount ? state.amount?.toString() : ''}
+											keyboardType='number-pad'
+											maxLength={10}
+											isItRequired={true}
+											textInputStyle={styles.totalValueInput}
+											inputBoxStyle={styles.totalValueBox}
+											editable={false}
+										/>
+									</View>
+									<ButtonComponent
+										title={transRef.t('save')}
+										onPressIn={onPressSaveWork}
+										disabled={disableWorkDetailButton()}
+										mainContainer={styles.buttonContainer}
 									/>
-									<TextInputComponent
-										showFieldLabel={true}
-										fieldLabelText={transRef.t('width')}
-										value={state.width?.toString()}
-										onChangeText={onChangeWidth}
-										keyboardType='number-pad'
-										maxLength={10}
-										isItRequired={true}
-										textInputStyle={styles.workAreaInput}
-										inputBoxStyle={styles.workAreaInputBox}
-									/>
-									<TextInputComponent
-										showFieldLabel={true}
-										fieldLabelText={transRef.t('height')}
-										value={state.height?.toString()}
-										onChangeText={onChangeHeight}
-										keyboardType='number-pad'
-										maxLength={10}
-										textInputStyle={styles.workAreaInput}
-										inputBoxStyle={styles.workAreaInputBox}
+									<PartyWorkHistory partyId={state?.party_id}/>
+								</View>
+								: null
+							}
+						</View>
+						: null
+					}
+					{ params?.partySomeDetails
+						? <View style={styles.uiContainer}>
+							<TouchableHighlight
+								onPress={()=>onOpenCloseUI('showPaymentDetails')}
+								style={styles.uiHeadingContainer}
+							>
+								<View style={styles.uiSubHeadingContainer}>
+									<Text style={styles.uiHeading}>{transRef.t('paymentDetails')}</Text>
+									<Entypo
+										name={state.showPaymentDetails === true ?"chevron-up" :"chevron-down"}
+										size={26} color="#002db3"
 									/>
 								</View>
-								<View style={styles.workAreaDetails}>
-									<TextInputComponent
-										showFieldLabel={true}
-										fieldLabelText={transRef.t('totalArea')}
-										value={state.totalArea ? state.totalArea?.toString() : ''}
-										keyboardType='number-pad'
-										maxLength={10}
-										isItRequired={true}
-										textInputStyle={styles.totalValueInput}
-										inputBoxStyle={styles.totalValueBox}
-										editable={false}
+							</TouchableHighlight>
+							{state.showPaymentDetails === true
+								? <View style={styles.uiElementContainer}>
+									<View  style ={styles.paymentElementContainer}>
+										<TextInputComponent
+											showFieldLabel={true}
+											fieldLabelText={transRef.t('amount')}
+											value={state.paidAmount?.toString()}
+											onChangeText={onChangePayableAmount}
+											keyboardType='number-pad'
+											isItRequired={true}
+											inputBoxStyle={styles.workRateBoxStyle}
+											textInputStyle={styles.workRateInput}
+											maxLength={10}
+										/>
+										<CommonDateTimePicker
+											onDateChange={onDateChange}
+											selectedDate={state.paymentDate}
+											placeHoldar={'Select Date'}
+											label={'Select Date'}
+										/>
+									</View>
+									<ButtonComponent
+										title={transRef.t('save')}
+										onPressIn={onPressSavePayment}
+										disabled={disablePapmentDetailButton()}
+										mainContainer={styles.buttonContainer}
 									/>
-									<TextInputComponent
-										showFieldLabel={true}
-										fieldLabelText={transRef.t('totalAmount')}
-										value={state.amount ? state.amount?.toString() : ''}
-										keyboardType='number-pad'
-										maxLength={10}
-										isItRequired={true}
-										textInputStyle={styles.totalValueInput}
-										inputBoxStyle={styles.totalValueBox}
-										editable={false}
-									/>
+									<PartyPamentHistory partyId={state?.party_id}/>
 								</View>
-								<ButtonComponent
-									title={transRef.t('save')}
-									onPressIn={onPressSaveWork}
-									disabled={disableWorkDetailButton()}
-									mainContainer={styles.buttonContainer}
-								/>
-								<PartyWorkHistory partyId={state?.party_id}/>
-							</View>
-							: null
-						}
-					</View>
-					<View style={styles.uiContainer}>
-						<TouchableHighlight
-							onPress={()=>onOpenCloseUI('showPaymentDetails')}
-							style={styles.uiHeadingContainer}
-						>
-							<View style={styles.uiSubHeadingContainer}>
-								<Text style={styles.uiHeading}>{transRef.t('paymentDetails')}</Text>
-								<Entypo
-									name={state.showPaymentDetails === true ?"chevron-up" :"chevron-down"}
-									size={26} color="#002db3"
-								/>
-							</View>
-						</TouchableHighlight>
-						{state.showPaymentDetails === true
-							? <View style={styles.uiElementContainer}>
-								<View  style ={styles.paymentElementContainer}>
-									<TextInputComponent
-										showFieldLabel={true}
-										fieldLabelText={transRef.t('amount')}
-										value={state.paidAmount?.toString()}
-										onChangeText={onChangePayableAmount}
-										keyboardType='number-pad'
-										isItRequired={true}
-										inputBoxStyle={styles.workRateBoxStyle}
-										textInputStyle={styles.workRateInput}
-										maxLength={10}
-									/>
-									<CommonDateTimePicker
-										onDateChange={onDateChange}
-										selectedDate={state.paymentDate}
-										placeHoldar={'Select Date'}
-										label={'Select Date'}
-									/>
-								</View>
-								<ButtonComponent
-									title={transRef.t('save')}
-									onPressIn={onPressSavePayment}
-									disabled={disablePapmentDetailButton()}
-									mainContainer={styles.buttonContainer}
-								/>
-								<PartyPamentHistory partyId={state?.party_id}/>
-							</View>
-							: null
-						}
-					</View>
+								: null
+							}
+						</View>
+						: null
+					}
 				</ScrollView>
 			</SafeAreaView>
 		);
