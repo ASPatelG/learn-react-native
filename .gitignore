@@ -65,3 +65,4 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+package-lock.json
