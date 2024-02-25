@@ -10,6 +10,7 @@ const initialValue = {
 	transRef:transRef,
 	loginUserData:'',
 	partyDetails:[],
+	isSelectedPrintParty:false,
 }
 
 export const reducers = (state = initialValue, action)=>{
@@ -41,9 +42,9 @@ export const reducers = (state = initialValue, action)=>{
 		}
 		case "selectPrintableWork":{
 			const {partyData, activeIndex} = action.payload;
-			const {partyDetails} = state;
+			const {partyDetails, isSelectedPrintParty} = state;
 			partyDetails[activeIndex] = partyData;
-			return {...state, partyDetails:[...partyDetails]}
+			return {...state, partyDetails:[...partyDetails], isSelectedPrintParty:!isSelectedPrintParty}
 		}
 		default:{
 			return state;
