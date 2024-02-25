@@ -74,8 +74,8 @@ function PaymentShortDetails(props){
 			<View style={styles.leftColumnStyle}>
 				<Text style={styles.partyNameStyle}>{paymentSomeDetails.payment_date} {paymentSomeDetails.lastName}</Text>
 			</View>
-			<View style={styles.columnStyle}>
-				<Text style={styles.mobileNumberStyle}>{paymentSomeDetails.amount}</Text>
+			<View style={styles.amountColumnStyle}>
+				<Text style={styles.amountValueStyle}>{paymentSomeDetails.amount}</Text>
 			</View>
 			<View style={styles.columnStyle}>
                 <Pressable
@@ -93,16 +93,17 @@ const styles = StyleSheet.create({
 	tableHeadingContainer:{
 		width:wp('97%'),
 		flexDirection:'row',
-		alignItems:'center',
 		borderTopWidth:0.9,
 		borderColor:'#D1D1D1',
 		justifyContent:'space-between',
 		alignSelf:'center',
 		marginTop:8,
+		borderBottomWidth:0.8,
+		borderBottomColor:'#808080'
 	},
 	headingTextStyle:{
 		width:wp('25%'),
-		paddingVertical:15,
+		paddingVertical:10,
 		paddingHorizontal:3,
 		borderLeftColor:'#B3B3B3',
 		borderLeftWidth:1,
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
 	},
     headingTextLeftColumnStyle:{
 		width:wp('25%'),
-		paddingVertical:15,
+		paddingVertical:10,
 		paddingHorizontal:3,
 		textAlign:'center',
 		fontWeight:'bold',
@@ -124,7 +125,16 @@ const styles = StyleSheet.create({
 	columnStyle:{
 		paddingVertical:15,
 		paddingHorizontal:3,
-		width:wp('25.07%'),
+		width:wp('24%'),
+		borderLeftWidth:1,
+		borderLeftColor:'#B3B3B3',
+		flexDirection:'row',
+		alignItems:'center',
+	},
+	amountColumnStyle:{
+		paddingVertical:15,
+		paddingHorizontal:3,
+		width:wp('24.9%'),
 		borderLeftWidth:1,
 		borderLeftColor:'#B3B3B3',
 		flexDirection:'row',
@@ -133,7 +143,7 @@ const styles = StyleSheet.create({
     leftColumnStyle:{
 		paddingVertical:15,
 		paddingHorizontal:3,
-		width:wp('25.07%'),
+		width:wp('24%'),
 		flexDirection:'row',
 		alignItems:'center',
         paddingLeft:8,
@@ -169,7 +179,7 @@ const styles = StyleSheet.create({
 		width:wp('21.5%'),
 		textAlign:'center',
 	},
-	mobileNumberStyle:{
+	amountValueStyle:{
 		fontSize:14,
 		fontWeight:'bold',
 		color:'#FFC107',
@@ -192,5 +202,6 @@ const styles = StyleSheet.create({
 	},
 	rightContentStyle:{
 		flexDirection:'row',
+		marginLeft:20
 	},
 });

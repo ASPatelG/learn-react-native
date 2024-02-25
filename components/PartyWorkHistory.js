@@ -44,7 +44,7 @@ const WorkDetailsTableHead = (props)=>{
 	const transRef  = useSelector((state)=>state.transRef);
 	return(
 		<View style={styles.tableHeadingContainer}>
-			<Text style={styles.headingTextStyle}>{transRef.t('workType')}</Text>
+			<Text style={styles.lefHeadingStyle}>{transRef.t('workType')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('totalArea')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('workRate')}</Text>
 			<Text style={styles.headingTextStyle}>{transRef.t('area') + ' X ' + transRef.t('workRate')}</Text>
@@ -69,10 +69,10 @@ function WorkShortDetails(props){
 	return(
 		<View
 			key={index}
-			style={workSomeDetails.is_selectedWork || workSomeDetails.is_selected == 1 ?styles.workSomeDetailsBackground :styles.workSomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
+			style={styles.workSomeDetailsContainer} 	// Since sqlite return 0/1 as boolean value
 		>
 			<View style={styles.leftColumnStyle}>
-				<Text style={styles.partyNameStyle}>{workSomeDetails.work_type}</Text>
+				<Text style={styles.workTypeStyle}>{workSomeDetails.work_type}</Text>
 			</View>
 			<View style={styles.columnStyle}>
 				<Text style={styles.mobileNumberStyle}>{workSomeDetails.total_area}</Text>
@@ -88,7 +88,7 @@ function WorkShortDetails(props){
 					// onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
 					style={styles.rightContentStyle}
 				>
-					<AntDesign name="edit" size={22} color="#808080" />
+					<AntDesign name="edit" size={22} color="#808080"/>
 				</Pressable>
 			</View>
 		</View>
@@ -99,15 +99,23 @@ const styles = StyleSheet.create({
 	tableHeadingContainer:{
 		width:wp('97%'),
 		flexDirection:'row',
-		alignItems:'center',
 		borderTopWidth:0.9,
+		borderBottomWidth:0.9,
 		borderColor:'#D1D1D1',
 		justifyContent:'space-between',
 		alignSelf:'center',
 		marginTop:8,
 	},
+	lefHeadingStyle:{
+		width:wp('19%'),
+		paddingVertical:15,
+		paddingHorizontal:3,
+		textAlign:'center',
+		fontWeight:'bold',
+		fontSize:15,
+	},
 	headingTextStyle:{
-		width:wp('20.3%'),
+		width:wp('19%'),
 		paddingVertical:15,
 		paddingHorizontal:3,
 		borderLeftColor:'#B3B3B3',
@@ -118,19 +126,19 @@ const styles = StyleSheet.create({
 	},
 
 
-	columnStyle:{
-		paddingVertical:15,
-		paddingHorizontal:3,
-		width:wp('20.2%'),
-		borderLeftWidth:1,
-		borderLeftColor:'#B3B3B3',
-		flexDirection:'row',
-		alignItems:'center',
-	},
 	leftColumnStyle:{
 		paddingVertical:15,
 		paddingHorizontal:3,
-		width:wp('20.2%'),
+		width:wp('19.2%'),
+		flexDirection:'row',
+		alignItems:'center',
+	},
+	columnStyle:{
+		paddingVertical:15,
+		paddingHorizontal:3,
+		width:wp('19.4%'),
+		borderLeftWidth:1,
+		borderLeftColor:'#B3B3B3',
 		flexDirection:'row',
 		alignItems:'center',
 	},
@@ -142,15 +150,6 @@ const styles = StyleSheet.create({
 		borderBottomWidth:1,
 		borderBottomColor:'#D3D3D3',
 	},
-	workSomeDetailsBackground:{
-		width:wp('96%'),
-		flexDirection:'row',
-		justifyContent:'space-between',
-		alignSelf:'center',
-		borderBottomWidth:1,
-		borderBottomColor:'#D3D3D3',
-		backgroundColor:'#D3D3D3',
-	},
 	columnValueStyle:{
 		fontSize:15,
 		fontWeight:'bold',
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
 		width:wp('21.5%'),
 		textAlign:'center',
 	},
-	partyNameStyle:{
+	workTypeStyle:{
 		fontSize:15,
 		fontWeight:'bold',
 		color:'#38C6F4',
@@ -188,5 +187,6 @@ const styles = StyleSheet.create({
 	},
 	rightContentStyle:{
 		flexDirection:'row',
+		marginLeft:15,
 	},
 });
