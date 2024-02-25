@@ -12,7 +12,7 @@ const PartyShortDetails = (props)=>{
 	const dispatchRefrence = useDispatch()		// To send the data in store
 	const {partySomeDetails, index, onDeleteWork}  = props;
 	const transRef  = useSelector((state)=>state.transRef);
-	const [state, setState] = useState({reRenderFlag:null});
+	const isSelectedPrintParty = useSelector((state) => state.isSelectedPrintParty);
 
 	const onPress = (partySomeDetails, index)=>{
 		const {navigation} = props;
@@ -20,19 +20,16 @@ const PartyShortDetails = (props)=>{
 	}
 
 	onSelectWork = async ()=>{
-		if(!partySomeDetails?.is_selected && !state.reRenderFlag){
+		if(!isSelectedPrintParty){
 			partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
-			setState(previous=>({...previous, reRenderFlag:true}));//to rerender
 			dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
 		}
 		else if(partySomeDetails?.is_selected === true){
 			partySomeDetails["is_selected"] = !partySomeDetails?.is_selected;
-			setState(previous=>({...previous, reRenderFlag:false}));//to rerender
 			dispatchRefrence(selectWorkToPrint({partyData:partySomeDetails, activeIndex:index}));
 		}
 		else{
 			crossPlatformToast(transRef.t('selectOnePartyHint'));
-			// setState(previous=>({...previous, reRenderFlag:false}));//to rerender
 		}
 	}
 
