@@ -31,7 +31,7 @@ const AddUpdatePartyWorkDetails = (props) => {
 		lastName: '',
 		mobileNumber: '',
 		email: '',
-		workType: 'wall',
+		workType: '',
 		rate: '',
 		length: '',
 		width: '',
@@ -538,8 +538,8 @@ const AddUpdatePartyWorkDetails = (props) => {
 										<CommonDateTimePicker
 											onDateChange={onDateChange}
 											selectedDate={state.paymentDate}
-											placeHoldar={'Select Date'}
-											label={'Select Date'}
+											placeHoldar={transRef.t('selectDate')}
+											label={transRef.t('selectDate')}
 										/>
 									</View>
 									<ButtonComponent
